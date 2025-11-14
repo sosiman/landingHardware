@@ -155,7 +155,7 @@ const OpenAIChat = ({ isOpen, onClose }) => {
                   </motion.div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Consultoría Tecnológica IA</h2>
-                    <p className="text-sm text-purple-300">Powered by OpenAI GPT-4o-mini</p>
+                    <p className="text-sm text-purple-300">Powered by OpenAI GPT-4o</p>
                   </div>
                 </div>
                 <motion.button
