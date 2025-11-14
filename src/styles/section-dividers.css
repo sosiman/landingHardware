@@ -1,0 +1,151 @@
+/* ===================================
+   DIVISORES DE SECCIÓN PROFESIONALES
+   Usando clip-path y pseudo-elementos
+   Método usado por Apple, Stripe, etc.
+   =================================== */
+
+/* Elimina cualquier margen entre secciones */
+section {
+  margin: 0;
+  position: relative;
+}
+
+/* Divisor ondulado - parte inferior */
+.wave-divider-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: inherit;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 60%,
+    95% 65%,
+    90% 70%,
+    85% 68%,
+    80% 60%,
+    75% 55%,
+    70% 58%,
+    65% 63%,
+    60% 65%,
+    55% 63%,
+    50% 58%,
+    45% 55%,
+    40% 58%,
+    35% 63%,
+    30% 65%,
+    25% 63%,
+    20% 58%,
+    15% 55%,
+    10% 58%,
+    5% 63%,
+    0 65%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Divisor diagonal - parte inferior */
+.diagonal-divider-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Divisor suave - parte superior */
+.smooth-divider-top::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: inherit;
+  clip-path: polygon(
+    0 40%,
+    5% 35%,
+    10% 38%,
+    15% 42%,
+    20% 40%,
+    25% 35%,
+    30% 32%,
+    35% 35%,
+    40% 40%,
+    45% 42%,
+    50% 40%,
+    55% 35%,
+    60% 32%,
+    65% 35%,
+    70% 40%,
+    75% 42%,
+    80% 40%,
+    85% 35%,
+    90% 32%,
+    95% 35%,
+    100% 40%,
+    100% 100%,
+    0 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Divisor curva - parte inferior */
+.curve-divider-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: inherit;
+  clip-path: ellipse(100% 100% at 50% 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Divisor curva - parte superior */
+.curve-divider-top::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: inherit;
+  clip-path: ellipse(100% 100% at 50% 0%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .wave-divider-bottom::after,
+  .smooth-divider-top::before {
+    height: 60px;
+  }
+  
+  .diagonal-divider-bottom::after {
+    height: 100px;
+  }
+  
+  .curve-divider-bottom::after,
+  .curve-divider-top::before {
+    height: 80px;
+  }
+}
+
+/* Asegura que los fondos se extiendan correctamente */
+section[class*="divider"] {
+  z-index: 0;
+}

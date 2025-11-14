@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom blur text animation */
+@keyframes blur-in {
+  from {
+    filter: blur(20px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+.blur-in {
+  animation: blur-in 1s ease-out forwards;
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 8s ease infinite;
+}
+
+/* Metallic shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes metallic-shine {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  25% {
+    filter: brightness(1.3);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1);
+  }
+  75% {
+    filter: brightness(1.2);
+  }
+}
+
+.metallic-text {
+  animation: metallic-shine 4s ease-in-out infinite, shimmer 3s linear infinite;
+  position: relative;
+}
+
+.metallic-text::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(
+    120deg,
+    rgba(100, 100, 120, 0.3),
+    rgba(180, 180, 200, 0.5),
+    rgba(255, 255, 255, 0.8),
+    rgba(180, 180, 200, 0.5),
+    rgba(100, 100, 120, 0.3)
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(8px);
+  opacity: 0.6;
+}
+
+/* Chrome metallic effect */
+.chrome-text {
+  background: linear-gradient(
+    180deg,
+    #e8e8e8 0%,
+    #ffffff 20%,
+    #c0c0c0 40%,
+    #ffffff 60%,
+    #b8b8b8 80%,
+    #e8e8e8 100%
+  );
+  background-size: 100% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: chrome-shine 3s ease-in-out infinite;
+  text-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(200, 200, 255, 0.3),
+    0 0 60px rgba(150, 150, 255, 0.2);
+  position: relative;
+}
+
+@keyframes chrome-shine {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+}
+
+/* Gold metallic effect */
+.gold-text {
+  background: linear-gradient(
+    120deg,
+    #d4af37 0%,
+    #f9f295 25%,
+    #ffffff 50%,
+    #f9f295 75%,
+    #d4af37 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gold-shine 4s ease-in-out infinite;
+  text-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.4),
+    0 0 40px rgba(255, 215, 0, 0.2);
+}
+
+@keyframes gold-shine {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.4);
+  }
+}
+
+/* Silver metallic effect */
+.silver-text {
+  background: linear-gradient(
+    135deg,
+    #c0c0c0 0%,
+    #f0f0f0 25%,
+    #ffffff 50%,
+    #f0f0f0 75%,
+    #c0c0c0 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: silver-shine 3.5s ease-in-out infinite;
+  text-shadow: 
+    0 0 15px rgba(192, 192, 192, 0.5),
+    0 0 30px rgba(192, 192, 192, 0.3);
+}
+
+@keyframes silver-shine {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.3);
+  }
+}
+
+/* Copper metallic effect */
+.copper-text {
+  background: linear-gradient(
+    140deg,
+    #b87333 0%,
+    #ffd700 25%,
+    #ff8c00 50%,
+    #ffd700 75%,
+    #b87333 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: copper-shine 3.8s ease-in-out infinite;
+  text-shadow: 
+    0 0 20px rgba(184, 115, 51, 0.4),
+    0 0 40px rgba(255, 140, 0, 0.3);
+}
+
+@keyframes copper-shine {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.35);
+  }
+}
+
+/* Platinum metallic effect */
+.platinum-text {
+  background: linear-gradient(
+    150deg,
+    #e5e4e2 0%,
+    #ffffff 20%,
+    #d3d3d3 40%,
+    #ffffff 60%,
+    #e5e4e2 80%,
+    #f8f8f8 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: platinum-shine 4.2s ease-in-out infinite;
+  text-shadow: 
+    0 0 25px rgba(229, 228, 226, 0.6),
+    0 0 50px rgba(211, 211, 211, 0.4),
+    0 0 75px rgba(248, 248, 248, 0.2);
+}
+
+@keyframes platinum-shine {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: brightness(1.05);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.4);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #2563eb, #7c3aed);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom backdrop blur effect */
+.backdrop-blur-custom {
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+}
+
+/* Iridescence container */
+.iridescence-container {
+  width: 100%;
+  height: 100%;
+}

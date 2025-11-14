@@ -1,0 +1,31 @@
+{
+  "name": "landing-animada",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@n8n/chat": "^0.59.0",
+    "@react-three/drei": "^9.105.4",
+    "@react-three/fiber": "^8.16.2",
+    "@splinetool/react-spline": "^4.1.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.263.1",
+    "ogl": "^1.0.11",
+    "postprocessing": "^6.37.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.0"
+  }
+}
