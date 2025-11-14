@@ -73,7 +73,7 @@ app.post('/api/chat', async (req, res) => {
 
     // Llamar a OpenAI
     const completion = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+      model: process.env.OPENAI_MODEL || 'gpt-4o',
       messages: messages,
       max_tokens: 500,
       temperature: 0.7
