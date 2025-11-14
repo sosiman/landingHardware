@@ -47,14 +47,14 @@ app.post('/api/chat', async (req, res) => {
 
     // Validación
     if (!message || typeof message !== 'string') {
-      return res.status(400).json({ 
-        error: 'El mensaje es requerido y debe ser un string' 
+      return res.status(400).json({
+        error: 'El mensaje es requerido y debe ser un string'
       });
     }
 
     if (message.length > 2000) {
-      return res.status(400).json({ 
-        error: 'El mensaje es demasiado largo (máximo 2000 caracteres)' 
+      return res.status(400).json({
+        error: 'El mensaje es demasiado largo (máximo 2000 caracteres)'
       });
     }
 
@@ -92,15 +92,74 @@ app.post('/api/chat', async (req, res) => {
 
   } catch (error) {
     console.error('Error en /api/chat:', error.message);
-    
+
     if (error.code === 'insufficient_quota') {
-      return res.status(402).json({ 
-        error: 'Sin créditos de OpenAI disponibles' 
+      return res.status(402).json({
+        error: 'Sin créditos de OpenAI disponibles'
       });
     }
 
-    res.status(500).json({ 
-      error: 'Error al procesar tu mensaje. Intenta de nuevo.' 
+    res.status(500).json({
+      error: 'Error al procesar tu mensaje. Intenta de nuevo.'
+    });
+  }
+});
+
+// Endpoint para generar imágenes con DALL-E 3
+app.post('/api/generate-image', async (req, res) => {
+  try {
+    const { prompt } = req.body;
+
+    // Validación
+    if (!prompt || typeof prompt !== 'string') {
+      return res.status(400).json({
+        error: 'El prompt es requerido y debe ser un string'
+      });
+    }
+
+    if (prompt.length > 4000) {
+      return res.status(400).json({
+        error: 'El prompt es demasiado largo (máximo 4000 caracteres)'
+      });
+    }
+
+    // Llamar a DALL-E 3
+    const imageModel = process.env.OPENAI_IMAGE_MODEL || 'dall-e-3';
+    const response = await openai.images.generate({
+      model: imageModel,
+      prompt: prompt,
+      n: 1,
+      size: '1024x1024',
+      quality: 'standard',
+      response_format: 'url'
+    });
+
+    const imageUrl = response.data[0].url;
+    const revisedPrompt = response.data[0].revised_prompt;
+
+    res.json({
+      imageUrl,
+      revisedPrompt,
+      model: imageModel
+    });
+
+  } catch (error) {
+    console.error('Error en /api/generate-image:', error.message);
+
+    if (error.code === 'insufficient_quota') {
+      return res.status(402).json({
+        error: 'Sin créditos de OpenAI disponibles'
+      });
+    }
+
+    if (error.code === 'content_policy_violation') {
+      return res.status(400).json({
+        error: 'El contenido del prompt viola las políticas de OpenAI'
+      });
+    }
+
+    res.status(500).json({
+      error: 'Error al generar la imagen. Intenta de nuevo.'
     });
   }
 });

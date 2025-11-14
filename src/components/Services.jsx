@@ -9,6 +9,7 @@ import GeometricMorph from './effects/GeometricMorph'
 import ShieldField from './effects/ShieldField'
 import KnowledgeOrbs from './effects/KnowledgeOrbs'
 import OpenAIChat from './OpenAIChat'
+import OpenAIImageChat from './OpenAIImageChat'
 
 // Iconos animados con React
 const CodeIcon = () => (
@@ -101,7 +102,7 @@ const OpenAIIcon = () => (
   </motion.svg>
 )
 
-const DatabaseIcon = () => (
+const ImageIcon = () => (
   <motion.svg
     width="32"
     height="32"
@@ -109,18 +110,31 @@ const DatabaseIcon = () => (
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
+    animate={{
+      scale: [1, 1.05, 1],
+      rotate: [0, 2, -2, 0]
+    }}
+    transition={{
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
   >
-    <ellipse cx="12" cy="5" rx="9" ry="3" />
-    <motion.path
-      d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"
-      animate={{ opacity: [0.5, 1, 0.5] }}
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+    <motion.circle
+      cx="8.5" cy="8.5" r="1.5"
+      animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
       transition={{ duration: 2, repeat: Infinity }}
     />
-    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-    <motion.path
-      d="M21 8c0 1.66-4 3-9 3s-9-1.34-9-3"
+    <motion.polyline
+      points="21 15 16 10 5 21"
       animate={{ opacity: [0.5, 1, 0.5] }}
-      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+      transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+    />
+    <motion.path
+      d="M21 21L16 16L12 20"
+      animate={{ opacity: [0.5, 1, 0.5] }}
+      transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
     />
   </motion.svg>
 )
@@ -207,6 +221,7 @@ const Services = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, threshold: 0.1 })
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isImageChatOpen, setIsImageChatOpen] = useState(false)
 
   const services = [
     {
@@ -225,11 +240,12 @@ const Services = () => {
       onClick: () => setIsChatOpen(true)
     },
     {
-      icon: <DatabaseIcon />,
-      title: "Gestión de Datos",
-      description: "Soluciones de Big Data, Analytics e Inteligencia Artificial",
+      icon: <ImageIcon />,
+      title: "Procesamiento de Imágenes",
+      description: "Generación y procesamiento de imágenes con IA usando DALL-E 3",
       color: "from-green-500 to-emerald-500",
-      CanvasEffect: DataFlow
+      CanvasEffect: DataFlow,
+      onClick: () => setIsImageChatOpen(true)
     },
     {
       icon: <GlobeIcon />,
@@ -377,6 +393,9 @@ const Services = () => {
 
       {/* OpenAI Chat Modal */}
       <OpenAIChat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
+      {/* OpenAI Image Chat Modal */}
+      <OpenAIImageChat isOpen={isImageChatOpen} onClose={() => setIsImageChatOpen(false)} />
     </section>
   )
 }
