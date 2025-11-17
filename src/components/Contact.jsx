@@ -273,15 +273,87 @@ const Contact = () => {
 
             <motion.div
               variants={itemVariants}
-              className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-md shadow-2xl"
+              className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-md shadow-2xl bg-black/20"
+              style={{ height: '380px' }}
             >
-              <iframe
-                src="https://ta-01ka8rjdaeyfgqp18k032e2p75-3000.wo-5skw4i3kwixzc4jdjgv44qa0g.w.modal.host/?embed=gallery&images=https%253A%252F%252Fimages.unsplash.com%252Fphoto-1519681393784-d120267933ba%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1500530855697-b586d89ba3ee%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1520975916090-3105956dac38%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1469474968028-56623f02e42e%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1506905925346-21bda4d32df4%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1518709268805-4e9042af9f23%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1511593358241-7eea1f3c84e5%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1501594907352-04cda38ebc29%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1486312338219-ce68d2c6f44d%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1441974231531-c6227db76b6e%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1470071459604-3b5ec3a7fe05%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1475924156734-496f6cac6ec1%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1507525428034-b723cf961d3e%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1472214103451-9374bd1c798e%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1433086966358-54859d0ed716%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1505142468610-359e7d316be0%253Fq%253D80%2526w%253D2400%2526auto%253Dformat%2526fit%253Dcrop&h=340&radius=16&gap=16&speed=8&dir=left&pause=1&bg=transparent"
-                style={{width: '100%', border: 0, overflow: 'hidden'}}
-                height="380"
-                allowFullScreen
-                loading="lazy"
-              />
+              {/* Video Carousel - Shows 3 videos at a time */}
+              <div className="relative w-full h-full overflow-hidden">
+                <motion.div
+                  className="flex gap-4 h-full"
+                  animate={{
+                    x: ['0%', '-50%'], // Move 50% to loop seamlessly (6 videos = 50% of 12 total)
+                  }}
+                  transition={{
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: 35,
+                      ease: "linear",
+                    },
+                  }}
+                  style={{
+                    display: 'flex',
+                    minWidth: '100%',
+                  }}
+                >
+                  {/* First set of 6 videos */}
+                  {[
+                    "/videos/VID_20251006_223257_399.mp4",
+                    "/videos/VID_20251006_223738_445.mp4",
+                    "/videos/VID_20251006_223742_952.mp4",
+                    "/videos/VID_20251006_223804_366.mp4",
+                    "/videos/VID_20251006_223822_120.mp4",
+                    "/videos/VID_20251006_223837_520.mp4",
+                  ].map((video, index) => (
+                    <div
+                      key={`video-1-${index}`}
+                      className="flex-shrink-0 rounded-xl overflow-hidden"
+                      style={{
+                        width: '32%',
+                        minWidth: '32%',
+                        height: '100%'
+                      }}
+                    >
+                      <video
+                        src={video}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    </div>
+                  ))}
+                  {/* Duplicate set of 6 videos for seamless loop */}
+                  {[
+                    "/videos/VID_20251006_223257_399.mp4",
+                    "/videos/VID_20251006_223738_445.mp4",
+                    "/videos/VID_20251006_223742_952.mp4",
+                    "/videos/VID_20251006_223804_366.mp4",
+                    "/videos/VID_20251006_223822_120.mp4",
+                    "/videos/VID_20251006_223837_520.mp4",
+                  ].map((video, index) => (
+                    <div
+                      key={`video-2-${index}`}
+                      className="flex-shrink-0 rounded-xl overflow-hidden"
+                      style={{
+                        width: '32%',
+                        minWidth: '32%',
+                        height: '100%'
+                      }}
+                    >
+                      <video
+                        src={video}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
             </motion.div>
 
             {/* Office Hours */}
