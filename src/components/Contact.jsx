@@ -287,7 +287,7 @@ const Contact = () => {
                     x: {
                       repeat: Infinity,
                       repeatType: "loop",
-                      duration: 35,
+                      duration: 12,
                       ease: "linear",
                     },
                   }}
