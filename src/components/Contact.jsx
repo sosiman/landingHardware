@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import React, { useState, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { Mail, Phone, MapPin, Send, User, MessageSquare, CheckCircle } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
 import Iridescence from './effects/Iridescence'
@@ -14,29 +14,6 @@ const Contact = () => {
     message: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [visualIndex, setVisualIndex] = useState(0)
-
-  const officeVisuals = [
-    {
-      image: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1200&auto=format&fit=crop",
-      caption: "Centro de Innovación Castellón"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
-      caption: "Laboratorio de Experiencias Digitales"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1520880867055-1e30d1cb001c?q=80&w=1200&auto=format&fit=crop",
-      caption: "Espacio de Co-creación con Clientes"
-    }
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisualIndex((prev) => (prev + 1) % officeVisuals.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [officeVisuals.length])
 
   const handleInputChange = (e) => {
     setFormData({
@@ -298,32 +275,13 @@ const Contact = () => {
               variants={itemVariants}
               className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-md shadow-2xl"
             >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={officeVisuals[visualIndex].image}
-                  initial={{ opacity: 0.2, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 1 }}
-                  className="h-56"
-                  style={{
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url(${officeVisuals[visualIndex].image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                />
-              </AnimatePresence>
-              <div className="absolute bottom-4 left-4 right-4 py-3 px-4 bg-black/70 backdrop-blur-md rounded-xl text-white text-sm flex items-center justify-between">
-                <span>{officeVisuals[visualIndex].caption}</span>
-                <div className="flex gap-2">
-                  {officeVisuals.map((_, idx) => (
-                    <span
-                      key={idx}
-                      className={`h-2 w-2 rounded-full ${idx === visualIndex ? 'bg-blue-400' : 'bg-gray-400/30'}`}
-                    />
-                  ))}
-                </div>
-              </div>
+              <iframe
+                src="https://ta-01ka8rjdaeyfgqp18k032e2p75-3000.wo-5skw4i3kwixzc4jdjgv44qa0g.w.modal.host/?embed=gallery&images=https%253A%252F%252Fimages.unsplash.com%252Fphoto-1519681393784-d120267933ba%253Fq%253D80%2526w%253D1200%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1500530855697-b586d89ba3ee%253Fq%253D80%2526w%253D1200%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1520975916090-3105956dac38%253Fq%253D80%2526w%253D1200%2526auto%253Dformat%2526fit%253Dcrop%2Chttps%253A%252F%252Fimages.unsplash.com%252Fphoto-1469474968028-56623f02e42e%253Fq%253D80%2526w%253D1200%2526auto%253Dformat%2526fit%253Dcrop&h=320&radius=16&gap=16&speed=30&dir=left&pause=1&bg=transparent"
+                style={{width: '100%', border: 0, overflow: 'hidden'}}
+                height="360"
+                allowFullScreen
+                loading="lazy"
+              />
             </motion.div>
 
             {/* Office Hours */}
