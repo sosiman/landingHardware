@@ -6,7 +6,7 @@ const CodexChat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: '¡Hola! Soy tu asistente de Desarrollo de Software potenciado por GPT-5.1-Codex. Puedo ayudarte con código, arquitectura, debugging y mejores prácticas. ¿En qué puedo ayudarte hoy?'
+      content: '¡Hola! Soy tu asistente de Desarrollo de Software potenciado por GPT-5.1. Puedo ayudarte con código, arquitectura, debugging y mejores prácticas. ¿En qué puedo ayudarte hoy?'
     }
   ])
   const [input, setInput] = useState('')
@@ -165,7 +165,7 @@ const CodexChat = ({ isOpen, onClose }) => {
                   </motion.div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Desarrollo de Software IA</h2>
-                    <p className="text-sm text-cyan-300">Powered by GPT-5.1-Codex</p>
+                    <p className="text-sm text-cyan-300">Powered by GPT-5.1</p>
                   </div>
                 </div>
                 <motion.button
