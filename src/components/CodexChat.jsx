@@ -54,7 +54,23 @@ const CodexChat = ({ isOpen, onClose }) => {
       })
 
       if (!response.ok) {
-        throw new Error('Error al comunicarse con el servidor')
+        const errorData = await response.json().catch(() => ({}))
+        console.error('❌ Error del servidor:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorData
+        })
+
+        // Crear mensaje de error detallado
+        let errorMessage = errorData.error || 'Error al comunicarse con el servidor'
+        if (errorData.details) {
+          errorMessage += `\n\nDetalles: ${errorData.details}`
+        }
+        if (errorData.model) {
+          errorMessage += `\n\nModelo: ${errorData.model}`
+        }
+
+        throw new Error(errorMessage)
       }
 
       const data = await response.json()
@@ -63,10 +79,11 @@ const CodexChat = ({ isOpen, onClose }) => {
         content: data.reply
       }])
     } catch (error) {
-      console.error('Error:', error)
+      console.error('❌ Error completo:', error)
+      const errorMessage = error.message || 'Error desconocido al procesar tu mensaje'
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.'
+        content: `❌ **Error:**\n\n${errorMessage}\n\n_Por favor, revisa los logs del servidor o contacta al administrador._`
       }])
     } finally {
       setIsLoading(false)

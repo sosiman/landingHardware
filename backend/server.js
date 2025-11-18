@@ -12,6 +12,16 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+// Logs de configuración al iniciar
+console.log('='.repeat(60));
+console.log('🚀 Configuración de OpenAI API');
+console.log('='.repeat(60));
+console.log('✓ API Key configurada:', process.env.OPENAI_API_KEY ? `${process.env.OPENAI_API_KEY.slice(0, 10)}...` : '❌ NO CONFIGURADA');
+console.log('✓ Modelo General (OPENAI_MODEL):', process.env.OPENAI_MODEL || 'gpt-4o (default)');
+console.log('✓ Modelo Codex (CODEX_MODEL):', process.env.CODEX_MODEL || 'gpt-5.1 (default)');
+console.log('✓ Modelo de Imágenes (OPENAI_IMAGE_MODEL):', process.env.OPENAI_IMAGE_MODEL || 'dall-e-3 (default)');
+console.log('='.repeat(60));
+
 // Middleware
 app.use(express.json());
 
@@ -38,6 +48,27 @@ app.use('/api/', limiter);
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Endpoint de diagnóstico para verificar configuración
+app.get('/api/config', (req, res) => {
+  res.json({
+    status: 'ok',
+    openai: {
+      apiKeyConfigured: !!process.env.OPENAI_API_KEY,
+      apiKeyPrefix: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.slice(0, 10) + '...' : 'NOT_SET',
+      models: {
+        general: process.env.OPENAI_MODEL || 'gpt-4o (default)',
+        codex: process.env.CODEX_MODEL || 'gpt-5.1 (default)',
+        image: process.env.OPENAI_IMAGE_MODEL || 'dall-e-3 (default)'
+      }
+    },
+    server: {
+      port: PORT,
+      nodeEnv: process.env.NODE_ENV || 'development'
+    },
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Endpoint principal del chat
@@ -107,6 +138,9 @@ app.post('/api/chat', async (req, res) => {
 
 // Endpoint específico para chat con Codex
 app.post('/api/chat/codex', async (req, res) => {
+  console.log('📨 Nueva petición a /api/chat/codex');
+  console.log('🔧 Modelo configurado:', process.env.CODEX_MODEL || 'gpt-5.1 (default)');
+
   try {
     const { message, conversationHistory = [] } = req.body;
 
@@ -137,12 +171,17 @@ app.post('/api/chat/codex', async (req, res) => {
     ];
 
     // Llamar a OpenAI con GPT-5.1
+    const modelToUse = process.env.CODEX_MODEL || 'gpt-5.1';
+    console.log('🤖 Llamando a OpenAI con modelo:', modelToUse);
+
     const completion = await openai.chat.completions.create({
-      model: process.env.CODEX_MODEL || 'gpt-5.1',
+      model: modelToUse,
       messages: messages,
       max_tokens: 1000,
       temperature: 0.5
     });
+
+    console.log('✅ Respuesta recibida exitosamente de OpenAI');
 
     const reply = completion.choices[0].message.content;
 
@@ -156,16 +195,54 @@ app.post('/api/chat/codex', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en /api/chat/codex:', error.message);
+    console.error('❌ Error en /api/chat/codex:');
+    console.error('━'.repeat(60));
+    console.error('Mensaje:', error.message);
+    console.error('Código:', error.code);
+    console.error('Status:', error.status);
+    console.error('Tipo:', error.type);
+    console.error('Modelo intentado:', process.env.CODEX_MODEL || 'gpt-5.1');
+    console.error('Error completo:', JSON.stringify(error, null, 2));
+    console.error('━'.repeat(60));
 
-    if (error.code === 'insufficient_quota') {
-      return res.status(402).json({
-        error: 'Sin créditos de OpenAI disponibles'
+    // Error de modelo no encontrado
+    if (error.code === 'model_not_found' || error.status === 404) {
+      return res.status(404).json({
+        error: 'Modelo no disponible',
+        details: `El modelo "${process.env.CODEX_MODEL || 'gpt-5.1'}" no está disponible en tu cuenta de OpenAI. Verifica tu suscripción o usa un modelo diferente.`,
+        model: process.env.CODEX_MODEL || 'gpt-5.1'
       });
     }
 
+    // Error de cuota insuficiente
+    if (error.code === 'insufficient_quota') {
+      return res.status(402).json({
+        error: 'Sin créditos de OpenAI disponibles',
+        details: 'Tu cuenta de OpenAI no tiene créditos suficientes'
+      });
+    }
+
+    // Error de permisos
+    if (error.status === 401 || error.code === 'invalid_api_key') {
+      return res.status(401).json({
+        error: 'API Key inválida',
+        details: 'La API Key de OpenAI no es válida o ha expirado'
+      });
+    }
+
+    // Error de rate limit
+    if (error.code === 'rate_limit_exceeded' || error.status === 429) {
+      return res.status(429).json({
+        error: 'Límite de solicitudes excedido',
+        details: 'Has excedido el límite de solicitudes. Intenta de nuevo en unos momentos.'
+      });
+    }
+
+    // Error genérico
     res.status(500).json({
-      error: 'Error al procesar tu mensaje. Intenta de nuevo.'
+      error: 'Error al procesar tu mensaje',
+      details: error.message || 'Error desconocido. Revisa los logs del servidor.',
+      model: process.env.CODEX_MODEL || 'gpt-5.1'
     });
   }
 });
