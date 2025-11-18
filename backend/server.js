@@ -136,9 +136,9 @@ app.post('/api/chat/codex', async (req, res) => {
       }
     ];
 
-    // Llamar a OpenAI con el modelo Codex
+    // Llamar a OpenAI con GPT-5.1
     const completion = await openai.chat.completions.create({
-      model: process.env.CODEX_MODEL || 'gpt-5.1-codex',
+      model: process.env.CODEX_MODEL || 'gpt-5.1',
       messages: messages,
       max_tokens: 1000,
       temperature: 0.5
