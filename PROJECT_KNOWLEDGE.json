@@ -1,0 +1,919 @@
+{
+  "proyecto": {
+    "nombre": "Landing Hardware - Innovate Solutions",
+    "descripcion": "Landing page moderna y avanzada para probar hardware potente con efectos visuales espectaculares, múltiples interfaces de chat con IA, y arquitectura escalable",
+    "proposito": "Herramienta para demostrar capacidades de hardware moderno mediante efectos 3D, animaciones complejas y procesamiento en tiempo real",
+    "dominio": "lockthard.es",
+    "repositorio": "landingHardware"
+  },
+
+  "arquitectura": {
+    "patron": "Cliente-Servidor (SPA + API REST)",
+    "frontend": {
+      "framework": "React 18",
+      "buildTool": "Vite 5.2",
+      "puerto": 3000,
+      "tipoModulos": "ES Modules",
+      "renderizado": "Client-Side Rendering (CSR)"
+    },
+    "backend": {
+      "framework": "Express 4.19",
+      "runtime": "Node.js",
+      "puerto": 3001,
+      "apiUrl": "https://api.lockthard.es",
+      "tipoModulos": "ES Modules"
+    },
+    "despliegue": {
+      "contenedorizacion": "Docker + Nginx",
+      "puertoProduccion": 80,
+      "buildStage": "Node 18-alpine",
+      "productionStage": "Nginx:alpine"
+    }
+  },
+
+  "tecnologias": {
+    "frontend": {
+      "core": {
+        "React": "18.x - Biblioteca de UI con hooks",
+        "Vite": "5.2.x - Build tool ultra-rápido con HMR",
+        "JavaScript": "ES6+ con JSX"
+      },
+      "estilos": {
+        "TailwindCSS": "3.4.x - Framework utility-first",
+        "PostCSS": "8.x - Procesamiento CSS",
+        "cssCustom": "src/styles/ - Estilos personalizados"
+      },
+      "animaciones": {
+        "FramerMotion": "11.x - Animaciones avanzadas React",
+        "características": [
+          "Animaciones declarativas",
+          "Gesture detection",
+          "Variants system",
+          "Layout animations",
+          "Scroll-triggered animations"
+        ]
+      },
+      "graficos3D": {
+        "ThreeJS": "Biblioteca 3D WebGL",
+        "ReactThreeFiber": "React renderer para Three.js",
+        "@react-three/drei": "Utilidades Three.js",
+        "postprocessing": "Efectos post-procesamiento",
+        "OGL": "Gráficos WebGL ligeros"
+      },
+      "chatIA": {
+        "@n8n/chat": "0.59.x - Integración chat n8n",
+        "características": ["Webhook support", "Session management", "Fullscreen mode"]
+      },
+      "iconos": {
+        "lucide-react": "Iconos modernos SVG"
+      },
+      "otros": {
+        "@splinetool/react-spline": "Modelos 3D Spline",
+        "react-dom": "18.x - DOM renderer"
+      }
+    },
+    "backend": {
+      "core": {
+        "Express": "4.19.x - Framework web",
+        "Node.js": "Runtime JavaScript"
+      },
+      "integracionIA": {
+        "OpenAI": "API oficial",
+        "modelos": {
+          "gpt-4o": "Chat general y desarrollo",
+          "gpt-5.1-codex": "Desarrollo especializado",
+          "dall-e-3": "Generación de imágenes"
+        }
+      },
+      "seguridad": {
+        "cors": "Control de orígenes cruzados",
+        "express-rate-limit": "20 req/min por IP",
+        "validacion": "Validación entrada (max 2000 chars)"
+      }
+    }
+  },
+
+  "estructura_directorios": {
+    "/": "Raíz del proyecto",
+    "/src": "Código fuente React",
+    "/src/components": "Componentes React reutilizables",
+    "/src/components/efectos": "23 efectos visuales avanzados",
+    "/src/styles": "Estilos CSS personalizados",
+    "/src/assets": "Recursos estáticos (imágenes, texturas)",
+    "/backend": "Servidor API Node.js/Express",
+    "/public": "Contenido estático servido (videos, modelos 3D)",
+    "/dist": "Build de producción generado (no en repo)",
+    "/node_modules": "Dependencias instaladas (no en repo)"
+  },
+
+  "componentes_principales": {
+    "App.jsx": {
+      "ubicacion": "src/App.jsx",
+      "descripcion": "Componente raíz de la aplicación",
+      "responsabilidades": [
+        "Enrutamiento interno (hash routing)",
+        "Estructura general de secciones",
+        "Implementación de parallax scroll",
+        "Splash screen (Hyperspeed) al llegar a Services",
+        "Gestión de efectos de fondo compartidos",
+        "Background blur animado púrpura"
+      ],
+      "secciones": [
+        "Navigation - Header fijo",
+        "Hero - Portada principal",
+        "Services - Servicios ofrecidos",
+        "Gallery - Galería de proyectos",
+        "Contact - Formulario contacto",
+        "Testimonials - Carrusel testimonios"
+      ]
+    },
+    "main.jsx": {
+      "ubicacion": "src/main.jsx",
+      "descripcion": "Punto de entrada de React",
+      "responsabilidades": [
+        "Renderizar App en #root",
+        "Importar estilos globales",
+        "Configuración inicial React"
+      ]
+    },
+    "Navigation.jsx": {
+      "descripcion": "Header navegación principal",
+      "características": [
+        "Logo con efecto MetallicText",
+        "Menú responsive con hamburguesa",
+        "Smooth scroll a secciones",
+        "Sticky positioning"
+      ]
+    },
+    "Hero.jsx": {
+      "descripcion": "Sección portada/principal",
+      "elementos": [
+        "RobotModel 3D (lado izquierdo)",
+        "Textos animados tipo máquina escribir",
+        "OrbBot (esfera flotante con chat)",
+        "N8nChatEmbed (integración n8n)",
+        "Imágenes de fondo rotativas",
+        "CTAs principales"
+      ]
+    },
+    "Services.jsx": {
+      "descripcion": "Tarjetas de servicios interactivas",
+      "características": [
+        "Grid responsive",
+        "23 efectos visuales disponibles",
+        "Hover 3D effects",
+        "Iconos animados",
+        "Fondo Galaxy compartido con Gallery"
+      ]
+    },
+    "Gallery.jsx": {
+      "descripcion": "Galería de proyectos",
+      "características": [
+        "Filtros por categoría",
+        "Modal de proyecto expandido",
+        "Efectos parallax",
+        "Fondo Galaxy compartido con Services"
+      ]
+    },
+    "Contact.jsx": {
+      "descripcion": "Formulario de contacto",
+      "campos": ["Nombre", "Email", "Mensaje"],
+      "validacion": "Frontend"
+    },
+    "Testimonials.jsx": {
+      "descripcion": "Carrusel de testimonios clientes"
+    }
+  },
+
+  "chats_ia": {
+    "descripcion_general": "Sistema modular con 5 implementaciones diferentes de chat, cada una especializada en un propósito",
+    "chats": {
+      "ChatBot": {
+        "archivo": "src/components/ChatBot.jsx",
+        "tipo": "Local (sin IA)",
+        "modelo": "Ninguno - Respuestas predefinidas",
+        "proposito": "Asistente básico FAQ sin costo",
+        "baseDatos": "Objeto 'knowledge' con keywords",
+        "categorias": [
+          "servicios - Descripción servicios ofrecidos",
+          "contacto - Email, teléfono, ubicación, horario",
+          "desarrollo - Apps web/móvil, tecnologías",
+          "ia - Machine Learning, Big Data, Analytics",
+          "seguridad - Ciberseguridad, auditorías, pentesting",
+          "precios - Presupuestos personalizados",
+          "hola - Saludos generales",
+          "gracias - Agradecimientos"
+        ],
+        "funcionamiento": [
+          "Usuario envía mensaje",
+          "Se busca en keywords del objeto knowledge",
+          "Devuelve respuesta predefinida o mensaje por defecto",
+          "Simula escritura con delay 1s"
+        ],
+        "interfaz": {
+          "posicion": "Bottom-right fixed",
+          "tamaño": "w-96 h-[32rem]",
+          "efectos": ["Glassmorphism", "Backdrop blur", "Gradientes animados"]
+        }
+      },
+      "CodexChat": {
+        "archivo": "src/components/CodexChat.jsx",
+        "tipo": "IA Backend",
+        "modelo": "GPT-4o / GPT-5.1-codex",
+        "endpoint": "/api/chat/codex",
+        "proposito": "Desarrollo de software especializado",
+        "especialidad": [
+          "Arquitectura de software",
+          "Debugging y troubleshooting",
+          "Mejores prácticas código",
+          "Ejemplos código funcional",
+          "Refactoring y optimización"
+        ],
+        "características": [
+          "Soporte markdown con bloques de código",
+          "Botón 'Copiar Código' en cada bloque",
+          "Sintaxis highlighting",
+          "Fondo CodeMatrix animado",
+          "Interfaz estilo terminal",
+          "Historial conversación (últimos 10 mensajes)"
+        ],
+        "configuracion": {
+          "temperature": 0.5,
+          "maxTokens": 1000,
+          "systemPrompt": "Eres un asistente experto en desarrollo de software. Ayudas con código, arquitectura, debugging, mejores prácticas y soluciones técnicas. Responde de forma concisa, técnica y profesional. Proporciona ejemplos de código cuando sea apropiado."
+        },
+        "funcionamiento": [
+          "Usuario escribe mensaje (máx 2000 chars)",
+          "Se valida entrada",
+          "POST a https://api.lockthard.es/api/chat/codex",
+          "Backend envía a OpenAI con historial",
+          "Respuesta se parsea (detecta ```código```)",
+          "Se renderiza con formato y botones copiar"
+        ]
+      },
+      "OpenAIChat": {
+        "archivo": "src/components/OpenAIChat.jsx",
+        "tipo": "IA Backend",
+        "modelo": "GPT-4o",
+        "endpoint": "/api/chat",
+        "proposito": "Consultoría tecnológica general",
+        "temas": [
+          "Consultas tecnológicas generales",
+          "Recomendaciones estratégicas",
+          "Explicaciones conceptos técnicos",
+          "Análisis de problemas empresariales"
+        ],
+        "interfaz": {
+          "fondoEfecto": "NeuralNetwork animado",
+          "colores": "Gradientes púrpura/rosa",
+          "tamaño": "Fullscreen modal"
+        },
+        "configuracion": {
+          "temperature": 0.7,
+          "maxTokens": 800,
+          "systemPrompt": "Eres un consultor tecnológico experto. Ayudas con decisiones estratégicas, arquitectura de sistemas y soluciones empresariales."
+        }
+      },
+      "OpenAIImageChat": {
+        "archivo": "src/components/OpenAIImageChat.jsx",
+        "tipo": "IA Backend - Generación Imágenes",
+        "modelo": "DALL-E 3",
+        "endpoint": "/api/generate-image",
+        "proposito": "Generación de imágenes desde texto",
+        "características": [
+          "Prompt natural en español o inglés",
+          "Imagen 1024x1024 HD",
+          "Muestra imagen generada en chat",
+          "Muestra prompt revisado por OpenAI",
+          "Indicador de carga visual",
+          "Fondo DataFlow animado"
+        ],
+        "funcionamiento": [
+          "Usuario describe imagen deseada",
+          "POST a /api/generate-image con prompt",
+          "DALL-E 3 genera imagen (20-60s)",
+          "Devuelve URL imagen + revised_prompt",
+          "Se muestra en mensaje del chat"
+        ],
+        "configuracion": {
+          "modelo": "dall-e-3",
+          "size": "1024x1024",
+          "quality": "standard",
+          "n": 1
+        }
+      },
+      "N8nChatEmbed": {
+        "archivo": "src/components/N8nChatEmbed.jsx",
+        "tipo": "Integración n8n",
+        "plataforma": "n8n.lockthard.es",
+        "webhook": "https://n8n.lockthard.es/webhook/...",
+        "nombreAsistente": "Sonar-Pro",
+        "proposito": "Automatización y workflows personalizados",
+        "características": [
+          "Carga sesiones anteriores del usuario",
+          "Modo fullscreen disponible",
+          "Interfaz completa n8n embedded",
+          "Soporte multiidioma (español/inglés)",
+          "Persistencia de conversaciones"
+        ],
+        "ventajas": [
+          "Lógica personalizable en n8n",
+          "Sin límites de tokens propios",
+          "Integraciones con servicios externos",
+          "Workflows visuales"
+        ]
+      }
+    }
+  },
+
+  "efectos_visuales": {
+    "ubicacion": "src/components/efectos/",
+    "total": 23,
+    "listado": {
+      "AnimatedMesh": {
+        "descripcion": "Malla 3D animada con morphing",
+        "tecnologia": "Three.js",
+        "uso": "Fondos abstractos"
+      },
+      "CircuitBoard": {
+        "descripcion": "Circuito electrónico animado con nodos",
+        "uso": "Fondos tecnológicos"
+      },
+      "CodeMatrix": {
+        "descripcion": "Efecto Matrix con código cayendo",
+        "usoEn": "CodexChat.jsx (fondo)",
+        "colores": "Verde terminal"
+      },
+      "DataFlow": {
+        "descripcion": "Flujo de datos y partículas",
+        "usoEn": "OpenAIImageChat.jsx (fondo)",
+        "efecto": "Movimiento ondulante"
+      },
+      "ElectricalBorder": {
+        "descripcion": "Bordes eléctricos animados",
+        "uso": "Bordes de tarjetas/modales"
+      },
+      "EnergyFlow": {
+        "descripcion": "Flujo de energía pulsante",
+        "colores": "Azul eléctrico"
+      },
+      "Galaxy": {
+        "descripcion": "Galaxia de estrellas interactivas",
+        "usoEn": ["Services.jsx", "Gallery.jsx"],
+        "interaccion": "Responde al mouse",
+        "performance": "Optimizado con RequestAnimationFrame"
+      },
+      "GeometricMorph": {
+        "descripcion": "Geometrías transformándose",
+        "tecnologia": "Three.js + shaders"
+      },
+      "Hyperspeed": {
+        "descripcion": "Efecto velocidad hiperespacio",
+        "usoEn": "App.jsx (splash screen al llegar a Services)",
+        "colores": "Gradiente púrpura",
+        "efecto": "Líneas de velocidad"
+      },
+      "Iridescence": {
+        "descripcion": "Efecto iridiscente holográfico",
+        "uso": "Overlays sutiles"
+      },
+      "KnowledgeOrbs": {
+        "descripcion": "Esferas de conocimiento flotantes",
+        "efecto": "Interconexión entre nodos"
+      },
+      "Lightning": {
+        "descripcion": "Rayos eléctricos animados",
+        "uso": "Acentos dramáticos"
+      },
+      "MetallicText": {
+        "descripcion": "Texto con efecto metálico/cromo",
+        "usoEn": "Navigation.jsx (logo)",
+        "efecto": "Reflejo animado"
+      },
+      "NeuralNetwork": {
+        "descripcion": "Red neuronal con nodos conectados",
+        "usoEn": "OpenAIChat.jsx (fondo)",
+        "animacion": "Pulsos que viajan por conexiones"
+      },
+      "Orb": {
+        "descripcion": "Esfera interactiva flotante",
+        "usoEn": "Hero.jsx (OrbBot)",
+        "interaccion": "Click abre chat",
+        "efecto": "Glow pulsante"
+      },
+      "ParticleSwarm": {
+        "descripcion": "Enjambre de partículas",
+        "comportamiento": "Flocking algorithm"
+      },
+      "ParticleWave": {
+        "descripcion": "Ola de partículas ondulantes",
+        "uso": "Transiciones secciones"
+      },
+      "PlasmaSphere": {
+        "descripcion": "Esfera de plasma energético",
+        "colores": "Degradado dinámico"
+      },
+      "SectionTransition": {
+        "descripcion": "Transiciones entre secciones",
+        "efecto": "Fade + slide suave"
+      },
+      "ShieldField": {
+        "descripcion": "Campo de fuerza hexagonal",
+        "uso": "Protección visual"
+      },
+      "SplashCursor": {
+        "descripcion": "Efecto splash al mover cursor",
+        "interaccion": "Sigue mouse con partículas"
+      },
+      "VariableProximity": {
+        "descripcion": "Partículas reaccionan a proximidad",
+        "interaccion": "Mouse proximity detection"
+      },
+      "WaveField": {
+        "descripcion": "Campo ondulante de puntos",
+        "efecto": "Olas en grid 3D"
+      }
+    },
+    "rendimiento": {
+      "optimizaciones": [
+        "RequestAnimationFrame para animaciones",
+        "CSS transform en lugar de left/top",
+        "Will-change para propiedades animadas",
+        "Throttling de eventos mouse",
+        "Canvas offscreen cuando sea posible"
+      ]
+    }
+  },
+
+  "backend_api": {
+    "archivo": "backend/server.js",
+    "puerto": 3001,
+    "urlProduccion": "https://api.lockthard.es",
+
+    "endpoints": {
+      "GET /health": {
+        "descripcion": "Health check del servidor",
+        "respuesta": {"status": "ok", "timestamp": "ISO date"}
+      },
+      "GET /api/config": {
+        "descripcion": "Verificar configuración API",
+        "respuesta": {
+          "openai_configured": "boolean",
+          "model": "string",
+          "image_model": "string",
+          "codex_model": "string"
+        }
+      },
+      "POST /api/chat": {
+        "descripcion": "Chat general consultoría tecnológica",
+        "modelo": "gpt-4o",
+        "body": {
+          "message": "string (requerido, max 2000 chars)",
+          "conversationHistory": "array (opcional, últimos 10)"
+        },
+        "respuesta": {
+          "reply": "string",
+          "usage": {"prompt_tokens": "number", "completion_tokens": "number", "total_tokens": "number"}
+        },
+        "configuracion": {
+          "temperature": 0.7,
+          "max_tokens": 800
+        }
+      },
+      "POST /api/chat/codex": {
+        "descripcion": "Chat especializado desarrollo software",
+        "modelo": "gpt-5.1-codex o gpt-4o",
+        "body": {
+          "message": "string (requerido, max 2000 chars)",
+          "conversationHistory": "array (opcional, últimos 10)"
+        },
+        "respuesta": {
+          "reply": "string (puede incluir bloques código markdown)",
+          "usage": {"prompt_tokens": "number", "completion_tokens": "number", "total_tokens": "number"}
+        },
+        "configuracion": {
+          "temperature": 0.5,
+          "max_tokens": 1000
+        },
+        "systemPrompt": "Eres un asistente experto en desarrollo de software. Ayudas con código, arquitectura, debugging, mejores prácticas y soluciones técnicas. Responde de forma concisa, técnica y profesional. Proporciona ejemplos de código cuando sea apropiado."
+      },
+      "POST /api/generate-image": {
+        "descripcion": "Generación de imágenes con DALL-E 3",
+        "modelo": "dall-e-3",
+        "body": {
+          "prompt": "string (requerido, max 2000 chars)"
+        },
+        "respuesta": {
+          "imageUrl": "string (URL temporal imagen generada)",
+          "revisedPrompt": "string (prompt optimizado por OpenAI)"
+        },
+        "configuracion": {
+          "model": "dall-e-3",
+          "size": "1024x1024",
+          "quality": "standard",
+          "n": 1
+        },
+        "tiempoEspera": "20-60 segundos"
+      }
+    },
+
+    "seguridad": {
+      "cors": {
+        "origenes_permitidos": [
+          "https://lockthard.es",
+          "http://localhost:3000",
+          "http://localhost:5173"
+        ],
+        "metodos": ["GET", "POST"],
+        "headers": ["Content-Type"]
+      },
+      "rateLimit": {
+        "ventana": "1 minuto",
+        "maxPeticiones": 20,
+        "porIP": true,
+        "mensaje": "Demasiadas peticiones, por favor intenta de nuevo más tarde"
+      },
+      "validacion": {
+        "mensajeMaxLength": 2000,
+        "mensajeRequerido": true,
+        "tipoString": true
+      }
+    },
+
+    "manejoErrores": {
+      "tipos": [
+        {
+          "tipo": "API key no configurada",
+          "codigo": 500,
+          "mensaje": "API key de OpenAI no está configurada"
+        },
+        {
+          "tipo": "Cuota excedida",
+          "codigo": 429,
+          "mensaje": "Has excedido tu cuota de OpenAI"
+        },
+        {
+          "tipo": "Rate limit OpenAI",
+          "codigo": 429,
+          "mensaje": "Demasiadas peticiones a OpenAI"
+        },
+        {
+          "tipo": "Entrada inválida",
+          "codigo": 400,
+          "mensaje": "El mensaje es requerido y debe ser un string"
+        },
+        {
+          "tipo": "Mensaje muy largo",
+          "codigo": 400,
+          "mensaje": "El mensaje es demasiado largo (máximo 2000 caracteres)"
+        },
+        {
+          "tipo": "Error genérico",
+          "codigo": 500,
+          "mensaje": "Error al procesar la solicitud"
+        }
+      ],
+      "logs": "Console.log detallado con emojis"
+    },
+
+    "variablesEntorno": {
+      "archivo": "backend/.env",
+      "requeridas": {
+        "OPENAI_API_KEY": "API key de OpenAI (requerida)",
+        "OPENAI_MODEL": "Modelo chat general (default: gpt-4o)",
+        "OPENAI_IMAGE_MODEL": "Modelo imágenes (default: dall-e-3)",
+        "CODEX_MODEL": "Modelo desarrollo (default: gpt-4o)",
+        "PORT": "Puerto servidor (default: 3001)"
+      }
+    }
+  },
+
+  "configuracion": {
+    "vite": {
+      "archivo": "vite.config.js",
+      "plugins": ["@vitejs/plugin-react"],
+      "server": {
+        "port": 3000,
+        "open": true,
+        "allowedHosts": ["detectible-descriptively-cordie.ngrok-free.app"]
+      }
+    },
+    "tailwind": {
+      "archivo": "tailwind.config.js",
+      "coloresPrimarios": {
+        "azul": "blue-500 a blue-700",
+        "cian": "cyan-400 a cyan-600",
+        "purpura": "purple-500 a purple-600",
+        "rosa": "pink-500 a pink-600"
+      },
+      "animacionesCustom": {
+        "gradient": "Gradiente animado",
+        "float": "Flotación suave",
+        "pulse-slow": "Pulso lento"
+      },
+      "blur": {
+        "backdrop-blur-xs": "blur(2px)"
+      }
+    },
+    "docker": {
+      "archivo": "Dockerfile",
+      "etapas": [
+        {
+          "nombre": "build",
+          "base": "node:18-alpine",
+          "accion": "npm install && npm run build"
+        },
+        {
+          "nombre": "production",
+          "base": "nginx:alpine",
+          "puerto": 80,
+          "copia": "dist/ a /usr/share/nginx/html"
+        }
+      ]
+    },
+    "package": {
+      "frontend": {
+        "archivo": "package.json",
+        "nombre": "landing-animada",
+        "version": "0.0.0",
+        "tipo": "module",
+        "scripts": {
+          "dev": "vite (puerto 3000)",
+          "build": "vite build (genera dist/)",
+          "preview": "vite preview"
+        }
+      },
+      "backend": {
+        "archivo": "backend/package.json",
+        "nombre": "lockthard-backend",
+        "version": "1.0.0",
+        "tipo": "module",
+        "scripts": {
+          "start": "node server.js"
+        }
+      }
+    }
+  },
+
+  "flujos_funcionamiento": {
+    "cargaPagina": [
+      "1. index.html carga",
+      "2. Vite inyecta bundle de React",
+      "3. main.jsx renderiza <App />",
+      "4. App.jsx monta todas las secciones",
+      "5. Efectos de fondo se inicializan (Galaxy, etc.)",
+      "6. Parallax listener se activa",
+      "7. Animaciones Framer Motion se ejecutan secuencialmente"
+    ],
+    "chatIA_CodexChat": [
+      "1. Usuario abre modal CodexChat desde Services",
+      "2. Usuario escribe mensaje (validación max 2000 chars)",
+      "3. Mensaje se agrega a estado local + UI",
+      "4. POST a https://api.lockthard.es/api/chat/codex",
+      "5. Backend valida entrada",
+      "6. Backend envía a OpenAI con system prompt + historial (últimos 10)",
+      "7. GPT-4o responde (max 1000 tokens)",
+      "8. Backend devuelve {reply, usage}",
+      "9. Frontend parsea markdown y detecta bloques ```código```",
+      "10. Se renderiza con botones 'Copiar Código'",
+      "11. Historial se actualiza para próxima interacción"
+    ],
+    "generacionImagen": [
+      "1. Usuario abre OpenAIImageChat",
+      "2. Usuario describe imagen deseada",
+      "3. POST a /api/generate-image con {prompt}",
+      "4. Backend valida prompt",
+      "5. Backend llama DALL-E 3 (size: 1024x1024)",
+      "6. Espera 20-60s mientras se genera",
+      "7. Devuelve {imageUrl, revisedPrompt}",
+      "8. Frontend muestra imagen en chat + revised_prompt",
+      "9. Usuario puede descargar imagen desde URL temporal"
+    ],
+    "navegacion": [
+      "1. Usuario hace click en menú navegación",
+      "2. Smooth scroll a sección correspondiente (#id)",
+      "3. Parallax listener ajusta posiciones efectos",
+      "4. Animaciones scroll-triggered se activan",
+      "5. Sección aparece con fade-in + slide"
+    ],
+    "efectoSplash": [
+      "1. Usuario scrollea hasta Services",
+      "2. Detector de scroll activa splash",
+      "3. Componente Hyperspeed se monta (fullscreen)",
+      "4. Animación de velocidad (2s)",
+      "5. Hyperspeed se desmonta",
+      "6. Services + Gallery aparecen con Galaxy compartido"
+    ]
+  },
+
+  "rendimiento_optimizacion": {
+    "frontend": [
+      "Vite build con tree-shaking automático",
+      "Lazy loading de componentes pesados",
+      "CSS crítico inlined en index.html",
+      "Bundle splitting automático por Vite",
+      "Minificación JS/CSS en producción",
+      "Compresión gzip en Nginx",
+      "Animaciones con transform (GPU accelerated)",
+      "Will-change en elementos animados",
+      "RequestAnimationFrame para animaciones canvas",
+      "Throttling eventos mouse/scroll"
+    ],
+    "backend": [
+      "Rate limiting 20 req/min",
+      "Validación entrada antes de llamar OpenAI",
+      "Límite historial conversación (10 mensajes)",
+      "Manejo errores específico por tipo",
+      "Logs estructurados con console",
+      "CORS restrictivo (solo dominios permitidos)"
+    ],
+    "carga": {
+      "tiempoCargaInicial": "~2s (con efectos 3D)",
+      "firstContentfulPaint": "~1s",
+      "timeToInteractive": "~3s"
+    }
+  },
+
+  "responsive": {
+    "breakpoints": {
+      "mobile": "320px - 767px",
+      "tablet": "768px - 1023px",
+      "desktop": "1024px - 1279px",
+      "large": "1280px+"
+    },
+    "ajustes": {
+      "mobile": [
+        "Menú hamburguesa colapsable",
+        "Grid 1 columna en servicios",
+        "Efectos 3D simplificados",
+        "Tamaño fuente reducido",
+        "Padding/margin ajustados"
+      ],
+      "tablet": [
+        "Grid 2 columnas servicios",
+        "Efectos 3D completos",
+        "Navegación horizontal"
+      ],
+      "desktop": [
+        "Grid 3 columnas servicios",
+        "Todos los efectos activos",
+        "Parallax completo",
+        "Hover effects 3D"
+      ]
+    }
+  },
+
+  "despliegue": {
+    "desarrollo": {
+      "comando": "npm run dev",
+      "puerto": 3000,
+      "hmr": "Habilitado (Hot Module Replacement)",
+      "tunnel": "Ngrok opcional para acceso remoto"
+    },
+    "produccion": {
+      "build": [
+        "1. npm run build (genera dist/)",
+        "2. Minificación + optimización automática",
+        "3. Genera index.html, assets/, CSS, JS"
+      ],
+      "docker": [
+        "1. docker build -t landing-hardware .",
+        "2. docker run -p 80:80 landing-hardware",
+        "3. Nginx sirve contenido estático en puerto 80"
+      ],
+      "dominio": {
+        "frontend": "https://lockthard.es",
+        "backend": "https://api.lockthard.es",
+        "n8n": "https://n8n.lockthard.es"
+      }
+    }
+  },
+
+  "funcionalidades_clave": {
+    "pruebaHardware": {
+      "descripcion": "La web está diseñada para probar hardware potente",
+      "elementos_intensivos": [
+        "23 efectos visuales simultáneos en canvas/WebGL",
+        "Modelos 3D con Three.js (robot, esferas)",
+        "Animaciones Framer Motion complejas",
+        "Parallax scroll con múltiples capas",
+        "Partículas interactivas (miles de puntos)",
+        "Post-procesamiento efectos visuales",
+        "Blur y gradientes animados",
+        "Detección mouse en tiempo real"
+      ],
+      "metricas_rendimiento": [
+        "FPS objetivo: 60fps",
+        "GPU utilizada para render 3D",
+        "CPU para cálculos partículas",
+        "RAM: carga de texturas y modelos 3D"
+      ]
+    },
+    "automatizacion": {
+      "descripcion": "Automatización mediante n8n y workflows",
+      "implementaciones": [
+        "N8nChatEmbed para workflows personalizados",
+        "Integración OpenAI para respuestas automáticas",
+        "Formulario contacto (backend pendiente)",
+        "Posibilidad de webhook triggers desde chat"
+      ]
+    },
+    "tabletasInteractivas": {
+      "descripcion": "Tabletas de servicios interactivos con protección contraseña",
+      "implementacion": [
+        "Acceso protegido con contraseña a servicios específicos",
+        "Interfaces fullscreen para demostraciones",
+        "Múltiples chats especializados",
+        "Generación imágenes DALL-E 3",
+        "Chat desarrollo con Codex"
+      ],
+      "seguridad": [
+        "Password-protected para demos públicas",
+        "Rate limiting API para prevenir abuso",
+        "Validación entrada usuario"
+      ]
+    }
+  },
+
+  "informacion_contacto": {
+    "empresa": "Innovate Solutions",
+    "email": "albertotplaza@gmail.com",
+    "telefono": "+34 621 208 980",
+    "ubicacion": "Castellón - Onda, España",
+    "horario": "Lunes - Domingo, 10:30 - 23:00 (CET/CEST)",
+    "dominios": {
+      "principal": "lockthard.es",
+      "api": "api.lockthard.es",
+      "n8n": "n8n.lockthard.es"
+    }
+  },
+
+  "dependencias": {
+    "frontend_principales": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "framer-motion": "^11.0.0",
+      "tailwindcss": "^3.4.0",
+      "three": "^0.160.0",
+      "@react-three/fiber": "^8.15.0",
+      "@react-three/drei": "^9.95.0",
+      "@n8n/chat": "^0.59.0",
+      "lucide-react": "^0.320.0",
+      "postprocessing": "^6.35.0",
+      "@splinetool/react-spline": "^2.2.6"
+    },
+    "frontend_dev": {
+      "@vitejs/plugin-react": "^4.2.1",
+      "vite": "^5.2.0",
+      "autoprefixer": "^10.4.17",
+      "postcss": "^8.4.35"
+    },
+    "backend_principales": {
+      "express": "^4.19.0",
+      "openai": "^4.26.0",
+      "cors": "^2.8.5",
+      "express-rate-limit": "^7.1.5",
+      "dotenv": "^16.4.1"
+    }
+  },
+
+  "archivos_documentacion": {
+    "README.md": "Información general del proyecto",
+    "COMANDOS.md": "Guía de instalación y comandos",
+    "PROJECT_KNOWLEDGE.json": "Este archivo - conocimiento completo proyecto",
+    ".env.example": "Ejemplo variables entorno backend"
+  },
+
+  "flujo_desarrollo": {
+    "iniciar_desarrollo": [
+      "1. git clone repositorio",
+      "2. npm install (instalar dependencias frontend)",
+      "3. cd backend && npm install (instalar dependencias backend)",
+      "4. Configurar backend/.env con OPENAI_API_KEY",
+      "5. npm run dev (frontend en puerto 3000)",
+      "6. cd backend && npm start (backend en puerto 3001)",
+      "7. Abrir http://localhost:3000"
+    ],
+    "estructura_commits": [
+      "Commits descriptivos",
+      "Pull requests para features nuevas",
+      "Branch principal protegida",
+      "CI/CD con GitHub Actions (opcional)"
+    ]
+  },
+
+  "futuras_mejoras": {
+    "sugerencias": [
+      "Agregar backend para formulario contacto (enviar emails)",
+      "Implementar base de datos para guardar conversaciones",
+      "Agregar más efectos visuales personalizables",
+      "Dashboard admin para gestionar servicios",
+      "Sistema de autenticación usuarios",
+      "Analytics integrado (Google Analytics, Plausible)",
+      "PWA (Progressive Web App) con service workers",
+      "Tests unitarios con Vitest",
+      "Tests E2E con Playwright",
+      "Internacionalización (i18n) multi-idioma"
+    ]
+  }
+}

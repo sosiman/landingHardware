@@ -15,39 +15,67 @@ const ChatBot = ({ isOpen, onClose }) => {
   const messagesEndRef = useRef(null)
   const chatContainerRef = useRef(null)
 
-  // Base de conocimiento del bot
+  // Base de conocimiento del bot - COMPLETA con información del proyecto
   const knowledge = {
+    proyecto: {
+      keywords: ['proyecto', 'web', 'página', 'site', 'qué es esto', 'para qué', 'propósito'],
+      response: '🌐 Landing Hardware - Innovate Solutions\n\nEsta es una web diseñada para **probar hardware potente** mediante:\n\n• 23 efectos visuales avanzados\n• Renderizado 3D en tiempo real\n• 5 interfaces de chat con IA\n• Animaciones complejas simultáneas\n\nTecnologías: React 18 + Vite + Three.js + OpenAI\n\n¿Quieres saber más sobre alguna funcionalidad específica?'
+    },
+    tecnologias: {
+      keywords: ['tecnología', 'tecnologías', 'stack', 'framework', 'react', 'vite', 'construido', 'programado', 'código'],
+      response: '⚙️ Stack Tecnológico:\n\n**Frontend:**\n• React 18 + Vite 5.2\n• Tailwind CSS + Framer Motion\n• Three.js (gráficos 3D)\n• 23 efectos visuales Canvas/WebGL\n\n**Backend:**\n• Express + Node.js\n• OpenAI API (GPT-4o, DALL-E 3)\n• Rate limiting + CORS\n\n**Arquitectura:**\n• SPA (Single Page App)\n• API REST\n• Docker + Nginx\n\n¿Quieres detalles sobre algún componente?'
+    },
+    chats: {
+      keywords: ['chat', 'chats', 'asistentes', 'ia', 'inteligencia artificial', 'bots', 'conversación'],
+      response: '💬 Sistema de Chats (5 implementaciones):\n\n1. **ChatBot** (este) - Respuestas locales sin IA\n2. **CodexChat** - Desarrollo de software (GPT-4o)\n3. **OpenAIChat** - Consultoría tecnológica (GPT-4o)\n4. **OpenAIImageChat** - Generación imágenes (DALL-E 3)\n5. **N8nChatEmbed** - Workflows personalizados\n\n¿Quieres probar alguno de los chats con IA?'
+    },
+    efectos: {
+      keywords: ['efectos', 'visuales', 'animaciones', 'gráficos', '3d', 'partículas'],
+      response: '✨ 23 Efectos Visuales Avanzados:\n\n**Principales:**\n• Galaxy - Estrellas interactivas\n• Hyperspeed - Velocidad hiperespacio\n• CodeMatrix - Código cayendo\n• NeuralNetwork - Red neuronal animada\n• Orb - Esfera flotante (OrbBot)\n• MetallicText - Efecto cromo\n\nY 17 efectos más: DataFlow, Lightning, ParticleSwarm, WaveField, etc.\n\n¡Todos optimizados para 60fps!'
+    },
+    arquitectura: {
+      keywords: ['arquitectura', 'estructura', 'componentes', 'organización', 'cómo funciona', 'funcionamiento'],
+      response: '🏗️ Arquitectura del Proyecto:\n\n**Componentes principales:**\n• App.jsx - Raíz con parallax scroll\n• Hero.jsx - Portada con modelo 3D\n• Services.jsx - Tarjetas servicios\n• Gallery.jsx - Galería proyectos\n• Navigation.jsx - Header\n\n**Backend API:**\n• /api/chat - Chat general\n• /api/chat/codex - Chat código\n• /api/generate-image - DALL-E 3\n\n¿Quieres saber más sobre algún componente?'
+    },
+    tabletas: {
+      keywords: ['tableta', 'tabletas', 'tablet', 'tablets', 'demo', 'kiosco'],
+      response: '📱 Tabletas Interactivas:\n\nInterfaces protegidas para demostraciones públicas:\n\n• Acceso con contraseña\n• Modo fullscreen\n• 5 chats especializados\n• Generación de imágenes IA\n• Desarrollo con Codex\n\nPerfecto para kioscos o presentaciones.\n\n¿Necesitas acceso a las tabletas?'
+    },
+    automatizacion: {
+      keywords: ['automatización', 'automatizacion', 'workflows', 'n8n', 'integración'],
+      response: '🔄 Automatización:\n\n• **N8nChatEmbed** - Workflows visuales\n• **Webhooks** - Triggers personalizados\n• **OpenAI Integration** - Respuestas automáticas\n• **API REST** - Integraciones externas\n\nPuedes crear flujos complejos con n8n.\n\n¿Quieres saber cómo funciona n8n?'
+    },
     servicios: {
       keywords: ['servicios', 'servicio', 'qué hacen', 'ofrecen', 'productos'],
-      response: '🚀 Nuestros servicios incluyen:\n\n• Desarrollo de Software\n• Consultoría Tecnológica\n• Gestión de Datos e IA\n• Transformación Digital\n• Ciberseguridad\n• Capacitación\n\n¿Sobre cuál te gustaría saber más?'
+      response: '🚀 Nuestros servicios incluyen:\n\n• Desarrollo de Software (React, Node.js)\n• Consultoría Tecnológica\n• Gestión de Datos e IA\n• Interfaces con efectos 3D avanzados\n• Integraciones OpenAI (Chat + Imágenes)\n• Ciberseguridad\n• Capacitación\n\n¿Sobre cuál te gustaría saber más?'
     },
     contacto: {
       keywords: ['contacto', 'email', 'teléfono', 'llamar', 'escribir', 'ubicación', 'dirección'],
-      response: '📞 Puedes contactarnos:\n\n📧 Email: albertotplaza@gmail.com\n📱 Teléfono: +34 621 208 980\n📍 Ubicación: Castellón - Onda, España\n🕐 Horario: Lunes - Domingo, 10:30 - 23:00 (CET/CEST)\n\n¿Prefieres que te contactemos nosotros?'
+      response: '📞 Puedes contactarnos:\n\n📧 Email: albertotplaza@gmail.com\n📱 Teléfono: +34 621 208 980\n📍 Ubicación: Castellón - Onda, España\n🕐 Horario: Lunes - Domingo, 10:30 - 23:00 (CET/CEST)\n🌐 Dominio: lockthard.es\n\n¿Prefieres que te contactemos nosotros?'
     },
     desarrollo: {
       keywords: ['desarrollo', 'app', 'aplicación', 'web', 'móvil', 'software', 'programación'],
-      response: '💻 Desarrollo de Software:\n\nCreamos aplicaciones web y móviles personalizadas usando las últimas tecnologías:\n\n• React, Next.js, Vue\n• Node.js, Python\n• Apps iOS y Android\n• APIs y Microservicios\n\n¿Tienes un proyecto en mente?'
+      response: '💻 Desarrollo de Software:\n\nCreamos aplicaciones usando tecnologías modernas:\n\n**Frontend:**\n• React 18, Next.js, Vue\n• Tailwind CSS, Framer Motion\n• Three.js para 3D\n\n**Backend:**\n• Node.js, Express\n• APIs REST\n• Integraciones OpenAI\n\n**Deploy:**\n• Docker + Nginx\n• Optimización rendimiento\n\n¿Tienes un proyecto en mente?'
     },
-    ia: {
-      keywords: ['ia', 'inteligencia artificial', 'machine learning', 'ai', 'datos', 'analytics'],
-      response: '🤖 IA y Gestión de Datos:\n\nOfrecemos soluciones de:\n\n• Big Data & Analytics\n• Machine Learning\n• Procesamiento de lenguaje natural\n• Visión por computadora\n• Automatización inteligente\n\n¿Qué problema quieres resolver con IA?'
+    hardware: {
+      keywords: ['hardware', 'rendimiento', 'fps', 'optimización', 'gpu', 'cpu'],
+      response: '⚡ Prueba de Hardware:\n\nEsta web está optimizada para:\n\n• **FPS objetivo:** 60fps constantes\n• **GPU:** Renderizado 3D WebGL\n• **CPU:** Cálculos partículas\n• **RAM:** Texturas y modelos 3D\n\n**Elementos intensivos:**\n• 23 efectos simultáneos\n• Miles de partículas\n• Animaciones complejas\n• Parallax multi-capa\n\n¡Perfecto para benchmarking!'
     },
-    seguridad: {
-      keywords: ['seguridad', 'ciberseguridad', 'protección', 'hackeo', 'vulnerabilidad'],
-      response: '🛡️ Ciberseguridad:\n\nProtegemos tu empresa con:\n\n• Auditorías de seguridad\n• Pentesting\n• Protección DDoS\n• Compliance (GDPR, ISO)\n• Monitoreo 24/7\n\n¿Necesitas una auditoría de seguridad?'
+    documentacion: {
+      keywords: ['documentación', 'documentacion', 'docs', 'información', 'detalles', 'manual'],
+      response: '📚 Documentación Disponible:\n\n• **PROJECT_KNOWLEDGE.json** - Base conocimiento JSON completa\n• **DOCUMENTACION_COMPLETA.md** - Guía detallada markdown\n• **README.md** - Información general\n• **COMANDOS.md** - Guía instalación\n\nToda la documentación está en el repositorio.\n\n¿Necesitas acceso al código fuente?'
     },
     precios: {
       keywords: ['precio', 'costo', 'cuánto', 'presupuesto', 'tarifa', 'cotización'],
-      response: '💰 Precios:\n\nCada proyecto es único. Ofrecemos:\n\n• Consulta inicial GRATUITA\n• Presupuestos personalizados\n• Planes flexibles de pago\n• Soporte post-lanzamiento\n\n¿Quieres agendar una consulta gratuita?'
+      response: '💰 Precios:\n\nCada proyecto es único. Ofrecemos:\n\n• Consulta inicial GRATUITA\n• Presupuestos personalizados\n• Planes flexibles de pago\n• Soporte post-lanzamiento\n• Documentación completa\n\n¿Quieres agendar una consulta gratuita?'
     },
     hola: {
       keywords: ['hola', 'buenos días', 'buenas tardes', 'hey', 'hi', 'hello'],
-      response: '¡Hola! 😊 Es un placer saludarte. Estoy aquí para ayudarte con cualquier consulta sobre Innovate Solutions. ¿Qué te gustaría saber?'
+      response: '¡Hola! 😊 Soy el asistente de Innovate Solutions. Puedo ayudarte con información sobre:\n\n• El proyecto y tecnologías\n• Los 5 chats con IA\n• Los 23 efectos visuales\n• Arquitectura y componentes\n• Servicios y contacto\n\n¿Qué te gustaría saber?'
     },
     gracias: {
       keywords: ['gracias', 'thanks', 'thank you', 'perfecto', 'genial', 'excelente'],
-      response: '¡De nada! 🌟 Es un placer ayudarte. Si tienes más preguntas, aquí estaré. ¿Hay algo más en lo que pueda asistirte?'
+      response: '¡De nada! 🌟 Es un placer ayudarte. Si tienes más preguntas sobre el proyecto, los chats IA, o cualquier aspecto técnico, aquí estaré. ¿Hay algo más en lo que pueda asistirte?'
     }
   }
 
