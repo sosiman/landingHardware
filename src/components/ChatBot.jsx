@@ -160,9 +160,12 @@ const ChatBot = ({ isOpen, onClose }) => {
   const handleSend = () => {
     if (!input.trim()) return
 
+    // Guardar el input antes de limpiarlo
+    const userInput = input
+
     const userMessage = {
       type: 'user',
-      text: input,
+      text: userInput,
       time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
     }
 
@@ -174,7 +177,7 @@ const ChatBot = ({ isOpen, onClose }) => {
     setTimeout(() => {
       const botResponse = {
         type: 'bot',
-        text: getBotResponse(input),
+        text: getBotResponse(userInput),
         time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
       }
       setMessages(prev => [...prev, botResponse])
