@@ -345,7 +345,13 @@ const Services = () => {
                 rotateX: 5,
                 rotateY: 5
               }}
-              onClick={service.onClick}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                if (service.onClick) {
+                  service.onClick()
+                }
+              }}
               className={`group relative p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 shadow-xl overflow-hidden ${
                 service.onClick ? 'cursor-pointer hover:shadow-2xl hover:shadow-purple-500/30' : ''
               }`}

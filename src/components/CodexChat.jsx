@@ -2,32 +2,59 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import CodeMatrix from './effects/CodeMatrix'
 
-// Componente para renderizar código con syntax highlighting básico
+// Componente mejorado para renderizar código con mejor UX
 const CodeBlock = ({ code, language }) => {
   const [copied, setCopied] = useState(false)
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Error al copiar:', err)
+    }
   }
 
   return (
-    <div className="relative my-3 rounded-lg overflow-hidden bg-gray-900 border border-cyan-500/30">
-      <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-cyan-500/20">
-        <span className="text-xs text-cyan-300 font-mono">{language || 'code'}</span>
+    <div className="relative my-3 rounded-lg overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-2 border-cyan-500/40 shadow-lg shadow-cyan-500/20">
+      <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-gray-800 to-gray-900 border-b-2 border-cyan-500/30">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
+          </div>
+          <span className="text-xs text-cyan-300 font-mono font-semibold ml-2">
+            {language || 'code'}
+          </span>
+        </div>
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
           onClick={copyToClipboard}
-          className="flex items-center gap-2 px-3 py-1 bg-cyan-600/20 hover:bg-cyan-600/30 rounded text-xs text-cyan-300 transition-colors"
+          className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
+            copied
+              ? 'bg-green-600/30 text-green-300 border border-green-500/50'
+              : 'bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-300 border border-cyan-500/30'
+          }`}
         >
           {copied ? (
             <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <motion.svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <polyline points="20 6 9 17 4 12" />
-              </svg>
-              Copiado
+              </motion.svg>
+              ¡Copiado!
             </>
           ) : (
             <>
@@ -35,16 +62,31 @@ const CodeBlock = ({ code, language }) => {
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
               </svg>
-              Copiar
+              Copiar Código
             </>
           )}
         </motion.button>
       </div>
-      <pre className="p-4 overflow-x-auto">
-        <code className="text-sm text-gray-100 font-mono">{code}</code>
+      <pre className="p-4 overflow-x-auto bg-black/20 max-h-96">
+        <code className="text-sm text-gray-100 font-mono leading-relaxed">{code}</code>
       </pre>
     </div>
   )
+}
+
+// Función para formatear texto con markdown básico
+const formatMarkdown = (text) => {
+  return text
+    // Negrita: **texto** o __texto__
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-cyan-200 font-bold">$1</strong>')
+    .replace(/__(.*?)__/g, '<strong class="text-cyan-200 font-bold">$1</strong>')
+    // Cursiva: *texto* o _texto_
+    .replace(/\*(.*?)\*/g, '<em class="text-blue-200 italic">$1</em>')
+    .replace(/_(.*?)_/g, '<em class="text-blue-200 italic">$1</em>')
+    // Código inline: `código`
+    .replace(/`([^`]+)`/g, '<code class="px-2 py-1 bg-gray-800 rounded text-cyan-300 text-sm font-mono border border-cyan-500/30">$1</code>')
+    // Listas con viñetas: • o -
+    .replace(/^([•\-]) (.+)$/gm, '<div class="flex items-start gap-2 my-1"><span class="text-cyan-400">•</span><span>$2</span></div>')
 }
 
 // Función para parsear markdown y detectar bloques de código
@@ -88,7 +130,16 @@ const CodexChat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: '¡Hola! Soy tu asistente de Desarrollo de Software potenciado por GPT-4o. Puedo ayudarte con código, arquitectura, debugging y mejores prácticas. ¿En qué puedo ayudarte hoy?'
+      content: `¡Hola! 👋 Soy tu asistente de **Desarrollo de Software** potenciado por **GPT-4o**.
+
+Puedo ayudarte con:
+• 💻 Escribir y revisar código en cualquier lenguaje
+• 🏗️ Diseño de arquitectura y patrones
+• 🐛 Debugging y solución de errores
+• ✨ Mejores prácticas y optimización
+• 📚 Explicaciones técnicas detalladas
+
+**Todos los bloques de código tienen un botón para copiar con un solo click.** ¿En qué puedo ayudarte hoy?`
     }
   ])
   const [input, setInput] = useState('')
@@ -234,7 +285,7 @@ const CodexChat = ({ isOpen, onClose }) => {
               </div>
 
               {/* Header */}
-              <div className="relative z-10 flex items-center justify-between p-6 border-b border-cyan-500/30 bg-black/20 backdrop-blur-sm">
+              <div className="relative z-10 flex items-center justify-between p-6 border-b-2 border-cyan-500/40 bg-gradient-to-r from-black/40 via-blue-900/30 to-black/40 backdrop-blur-md shadow-lg">
                 <div className="flex items-center gap-4">
                   {/* Code Icon Animated */}
                   <motion.div
@@ -247,9 +298,9 @@ const CodexChat = ({ isOpen, onClose }) => {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                    className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/50"
+                    className="w-14 h-14 bg-gradient-to-br from-blue-500 via-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-xl shadow-blue-500/60"
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                       <motion.polyline
                         points="16 18 22 12 16 6"
                         animate={{ x: [0, 2, 0] }}
@@ -263,17 +314,24 @@ const CodexChat = ({ isOpen, onClose }) => {
                     </svg>
                   </motion.div>
                   <div>
-                    <h2 className="text-2xl font-bold text-white">Desarrollo de Software IA</h2>
-                    <p className="text-sm text-cyan-300">Powered by GPT-4o</p>
+                    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-300 to-cyan-300">
+                      Chat de Desarrollo IA
+                    </h2>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="px-2 py-0.5 bg-cyan-500/20 border border-cyan-500/40 rounded text-xs text-cyan-300 font-semibold">
+                        GPT-4o
+                      </span>
+                      <span className="text-xs text-gray-400">• Copiar código con 1 click</span>
+                    </div>
                   </div>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={onClose}
-                  className="w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 flex items-center justify-center text-red-400 hover:text-red-300 transition-colors"
+                  className="w-11 h-11 rounded-full bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500/50 hover:border-red-500/70 flex items-center justify-center text-red-400 hover:text-red-300 transition-all shadow-lg"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="18" y1="6" x2="6" y2="18" />
                     <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
@@ -323,7 +381,10 @@ const CodexChat = ({ isOpen, onClose }) => {
                             {parsedContent.map((part, partIndex) => (
                               <div key={partIndex}>
                                 {part.type === 'text' ? (
-                                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{part.content}</p>
+                                  <div
+                                    className="text-sm leading-relaxed whitespace-pre-wrap"
+                                    dangerouslySetInnerHTML={{ __html: formatMarkdown(part.content) }}
+                                  />
                                 ) : (
                                   <CodeBlock code={part.content} language={part.language} />
                                 )}
@@ -405,23 +466,28 @@ const CodexChat = ({ isOpen, onClose }) => {
               </div>
 
               {/* Input Form */}
-              <div className="relative z-10 p-6 border-t border-cyan-500/30 bg-black/20 backdrop-blur-sm">
+              <div className="relative z-10 p-6 border-t-2 border-cyan-500/40 bg-gradient-to-r from-black/40 via-blue-900/20 to-black/40 backdrop-blur-md shadow-inner">
                 <form onSubmit={sendMessage} className="flex gap-3">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Pregunta sobre código, arquitectura, debugging..."
-                    disabled={isLoading}
-                    className="flex-1 px-6 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/30 transition-all disabled:opacity-50"
-                  />
+                  <div className="flex-1 relative">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="Escribe tu pregunta sobre código, arquitectura, debugging..."
+                      disabled={isLoading}
+                      className="w-full px-6 py-4 bg-white/10 backdrop-blur-md border-2 border-cyan-500/30 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500/70 focus:ring-2 focus:ring-cyan-500/40 transition-all disabled:opacity-50 font-mono text-sm"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500 pointer-events-none">
+                      {input.length > 0 && `${input.length} caracteres`}
+                    </div>
+                  </div>
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.92 }}
                     type="submit"
                     disabled={isLoading || !input.trim()}
-                    className="px-8 py-4 bg-gradient-to-br from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-2xl text-white font-semibold shadow-lg shadow-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="px-8 py-4 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:via-cyan-500 hover:to-blue-500 rounded-2xl text-white font-bold shadow-xl shadow-blue-500/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all border-2 border-cyan-500/40"
                   >
                     {isLoading ? (
                       <motion.svg
