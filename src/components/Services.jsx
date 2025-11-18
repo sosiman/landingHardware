@@ -10,6 +10,7 @@ import ShieldField from './effects/ShieldField'
 import KnowledgeOrbs from './effects/KnowledgeOrbs'
 import OpenAIChat from './OpenAIChat'
 import OpenAIImageChat from './OpenAIImageChat'
+import CodexChat from './CodexChat'
 
 // Iconos animados con React
 const CodeIcon = () => (
@@ -222,6 +223,7 @@ const Services = () => {
   const isInView = useInView(ref, { once: true, threshold: 0.1 })
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isImageChatOpen, setIsImageChatOpen] = useState(false)
+  const [isCodexChatOpen, setIsCodexChatOpen] = useState(false)
 
   const services = [
     {
@@ -229,7 +231,8 @@ const Services = () => {
       title: "Desarrollo de Software",
       description: "Aplicaciones web y móviles personalizadas con las últimas tecnologías",
       color: "from-blue-500 to-cyan-500",
-      CanvasEffect: CodeMatrix
+      CanvasEffect: CodeMatrix,
+      onClick: () => setIsCodexChatOpen(true)
     },
     {
       icon: <OpenAIIcon />,
@@ -391,10 +394,13 @@ const Services = () => {
         </motion.div>
       </div>
 
-      {/* OpenAI Chat Modal */}
+      {/* Codex Chat Modal - Desarrollo de Software */}
+      <CodexChat isOpen={isCodexChatOpen} onClose={() => setIsCodexChatOpen(false)} />
+
+      {/* OpenAI Chat Modal - Consultoría Tecnológica */}
       <OpenAIChat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
-      {/* OpenAI Image Chat Modal */}
+      {/* OpenAI Image Chat Modal - Procesamiento de Imágenes */}
       <OpenAIImageChat isOpen={isImageChatOpen} onClose={() => setIsImageChatOpen(false)} />
     </section>
   )
