@@ -105,6 +105,71 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// Endpoint específico para chat con Codex
+app.post('/api/chat/codex', async (req, res) => {
+  try {
+    const { message, conversationHistory = [] } = req.body;
+
+    // Validación
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({
+        error: 'El mensaje es requerido y debe ser un string'
+      });
+    }
+
+    if (message.length > 2000) {
+      return res.status(400).json({
+        error: 'El mensaje es demasiado largo (máximo 2000 caracteres)'
+      });
+    }
+
+    // Preparar mensajes para OpenAI con contexto de desarrollo
+    const messages = [
+      {
+        role: 'system',
+        content: 'Eres un asistente experto en desarrollo de software. Ayudas con código, arquitectura, debugging, mejores prácticas y soluciones técnicas. Responde de forma concisa, técnica y profesional. Proporciona ejemplos de código cuando sea apropiado.'
+      },
+      ...conversationHistory.slice(-10), // Solo últimos 10 mensajes
+      {
+        role: 'user',
+        content: message
+      }
+    ];
+
+    // Llamar a OpenAI con el modelo Codex
+    const completion = await openai.chat.completions.create({
+      model: process.env.CODEX_MODEL || 'gpt-5.1-codex',
+      messages: messages,
+      max_tokens: 1000,
+      temperature: 0.5
+    });
+
+    const reply = completion.choices[0].message.content;
+
+    res.json({
+      reply,
+      usage: {
+        prompt_tokens: completion.usage.prompt_tokens,
+        completion_tokens: completion.usage.completion_tokens,
+        total_tokens: completion.usage.total_tokens
+      }
+    });
+
+  } catch (error) {
+    console.error('Error en /api/chat/codex:', error.message);
+
+    if (error.code === 'insufficient_quota') {
+      return res.status(402).json({
+        error: 'Sin créditos de OpenAI disponibles'
+      });
+    }
+
+    res.status(500).json({
+      error: 'Error al procesar tu mensaje. Intenta de nuevo.'
+    });
+  }
+});
+
 // Endpoint para generar imágenes con DALL-E 3
 app.post('/api/generate-image', async (req, res) => {
   try {
