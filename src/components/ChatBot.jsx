@@ -6,7 +6,7 @@ const ChatBot = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
       type: 'bot',
-      text: '¡Hola! 👋 Soy el asistente virtual de Innovate Solutions. ¿En qué puedo ayudarte hoy?',
+      text: '¡Hola! 👋 Soy el asistente IA de Innovate Solutions, potenciado por OpenAI.\n\n🤖 Puedo ayudarte con:\n• Información sobre nuestros servicios\n• Detalles técnicos del proyecto\n• Asistentes IA disponibles\n• Contacto y presupuestos\n• Testing de hardware\n• Portafolio de proyectos\n• Y mucho más...\n\n¿Qué te gustaría saber?',
       time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
     }
   ])
@@ -143,10 +143,109 @@ const ChatBot = ({ isOpen, onClose }) => {
     scrollToBottom()
   }, [messages])
 
-  const getBotResponse = (userInput) => {
+  const getBotResponseFromAI = async (userInput, conversationHistory) => {
+    try {
+      // Crear el system prompt con toda la información del proyecto
+      const systemPrompt = `Eres el asistente IA de Innovate Solutions, representado por la esfera circular animada (Orb) en la web.
+
+INFORMACIÓN COMPLETA DEL PROYECTO:
+
+🏢 EMPRESA:
+- Nombre: Innovate Solutions
+- Especialización: Consultoría tecnológica, desarrollo de software, IA, ciberseguridad y transformación digital
+- Ubicación: Castellón - Onda, España
+- Horario: Lunes-Domingo 10:30-23:00 (CET)
+- Contacto: albertotplaza@gmail.com | +34 621 208 980
+
+🚀 SERVICIOS (6 principales):
+1. Desarrollo de Software (React, Node.js, Python, Apps web/móviles) - Chat: CodexChat (contraseña: "sosi")
+2. Consultoría Tecnológica (Estrategia IA, Optimización) - Chat: OpenAIChat (contraseña: "sosi")
+3. Procesamiento de Imágenes (DALL-E 3, Generación IA) - Chat: OpenAIImageChat (contraseña: "sosi")
+4. Transformación Digital (Cloud, Modernización)
+5. Ciberseguridad (Auditorías, Pentesting, Protección 24/7)
+6. Capacitación (Formación técnica avanzada)
+
+🤖 ASISTENTES IA (5 disponibles):
+1. ChatBot (TÚ) - Asistente principal con conocimiento completo
+2. Sonar-Pro - Chat avanzado n8n con workflows
+3. OpenAI Chat - Consultoría con GPT-4o (protegido)
+4. OpenAI Image Chat - DALL-E 3 (protegido)
+5. Codex Chat - Desarrollo de software (protegido)
+
+💻 STACK TECNOLÓGICO:
+Frontend: React 18.2.0, Vite 5.2.0, Tailwind CSS 3.4.3, Framer Motion 11.0.0
+Gráficos 3D: Three.js 0.180.0, @react-three/fiber, OGL 1.0.11
+IA: @n8n/chat 0.59.0, OpenAI API, DALL-E 3
+Backend: Node.js, Express, OpenAI SDK
+
+✨ EFECTOS VISUALES (20+):
+- Orb (tu animación circular con WebGL/GLSL)
+- Galaxy (fondo espacial con Three.js)
+- Hyperspeed (carretera espacial)
+- NeuralNetwork, CodeMatrix, DataFlow
+- MetallicText, ShieldField, Lightning
+- Y muchos más efectos interactivos
+
+🎨 CARACTERÍSTICAS WEB:
+- Efectos WebGL avanzados con shaders personalizados
+- Glassmorphism design
+- Sistema de contraseñas para servicios premium
+- Testing de hardware (VSBM benchmark)
+- Visualizador de redes neuronales (https://nn-vis.noelith.dev/)
+- Portafolio con 6 proyectos destacados
+- Formulario de contacto con validación
+
+🖼️ PROYECTOS PORTAFOLIO:
+1. E-commerce Platform (React, Node.js, MongoDB) - +230% conversión
+2. Mobile Banking App (React Native, Firebase) - 99.9% uptime
+3. AI Dashboard (Python, TensorFlow, D3.js) - Predicciones real-time
+4. Cloud Infrastructure (AWS, Docker, Kubernetes) - 4x deployment speed
+5. Corporate Website (Next.js, Strapi, Tailwind) - <1s load time
+6. IoT Control System (Arduino, MQTT, React) - Monitoreo 24/7
+
+🔧 TESTING DE HARDWARE:
+- VSBM (Very Simple Benchmark) integrado
+- Tests: CPU, GPU, RAM, Storage
+- URL: https://cznull.github.io/vsbm
+- Acceso desde botón "Hardware Test"
+
+Responde de forma amigable, profesional y concisa. Usa emojis moderadamente. Si no sabes algo, recomienda contactar directamente. Tu objetivo es ayudar a los visitantes a entender los servicios y la tecnología de Innovate Solutions.`
+
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://api.lockthard.es'
+      const response = await fetch(`${apiUrl}/api/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userInput,
+          conversationHistory: [
+            { role: 'system', content: systemPrompt },
+            ...conversationHistory.slice(-8).map(msg => ({
+              role: msg.type === 'user' ? 'user' : 'assistant',
+              content: msg.text
+            }))
+          ]
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Error en la respuesta del servidor')
+      }
+
+      const data = await response.json()
+      return data.reply
+    } catch (error) {
+      console.error('Error al obtener respuesta de IA:', error)
+      // Fallback al sistema local de keywords
+      return getBotResponseLocal(userInput)
+    }
+  }
+
+  const getBotResponseLocal = (userInput) => {
     const input = userInput.toLowerCase()
-    
-    // Buscar en la base de conocimiento
+
+    // Buscar en la base de conocimiento local
     for (const [key, data] of Object.entries(knowledge)) {
       if (data.keywords.some(keyword => input.includes(keyword))) {
         return data.response
@@ -154,10 +253,10 @@ const ChatBot = ({ isOpen, onClose }) => {
     }
 
     // Respuesta por defecto
-    return '🤔 Interesante pregunta. Te recomiendo:\n\n• Explorar nuestros Servicios\n• Ver nuestra Galería de proyectos\n• Contactarnos directamente\n\n¿Quieres que te conecte con un asesor humano?'
+    return '🤔 Interesante pregunta. Te recomiendo:\n\n• Explorar nuestros Servicios\n• Ver nuestra Galería de proyectos\n• Contactarnos directamente\n\n💡 Tip: Puedo responder sobre servicios, tecnologías, asistentes IA, efectos visuales, contacto, precios y más.\n\n¿Qué te gustaría saber sobre Innovate Solutions?'
   }
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return
 
     // Guardar el input antes de limpiarlo
@@ -173,16 +272,26 @@ const ChatBot = ({ isOpen, onClose }) => {
     setInput('')
     setIsTyping(true)
 
-    // Simular tiempo de respuesta
-    setTimeout(() => {
+    // Obtener respuesta de IA
+    try {
+      const responseText = await getBotResponseFromAI(userInput, messages)
       const botResponse = {
         type: 'bot',
-        text: getBotResponse(userInput),
+        text: responseText,
         time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
       }
       setMessages(prev => [...prev, botResponse])
+    } catch (error) {
+      console.error('Error al enviar mensaje:', error)
+      const errorResponse = {
+        type: 'bot',
+        text: '❌ Hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.',
+        time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+      }
+      setMessages(prev => [...prev, errorResponse])
+    } finally {
       setIsTyping(false)
-    }, 1000)
+    }
   }
 
   const handleFormSubmit = (e) => {
