@@ -2,11 +2,93 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import CodeMatrix from './effects/CodeMatrix'
 
+// Componente para renderizar código con syntax highlighting básico
+const CodeBlock = ({ code, language }) => {
+  const [copied, setCopied] = useState(false)
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="relative my-3 rounded-lg overflow-hidden bg-gray-900 border border-cyan-500/30">
+      <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-cyan-500/20">
+        <span className="text-xs text-cyan-300 font-mono">{language || 'code'}</span>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={copyToClipboard}
+          className="flex items-center gap-2 px-3 py-1 bg-cyan-600/20 hover:bg-cyan-600/30 rounded text-xs text-cyan-300 transition-colors"
+        >
+          {copied ? (
+            <>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Copiado
+            </>
+          ) : (
+            <>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              Copiar
+            </>
+          )}
+        </motion.button>
+      </div>
+      <pre className="p-4 overflow-x-auto">
+        <code className="text-sm text-gray-100 font-mono">{code}</code>
+      </pre>
+    </div>
+  )
+}
+
+// Función para parsear markdown y detectar bloques de código
+const parseMessageContent = (content) => {
+  const parts = []
+  const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g
+  let lastIndex = 0
+  let match
+
+  while ((match = codeBlockRegex.exec(content)) !== null) {
+    // Agregar texto antes del bloque de código
+    if (match.index > lastIndex) {
+      parts.push({
+        type: 'text',
+        content: content.substring(lastIndex, match.index)
+      })
+    }
+
+    // Agregar bloque de código
+    parts.push({
+      type: 'code',
+      language: match[1] || 'code',
+      content: match[2].trim()
+    })
+
+    lastIndex = match.index + match[0].length
+  }
+
+  // Agregar texto restante
+  if (lastIndex < content.length) {
+    parts.push({
+      type: 'text',
+      content: content.substring(lastIndex)
+    })
+  }
+
+  return parts.length > 0 ? parts : [{ type: 'text', content }]
+}
+
 const CodexChat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: '¡Hola! Soy tu asistente de Desarrollo de Software potenciado por GPT-5.1. Puedo ayudarte con código, arquitectura, debugging y mejores prácticas. ¿En qué puedo ayudarte hoy?'
+      content: '¡Hola! Soy tu asistente de Desarrollo de Software potenciado por GPT-4o. Puedo ayudarte con código, arquitectura, debugging y mejores prácticas. ¿En qué puedo ayudarte hoy?'
     }
   ])
   const [input, setInput] = useState('')
@@ -182,7 +264,7 @@ const CodexChat = ({ isOpen, onClose }) => {
                   </motion.div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Desarrollo de Software IA</h2>
-                    <p className="text-sm text-cyan-300">Powered by GPT-5.1</p>
+                    <p className="text-sm text-cyan-300">Powered by GPT-4o</p>
                   </div>
                 </div>
                 <motion.button
@@ -200,35 +282,79 @@ const CodexChat = ({ isOpen, onClose }) => {
 
               {/* Messages Container */}
               <div className="relative z-10 flex-1 overflow-y-auto p-6 space-y-4 h-[calc(80vh-180px)]">
-                {messages.map((message, index) => (
-                  <motion.div
-                    key={index}
-                    variants={messageVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[80%] p-4 rounded-2xl ${
-                        message.role === 'user'
-                          ? 'bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/50'
-                          : 'bg-white/10 backdrop-blur-md border border-white/20 text-gray-100'
-                      }`}
+                {messages.map((message, index) => {
+                  const [copiedMsg, setCopiedMsg] = useState(false)
+
+                  const copyMessage = () => {
+                    navigator.clipboard.writeText(message.content)
+                    setCopiedMsg(true)
+                    setTimeout(() => setCopiedMsg(false), 2000)
+                  }
+
+                  const parsedContent = message.role === 'assistant'
+                    ? parseMessageContent(message.content)
+                    : [{ type: 'text', content: message.content }]
+
+                  return (
+                    <motion.div
+                      key={index}
+                      variants={messageVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
-                      <div className="flex items-start gap-3">
-                        {message.role === 'assistant' && (
-                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                              <polyline points="16 18 22 12 16 6" />
-                              <polyline points="8 6 2 12 8 18" />
-                            </svg>
+                      <div
+                        className={`max-w-[80%] p-4 rounded-2xl ${
+                          message.role === 'user'
+                            ? 'bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/50'
+                            : 'bg-white/10 backdrop-blur-md border border-white/20 text-gray-100'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          {message.role === 'assistant' && (
+                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                              </svg>
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            {parsedContent.map((part, partIndex) => (
+                              <div key={partIndex}>
+                                {part.type === 'text' ? (
+                                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{part.content}</p>
+                                ) : (
+                                  <CodeBlock code={part.content} language={part.language} />
+                                )}
+                              </div>
+                            ))}
                           </div>
-                        )}
-                        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                          {message.role === 'assistant' && (
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                              onClick={copyMessage}
+                              className="flex-shrink-0 p-2 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 transition-colors"
+                              title="Copiar mensaje completo"
+                            >
+                              {copiedMsg ? (
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                              ) : (
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg>
+                              )}
+                            </motion.button>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  )
+                })}
 
                 {isLoading && (
                   <motion.div
