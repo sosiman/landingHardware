@@ -454,7 +454,7 @@ const Hero = () => {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 50 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-5xl h-[800px] bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-emerald-500/20"
+              className="relative w-full max-w-7xl h-[1040px] bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-emerald-500/20"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}

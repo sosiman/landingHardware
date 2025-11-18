@@ -5,7 +5,6 @@ import Services from './components/Services'
 import Gallery from './components/Gallery'
 import Contact from './components/Contact'
 import Navigation from './components/Navigation'
-import SplashCursor from './components/effects/SplashCursor/SplashCursor'
 import Hyperspeed from './components/effects/Hyperspeed'
 import { hyperspeedPresets } from './components/effects/Hyperspeed'
 import Galaxy from './components/effects/Galaxy'
@@ -96,9 +95,6 @@ function App() {
 
       {/* Contact Section */}
       <Contact />
-
-      {/* SplashCursor - solo visible desde Services hacia abajo */}
-      {showSplash && <SplashCursor />}
 
       {/* Animated Background Elements */}
       <motion.div 
