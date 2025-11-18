@@ -224,6 +224,40 @@ const Services = () => {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isImageChatOpen, setIsImageChatOpen] = useState(false)
   const [isCodexChatOpen, setIsCodexChatOpen] = useState(false)
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+  const [passwordInput, setPasswordInput] = useState('')
+  const [pendingChatAction, setPendingChatAction] = useState(null)
+  const [passwordError, setPasswordError] = useState(false)
+
+  const handlePasswordProtectedAction = (action) => {
+    setPendingChatAction(() => action)
+    setIsPasswordModalOpen(true)
+    setPasswordInput('')
+    setPasswordError(false)
+  }
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault()
+    if (passwordInput === 'sosi') {
+      setIsPasswordModalOpen(false)
+      if (pendingChatAction) {
+        pendingChatAction()
+      }
+      setPasswordInput('')
+      setPasswordError(false)
+      setPendingChatAction(null)
+    } else {
+      setPasswordError(true)
+      setPasswordInput('')
+    }
+  }
+
+  const handleClosePasswordModal = () => {
+    setIsPasswordModalOpen(false)
+    setPasswordInput('')
+    setPasswordError(false)
+    setPendingChatAction(null)
+  }
 
   const services = [
     {
@@ -232,7 +266,7 @@ const Services = () => {
       description: "Aplicaciones web y móviles personalizadas con las últimas tecnologías",
       color: "from-blue-500 to-cyan-500",
       CanvasEffect: CodeMatrix,
-      onClick: () => setIsCodexChatOpen(true)
+      onClick: () => handlePasswordProtectedAction(() => setIsCodexChatOpen(true))
     },
     {
       icon: <OpenAIIcon />,
@@ -240,7 +274,7 @@ const Services = () => {
       description: "Asesoramiento estratégico para optimizar tus procesos digitales con IA",
       color: "from-purple-500 to-pink-500",
       CanvasEffect: NeuralNetwork,
-      onClick: () => setIsChatOpen(true)
+      onClick: () => handlePasswordProtectedAction(() => setIsChatOpen(true))
     },
     {
       icon: <ImageIcon />,
@@ -248,7 +282,7 @@ const Services = () => {
       description: "Generación y procesamiento de imágenes con IA usando DALL-E 3",
       color: "from-green-500 to-emerald-500",
       CanvasEffect: DataFlow,
-      onClick: () => setIsImageChatOpen(true)
+      onClick: () => handlePasswordProtectedAction(() => setIsImageChatOpen(true))
     },
     {
       icon: <GlobeIcon />,
@@ -399,6 +433,80 @@ const Services = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* Password Modal */}
+      {isPasswordModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative w-full max-w-md p-8 rounded-2xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 border border-white/10 shadow-2xl"
+          >
+            {/* Close button */}
+            <button
+              onClick={handleClosePasswordModal}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Lock icon */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="flex justify-center mb-6"
+            >
+              <div className="p-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+            </motion.div>
+
+            <h3 className="text-2xl font-bold text-white text-center mb-2">
+              Acceso Protegido
+            </h3>
+            <p className="text-gray-400 text-center mb-6">
+              Ingresa la contraseña para acceder a este servicio
+            </p>
+
+            <form onSubmit={handlePasswordSubmit}>
+              <div className="mb-6">
+                <input
+                  type="password"
+                  value={passwordInput}
+                  onChange={(e) => setPasswordInput(e.target.value)}
+                  placeholder="Contraseña"
+                  autoFocus
+                  className={`w-full px-4 py-3 rounded-lg bg-gray-800/50 border ${
+                    passwordError ? 'border-red-500' : 'border-white/10'
+                  } text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors`}
+                />
+                {passwordError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-2 text-sm text-red-500"
+                  >
+                    Contraseña incorrecta. Inténtalo de nuevo.
+                  </motion.p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg"
+              >
+                Acceder
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      )}
 
       {/* Codex Chat Modal - Desarrollo de Software */}
       <CodexChat isOpen={isCodexChatOpen} onClose={() => setIsCodexChatOpen(false)} />
