@@ -126,6 +126,95 @@ const parseMessageContent = (content) => {
   return parts.length > 0 ? parts : [{ type: 'text', content }]
 }
 
+// Componente para renderizar un mensaje individual
+const MessageBubble = ({ message, index }) => {
+  const [copiedMsg, setCopiedMsg] = useState(false)
+
+  const copyMessage = () => {
+    navigator.clipboard.writeText(message.content)
+    setCopiedMsg(true)
+    setTimeout(() => setCopiedMsg(false), 2000)
+  }
+
+  const parsedContent = message.role === 'assistant'
+    ? parseMessageContent(message.content)
+    : [{ type: 'text', content: message.content }]
+
+  const messageVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.3
+      }
+    }
+  }
+
+  return (
+    <motion.div
+      variants={messageVariants}
+      initial="hidden"
+      animate="visible"
+      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+    >
+      <div
+        className={`max-w-[80%] p-4 rounded-2xl ${
+          message.role === 'user'
+            ? 'bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/50'
+            : 'bg-white/10 backdrop-blur-md border border-white/20 text-gray-100'
+        }`}
+      >
+        <div className="flex items-start gap-3">
+          {message.role === 'assistant' && (
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+            </div>
+          )}
+          <div className="flex-1">
+            {parsedContent.map((part, partIndex) => (
+              <div key={partIndex}>
+                {part.type === 'text' ? (
+                  <div
+                    className="text-sm leading-relaxed whitespace-pre-wrap"
+                    dangerouslySetInnerHTML={{ __html: formatMarkdown(part.content) }}
+                  />
+                ) : (
+                  <CodeBlock code={part.content} language={part.language} />
+                )}
+              </div>
+            ))}
+          </div>
+          {message.role === 'assistant' && (
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={copyMessage}
+              className="flex-shrink-0 p-2 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 transition-colors"
+              title="Copiar mensaje completo"
+            >
+              {copiedMsg ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              )}
+            </motion.button>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 const CodexChat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
@@ -245,7 +334,7 @@ Puedo ayudarte con:
     }
   }
 
-  const messageVariants = {
+  const loadingVariants = {
     hidden: { opacity: 0, y: 20, scale: 0.8 },
     visible: {
       opacity: 1,
@@ -340,86 +429,13 @@ Puedo ayudarte con:
 
               {/* Messages Container */}
               <div className="relative z-10 flex-1 overflow-y-auto p-6 space-y-4 h-[calc(80vh-180px)]">
-                {messages.map((message, index) => {
-                  const [copiedMsg, setCopiedMsg] = useState(false)
-
-                  const copyMessage = () => {
-                    navigator.clipboard.writeText(message.content)
-                    setCopiedMsg(true)
-                    setTimeout(() => setCopiedMsg(false), 2000)
-                  }
-
-                  const parsedContent = message.role === 'assistant'
-                    ? parseMessageContent(message.content)
-                    : [{ type: 'text', content: message.content }]
-
-                  return (
-                    <motion.div
-                      key={index}
-                      variants={messageVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`max-w-[80%] p-4 rounded-2xl ${
-                          message.role === 'user'
-                            ? 'bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/50'
-                            : 'bg-white/10 backdrop-blur-md border border-white/20 text-gray-100'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          {message.role === 'assistant' && (
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                                <polyline points="16 18 22 12 16 6" />
-                                <polyline points="8 6 2 12 8 18" />
-                              </svg>
-                            </div>
-                          )}
-                          <div className="flex-1">
-                            {parsedContent.map((part, partIndex) => (
-                              <div key={partIndex}>
-                                {part.type === 'text' ? (
-                                  <div
-                                    className="text-sm leading-relaxed whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: formatMarkdown(part.content) }}
-                                  />
-                                ) : (
-                                  <CodeBlock code={part.content} language={part.language} />
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                          {message.role === 'assistant' && (
-                            <motion.button
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              onClick={copyMessage}
-                              className="flex-shrink-0 p-2 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 transition-colors"
-                              title="Copiar mensaje completo"
-                            >
-                              {copiedMsg ? (
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                  <polyline points="20 6 9 17 4 12" />
-                                </svg>
-                              ) : (
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                                </svg>
-                              )}
-                            </motion.button>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )
-                })}
+                {messages.map((message, index) => (
+                  <MessageBubble key={index} message={message} index={index} />
+                ))}
 
                 {isLoading && (
                   <motion.div
-                    variants={messageVariants}
+                    variants={loadingVariants}
                     initial="hidden"
                     animate="visible"
                     className="flex justify-start"
