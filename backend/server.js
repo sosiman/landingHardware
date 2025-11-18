@@ -18,7 +18,7 @@ console.log('🚀 Configuración de OpenAI API');
 console.log('='.repeat(60));
 console.log('✓ API Key configurada:', process.env.OPENAI_API_KEY ? `${process.env.OPENAI_API_KEY.slice(0, 10)}...` : '❌ NO CONFIGURADA');
 console.log('✓ Modelo General (OPENAI_MODEL):', process.env.OPENAI_MODEL || 'gpt-4o (default)');
-console.log('✓ Modelo Codex (CODEX_MODEL):', process.env.CODEX_MODEL || 'gpt-5.1 (default)');
+console.log('✓ Modelo Codex (CODEX_MODEL):', process.env.CODEX_MODEL || 'gpt-4o (default)');
 console.log('✓ Modelo de Imágenes (OPENAI_IMAGE_MODEL):', process.env.OPENAI_IMAGE_MODEL || 'dall-e-3 (default)');
 console.log('='.repeat(60));
 
@@ -59,7 +59,7 @@ app.get('/api/config', (req, res) => {
       apiKeyPrefix: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.slice(0, 10) + '...' : 'NOT_SET',
       models: {
         general: process.env.OPENAI_MODEL || 'gpt-4o (default)',
-        codex: process.env.CODEX_MODEL || 'gpt-5.1 (default)',
+        codex: process.env.CODEX_MODEL || 'gpt-4o (default)',
         image: process.env.OPENAI_IMAGE_MODEL || 'dall-e-3 (default)'
       }
     },
@@ -139,7 +139,7 @@ app.post('/api/chat', async (req, res) => {
 // Endpoint específico para chat con Codex
 app.post('/api/chat/codex', async (req, res) => {
   console.log('📨 Nueva petición a /api/chat/codex');
-  console.log('🔧 Modelo configurado:', process.env.CODEX_MODEL || 'gpt-5.1 (default)');
+  console.log('🔧 Modelo configurado:', process.env.CODEX_MODEL || 'gpt-4o (default)');
 
   try {
     const { message, conversationHistory = [] } = req.body;
@@ -170,8 +170,8 @@ app.post('/api/chat/codex', async (req, res) => {
       }
     ];
 
-    // Llamar a OpenAI con GPT-5.1
-    const modelToUse = process.env.CODEX_MODEL || 'gpt-5.1';
+    // Llamar a OpenAI con GPT-4o
+    const modelToUse = process.env.CODEX_MODEL || 'gpt-4o';
     console.log('🤖 Llamando a OpenAI con modelo:', modelToUse);
 
     const completion = await openai.chat.completions.create({
@@ -201,7 +201,7 @@ app.post('/api/chat/codex', async (req, res) => {
     console.error('Código:', error.code);
     console.error('Status:', error.status);
     console.error('Tipo:', error.type);
-    console.error('Modelo intentado:', process.env.CODEX_MODEL || 'gpt-5.1');
+    console.error('Modelo intentado:', process.env.CODEX_MODEL || 'gpt-4o');
     console.error('Error completo:', JSON.stringify(error, null, 2));
     console.error('━'.repeat(60));
 
@@ -209,8 +209,8 @@ app.post('/api/chat/codex', async (req, res) => {
     if (error.code === 'model_not_found' || error.status === 404) {
       return res.status(404).json({
         error: 'Modelo no disponible',
-        details: `El modelo "${process.env.CODEX_MODEL || 'gpt-5.1'}" no está disponible en tu cuenta de OpenAI. Verifica tu suscripción o usa un modelo diferente.`,
-        model: process.env.CODEX_MODEL || 'gpt-5.1'
+        details: `El modelo "${process.env.CODEX_MODEL || 'gpt-4o'}" no está disponible en tu cuenta de OpenAI. Verifica tu suscripción o usa un modelo diferente.`,
+        model: process.env.CODEX_MODEL || 'gpt-4o'
       });
     }
 
@@ -242,7 +242,7 @@ app.post('/api/chat/codex', async (req, res) => {
     res.status(500).json({
       error: 'Error al procesar tu mensaje',
       details: error.message || 'Error desconocido. Revisa los logs del servidor.',
-      model: process.env.CODEX_MODEL || 'gpt-5.1'
+      model: process.env.CODEX_MODEL || 'gpt-4o'
     });
   }
 });
