@@ -89,8 +89,8 @@ const Gallery = () => {
     { id: 'iot', name: 'IoT' }
   ]
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
+  const filteredProjects = filter === 'all'
+    ? projects
     : projects.filter(project => project.category === filter)
 
   const containerVariants = {
@@ -105,8 +105,8 @@ const Gallery = () => {
   }
 
   const itemVariants = {
-    hidden: { 
-      y: 60, 
+    hidden: {
+      y: 60,
       opacity: 0,
       filter: "blur(10px)"
     },
@@ -124,7 +124,7 @@ const Gallery = () => {
   return (
     <section id="gallery" className="py-24 relative">
       {/* Ya NO tiene su propio fondo - usa el Galaxy compartido de App.jsx */}
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={ref}
@@ -133,24 +133,127 @@ const Gallery = () => {
           animate={isInView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl"
+            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl flex items-center justify-center gap-6"
           >
+            {/* Bouncy Easing Curve Visualization */}
+            <motion.svg
+              width="140"
+              height="70"
+              viewBox="0 0 140 70"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 1.2,
+                ease: [0.34, 1.56, 0.64, 1]
+              }}
+              className="hidden md:block"
+            >
+              <defs>
+                <linearGradient id="lineGradientPortfolio" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ec4899" />
+                  <stop offset="33%" stopColor="#d946ef" />
+                  <stop offset="66%" stopColor="#a855f7" />
+                  <stop offset="100%" stopColor="#8b5cf6" />
+                </linearGradient>
+                <filter id="neonGlowPortfolio">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              
+              {/* Main animated curve - bouncy spring effect */}
+              <motion.path
+                d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
+                fill="none"
+                stroke="url(#lineGradientPortfolio)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter="url(#neonGlowPortfolio)"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: 2,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
+                style={{ filter: 'drop-shadow(0 0 8px rgba(236, 72, 153, 0.9))' }}
+              />
+              
+              {/* Thicker glow layer behind */}
+              <motion.path
+                d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
+                fill="none"
+                stroke="#d946ef"
+                strokeWidth="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.25"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: 2,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
+              />
+              
+              {/* End point with pulse */}
+              <motion.circle
+                cx="130"
+                cy="45"
+                r="4"
+                fill="#ec4899"
+                filter="url(#neonGlowPortfolio)"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 2
+                }}
+              />
+              
+              {/* Pulsing ring effect */}
+              <motion.circle
+                cx="130"
+                cy="45"
+                r="6"
+                fill="none"
+                stroke="#ec4899"
+                strokeWidth="2"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [1, 2],
+                  opacity: [0.7, 0]
+                }}
+                transition={{
+                  duration: 1.5,
+                  delay: 2.2,
+                  repeat: Infinity,
+                  repeatDelay: 0.3
+                }}
+              />
+            </motion.svg>
+            
             <MetallicText className="silver-text">
               Nuestro Portafolio
             </MetallicText>
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-xl text-gray-300 max-w-3xl mx-auto mb-12 drop-shadow-lg"
           >
-            Descubre algunos de nuestros proyectos más destacados y las soluciones 
+            Descubre algunos de nuestros proyectos más destacados y las soluciones
             innovadoras que hemos desarrollado para nuestros clientes
           </motion.p>
 
           {/* Filter Buttons */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="flex flex-wrap justify-center gap-4 mb-12"
           >
@@ -160,11 +263,10 @@ const Gallery = () => {
                 onClick={() => setFilter(category.id)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg ${
-                  filter === category.id
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg ${filter === category.id
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                  : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                  }`}
               >
                 {category.name}
               </motion.button>
@@ -173,7 +275,7 @@ const Gallery = () => {
         </motion.div>
 
         {/* Projects Grid */}
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
@@ -204,7 +306,7 @@ const Gallery = () => {
                   <div className="absolute top-4 left-4 px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-black/50 backdrop-blur-md text-white">
                     {project.category}
                   </div>
-                  
+
                   {/* Overlay */}
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -241,7 +343,7 @@ const Gallery = () => {
                   <p className="text-gray-300 mb-4">
                     {project.description}
                   </p>
-                  
+
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag, tagIndex) => (
@@ -322,7 +424,7 @@ const Gallery = () => {
                 </button>
               </motion.div>
             </motion.div>
-          )}  
+          )}
         </AnimatePresence>
       </div>
     </section>

@@ -1,0 +1,122 @@
+/* ParticleMorph.css */
+.particle-wrapper {
+    position: fixed;
+    top: 5%;
+    /* Moved up slightly to accommodate larger size */
+    right: 2%;
+    /* Moved right slightly */
+    width: 600px;
+    /* Increased from 400px */
+    height: 700px;
+    /* Increased from 500px */
+    z-index: 9999;
+    /* Max z-index to ensure it's on top */
+    pointer-events: none;
+}
+
+.particle-canvas-container {
+    width: 100%;
+    height: 600px;
+    /* Increased from 400px */
+    position: relative;
+    pointer-events: auto;
+}
+
+/* Scoped Input Styles */
+.pm-input-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    z-index: 10000;
+    pointer-events: auto;
+}
+
+.pm-input-wrapper {
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker background for better contrast with neon */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    /* Neon cyan border */
+    border-radius: 16px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    /* Neon glow */
+    transition: all 0.3s ease;
+}
+
+.pm-input-wrapper:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 0, 255, 0.5);
+    /* Neon magenta on hover */
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+}
+
+.pm-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.8rem 1rem;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.pm-input:focus {
+    outline: none;
+}
+
+.pm-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pm-button {
+    background: linear-gradient(135deg, #00f2ff 0%, #00c3ff 100%);
+    /* Electric Blue */
+    border: none;
+    padding: 0.6rem 1.5rem;
+    color: #000;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+}
+
+.pm-button:hover {
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 242, 255, 0.6);
+    background: linear-gradient(135deg, #ff00ff 0%, #d400ff 100%);
+    /* Electric Magenta on hover */
+    color: white;
+}
+
+.pm-button:active {
+    transform: translateY(1px);
+}
+
+.pm-button-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pm-button-content svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.pm-button:hover .pm-button-content svg {
+    transform: translateX(3px);
+}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ChevronRight, ArrowRight, Sparkles } from 'lucide-react'
+import { ChevronRight, ArrowRight, Sparkles, Car } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
 import OrbBot from './OrbBot'
 import VariableProximity from './effects/VariableProximity'
 import N8nChatEmbed from './N8nChatEmbed'
 import RobotModel from './RobotModel'
+import CarViewer3D from './CarViewer3D'
 
 const Hero = () => {
   const { scrollYProgress } = useScroll()
@@ -18,6 +19,7 @@ const Hero = () => {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isHardwareTestOpen, setIsHardwareTestOpen] = useState(false)
   const [isNeuralNetworkOpen, setIsNeuralNetworkOpen] = useState(false)
+  const [isCarViewerOpen, setIsCarViewerOpen] = useState(false)
   const texts = [
     "Soluciones Tecnológicas",
     "Consultoría Especializada", 
@@ -366,6 +368,65 @@ const Hero = () => {
               transition={{ duration: 0.3 }}
             />
           </motion.button>
+
+          <motion.button
+            onClick={() => setIsCarViewerOpen(true)}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(249, 115, 22, 0.5)" }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 rounded-full text-white font-semibold overflow-hidden shadow-lg flex items-center gap-2"
+          >
+            {/* Efecto de velocidad */}
+            <motion.div
+              animate={{
+                opacity: [0.2, 0.6, 0.2],
+                x: ["-100%", "100%"]
+              }}
+              transition={{ 
+                opacity: { duration: 2, repeat: Infinity },
+                x: { duration: 1.5, repeat: Infinity, ease: "linear" }
+              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            />
+
+            {/* Icono de coche */}
+            <motion.div
+              animate={{
+                x: [0, 3, 0],
+                rotate: [0, -5, 0]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="relative z-10"
+            >
+              <Car size={20} />
+            </motion.div>
+
+            <span className="relative z-10">Visor 3D</span>
+
+            {/* Partículas de velocidad */}
+            <motion.div
+              animate={{
+                x: [-10, 10],
+                opacity: [0, 1, 0]
+              }}
+              transition={{ duration: 1, repeat: Infinity }}
+              className="absolute top-1/2 left-0 w-2 h-0.5 bg-orange-400 blur-sm"
+            />
+            <motion.div
+              animate={{
+                x: [-10, 10],
+                opacity: [0, 1, 0]
+              }}
+              transition={{ duration: 1, repeat: Infinity, delay: 0.3 }}
+              className="absolute top-1/2 left-2 w-2 h-0.5 bg-red-400 blur-sm transform translate-y-1"
+            />
+
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600"
+              initial={{ x: "100%" }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.button>
         </motion.div>
       </motion.div>
 
@@ -478,6 +539,9 @@ const Hero = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Car Viewer 3D Modal */}
+      <CarViewer3D isOpen={isCarViewerOpen} onClose={() => setIsCarViewerOpen(false)} />
     </section>
   )
 }

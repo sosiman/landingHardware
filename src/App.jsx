@@ -8,13 +8,14 @@ import Navigation from './components/Navigation'
 import Hyperspeed from './components/effects/Hyperspeed'
 import { hyperspeedPresets } from './components/effects/Hyperspeed'
 import Galaxy from './components/effects/Galaxy'
+import ParticleMorph from './components/ParticleMorph'
 
 function App() {
   const { scrollYProgress } = useScroll()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showSplash, setShowSplash] = useState(false)
   const servicesRef = useRef(null)
-  
+
   // Parallax effects
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100])
 
@@ -23,7 +24,7 @@ function App() {
       if (servicesRef.current) {
         const servicesTop = servicesRef.current.offsetTop
         const scrollPosition = window.scrollY + window.innerHeight / 2
-        
+
         // Activa el splash cuando llegas a la sección Services
         setShowSplash(scrollPosition >= servicesTop)
       }
@@ -31,7 +32,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll)
     handleScroll() // Check inicial
-    
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -80,7 +81,7 @@ function App() {
             transparent={true}
           />
         </div>
-        
+
         {/* Dark overlay para mejorar legibilidad - COMPARTIDO */}
         <div className="absolute inset-0 bg-black/50 z-0" />
 
@@ -97,10 +98,13 @@ function App() {
       <Contact />
 
       {/* Animated Background Elements */}
-      <motion.div 
+      <motion.div
         style={{ y: y1 }}
         className="fixed top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl -z-10"
       />
+
+      {/* 3D Particle Morph Component - Fixed Top Right */}
+      <ParticleMorph />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import { Mail, Phone, MapPin, Send, User, MessageSquare, CheckCircle } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
 import Iridescence from './effects/Iridescence'
+import PlasmaGlobe from './ui/plasma-globe'
 
 const Contact = () => {
   const ref = useRef(null)
@@ -65,8 +66,8 @@ const Contact = () => {
   }
 
   const itemVariants = {
-    hidden: { 
-      y: 60, 
+    hidden: {
+      y: 60,
       opacity: 0,
       filter: "blur(10px)"
     },
@@ -92,9 +93,19 @@ const Contact = () => {
           speed={1.0}
         />
       </div>
-      
+
       {/* Dark overlay para mejorar legibilidad */}
       <div className="absolute inset-0 bg-black/40 z-0" />
+
+      {/* Plasma Globe Ambient Background */}
+      <div className="absolute -left-[30%] -top-[20%] w-[160%] h-[140%] z-0 pointer-events-none mix-blend-screen">
+        <div className="w-full h-full" style={{
+          maskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)'
+        }}>
+          <PlasmaGlobe />
+        </div>
+      </div>
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -104,19 +115,19 @@ const Contact = () => {
           animate={isInView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl"
+            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl relative inline-block"
           >
             <MetallicText className="platinum-text">
               Hablemos de tu Proyecto
             </MetallicText>
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-xl text-gray-100 max-w-3xl mx-auto drop-shadow-lg"
           >
-            ¿Tienes una idea innovadora? Contáctanos y descubre cómo podemos 
+            ¿Tienes una idea innovadora? Contáctanos y descubre cómo podemos
             ayudarte a convertirla en realidad digital.
           </motion.p>
         </motion.div>
@@ -241,7 +252,7 @@ const Contact = () => {
             <motion.div variants={itemVariants}>
               <h3 className="text-2xl font-bold text-white mb-8">Información de Contacto</h3>
               <p className="text-gray-200 mb-8 leading-relaxed">
-                Estamos aquí para ayudarte. No dudes en contactarnos a través de cualquiera 
+                Estamos aquí para ayudarte. No dudes en contactarnos a través de cualquiera
                 de estos medios o visítanos en nuestras oficinas.
               </p>
             </motion.div>

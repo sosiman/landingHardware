@@ -11,6 +11,7 @@ import KnowledgeOrbs from './effects/KnowledgeOrbs'
 import OpenAIChat from './OpenAIChat'
 import OpenAIImageChat from './OpenAIImageChat'
 import CodexChat from './CodexChat'
+import { ThreeDMarquee } from './ui/3d-marquee'
 
 // Iconos animados con React
 const CodeIcon = () => (
@@ -289,21 +290,42 @@ const Services = () => {
       title: "Transformación Digital",
       description: "Modernización completa de infraestructuras y procesos empresariales",
       color: "from-orange-500 to-red-500",
-      CanvasEffect: GeometricMorph
+      marqueeImages: [
+        { src: "https://picsum.photos/seed/tech1/400/600", alt: "Digital 1" },
+        { src: "https://picsum.photos/seed/tech2/400/600", alt: "Digital 2" },
+        { src: "https://picsum.photos/seed/tech3/400/600", alt: "Digital 3" },
+        { src: "https://picsum.photos/seed/tech4/400/600", alt: "Digital 4" },
+        { src: "https://picsum.photos/seed/tech5/400/600", alt: "Digital 5" },
+        { src: "https://picsum.photos/seed/tech6/400/600", alt: "Digital 6" },
+      ]
     },
     {
       icon: <ShieldIcon />,
       title: "Ciberseguridad",
       description: "Protección integral de sistemas y datos empresariales",
       color: "from-indigo-500 to-blue-500",
-      CanvasEffect: ShieldField
+      marqueeImages: [
+        { src: "https://picsum.photos/seed/sec1/400/600", alt: "Security 1" },
+        { src: "https://picsum.photos/seed/sec2/400/600", alt: "Security 2" },
+        { src: "https://picsum.photos/seed/sec3/400/600", alt: "Security 3" },
+        { src: "https://picsum.photos/seed/sec4/400/600", alt: "Security 4" },
+        { src: "https://picsum.photos/seed/sec5/400/600", alt: "Security 5" },
+        { src: "https://picsum.photos/seed/sec6/400/600", alt: "Security 6" },
+      ]
     },
     {
       icon: <UsersIcon />,
       title: "Capacitación",
       description: "Formación especializada en tecnologías emergentes",
       color: "from-teal-500 to-green-500",
-      CanvasEffect: KnowledgeOrbs
+      marqueeImages: [
+        { src: "https://picsum.photos/seed/edu1/400/600", alt: "Training 1" },
+        { src: "https://picsum.photos/seed/edu2/400/600", alt: "Training 2" },
+        { src: "https://picsum.photos/seed/edu3/400/600", alt: "Training 3" },
+        { src: "https://picsum.photos/seed/edu4/400/600", alt: "Training 4" },
+        { src: "https://picsum.photos/seed/edu5/400/600", alt: "Training 5" },
+        { src: "https://picsum.photos/seed/edu6/400/600", alt: "Training 6" },
+      ]
     }
   ]
 
@@ -319,8 +341,8 @@ const Services = () => {
   }
 
   const itemVariants = {
-    hidden: { 
-      y: 60, 
+    hidden: {
+      y: 60,
       opacity: 0,
       filter: "blur(10px)"
     },
@@ -338,7 +360,7 @@ const Services = () => {
   return (
     <section id="services" className="py-24 relative">
       {/* Galaxy ya NO está aquí - ahora está en App.jsx compartido */}
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={ref}
@@ -347,24 +369,128 @@ const Services = () => {
           animate={isInView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl"
+            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl flex items-center justify-center gap-6"
           >
+            {/* Bouncy Easing Curve Visualization */}
+            <motion.svg
+              width="140"
+              height="70"
+              viewBox="0 0 140 70"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 1.2,
+                ease: [0.34, 1.56, 0.64, 1]
+              }}
+              className="hidden md:block"
+            >
+              <defs>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#8b5cf6" />
+                  <stop offset="25%" stopColor="#6366f1" />
+                  <stop offset="50%" stopColor="#3b82f6" />
+                  <stop offset="75%" stopColor="#0ea5e9" />
+                  <stop offset="100%" stopColor="#06b6d4" />
+                </linearGradient>
+                <filter id="neonGlow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              
+              {/* Main animated curve - bouncy spring effect */}
+              <motion.path
+                d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
+                fill="none"
+                stroke="url(#lineGradient)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter="url(#neonGlow)"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: 2,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
+                style={{ filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.9))' }}
+              />
+              
+              {/* Thicker glow layer behind */}
+              <motion.path
+                d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
+                fill="none"
+                stroke="#3b82f6"
+                strokeWidth="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.25"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: 2,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
+              />
+              
+              {/* End point with pulse */}
+              <motion.circle
+                cx="130"
+                cy="45"
+                r="4"
+                fill="#06b6d4"
+                filter="url(#neonGlow)"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 2
+                }}
+              />
+              
+              {/* Pulsing ring effect */}
+              <motion.circle
+                cx="130"
+                cy="45"
+                r="6"
+                fill="none"
+                stroke="#06b6d4"
+                strokeWidth="2"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [1, 2],
+                  opacity: [0.7, 0]
+                }}
+                transition={{
+                  duration: 1.5,
+                  delay: 2.2,
+                  repeat: Infinity,
+                  repeatDelay: 0.3
+                }}
+              />
+            </motion.svg>
+            
             <MetallicText className="chrome-text">
               Nuestros Servicios
             </MetallicText>
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-xl text-gray-300 max-w-3xl mx-auto drop-shadow-lg"
           >
-            Ofrecemos soluciones tecnológicas integrales que impulsan el crecimiento 
+            Ofrecemos soluciones tecnológicas integrales que impulsan el crecimiento
             y la innovación en tu empresa
           </motion.p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -386,16 +512,28 @@ const Services = () => {
                   service.onClick()
                 }
               }}
-              className={`group relative p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 shadow-xl overflow-hidden ${
-                service.onClick ? 'cursor-pointer hover:shadow-2xl hover:shadow-purple-500/30' : ''
-              }`}
+              className={`group relative p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 shadow-xl overflow-hidden ${service.onClick ? 'cursor-pointer hover:shadow-2xl hover:shadow-purple-500/30' : ''
+                }`}
               style={{
                 background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)"
               }}
             >
-              {/* Canvas Effect Background */}
-              <div className="absolute inset-0 opacity-70 group-hover:opacity-90 transition-opacity duration-500 bg-black/30">
-                <service.CanvasEffect />
+              {/* Canvas Effect Background or Marquee */}
+              {/* Canvas Effect Background or Marquee */}
+              <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                {service.marqueeImages ? (
+                  <div className="w-full h-full absolute inset-0">
+                    <ThreeDMarquee
+                      images={service.marqueeImages}
+                      className="!h-full !bg-transparent"
+                      cols={4}
+                    />
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 opacity-70 group-hover:opacity-90 transition-opacity duration-500 bg-black/30">
+                    <service.CanvasEffect />
+                  </div>
+                )}
               </div>
 
               {/* Gradient Overlay on Hover */}
@@ -416,7 +554,7 @@ const Services = () => {
               <h3 className="relative text-2xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-gray-300 transition-all duration-300 drop-shadow-lg z-10">
                 {service.title}
               </h3>
-              
+
               {/* Description */}
               <p className="relative text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300 z-10">
                 {service.description}
@@ -482,9 +620,8 @@ const Services = () => {
                   onChange={(e) => setPasswordInput(e.target.value)}
                   placeholder="Contraseña"
                   autoFocus
-                  className={`w-full px-4 py-3 rounded-lg bg-gray-800/50 border ${
-                    passwordError ? 'border-red-500' : 'border-white/10'
-                  } text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors`}
+                  className={`w-full px-4 py-3 rounded-lg bg-gray-800/50 border ${passwordError ? 'border-red-500' : 'border-white/10'
+                    } text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors`}
                 />
                 {passwordError && (
                   <motion.p
