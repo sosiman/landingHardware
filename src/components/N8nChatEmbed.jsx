@@ -10,7 +10,7 @@ const N8nChatEmbed = ({ isOpen, onClose }) => {
     if (isOpen && chatContainerRef.current && !chatInstanceRef.current) {
       // Crear instancia del chat de n8n
       chatInstanceRef.current = createChat({
-        webhookUrl: 'https://n8n.lockthard.es/webhook/e441c669-2611-43ef-8dfa-883508753f46/chat',
+        webhookUrl: 'https://n8n.lockthard.es/webhook/8a96e944-796a-49b6-b2bd-826e4ea8990c/chat',
         mode: 'fullscreen',
         target: '#n8n-chat-container',
         showWelcomeScreen: true,
