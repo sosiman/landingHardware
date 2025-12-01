@@ -30,6 +30,7 @@ app.use(cors({
   origin: [
     'https://lockthard.es',
     'https://www.lockthard.es',
+    'https://n8n.lockthard.es',
     'http://localhost:5173', // Para desarrollo local
     'http://localhost:3000'
   ],
