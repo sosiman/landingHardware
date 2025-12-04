@@ -8,7 +8,6 @@ import Navigation from './components/Navigation'
 import Hyperspeed from './components/effects/Hyperspeed'
 import { hyperspeedPresets } from './components/effects/Hyperspeed'
 import Galaxy from './components/effects/Galaxy'
-import ParticleMorph from './components/ParticleMorph'
 
 function App() {
   const { scrollYProgress } = useScroll()
@@ -103,8 +102,6 @@ function App() {
         className="fixed top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl -z-10"
       />
 
-      {/* 3D Particle Morph Component - Fixed Top Right */}
-      <ParticleMorph />
     </div>
   )
 }
