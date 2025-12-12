@@ -15,7 +15,7 @@ const N8nChatEmbed = ({ isOpen, onClose }) => {
         target: '#n8n-chat-container',
         showWelcomeScreen: true,
         initialMessages: [
-          '¡Hola! Soy Sonar-Pro, el asistente IA de Innovate Solutions',
+          '¡Hola! Soy Sonar-Pro, trabajando en equipo con Gemini 2.5 Pro, el asistente IA de Innovate Solutions',
           '¿En qué puedo ayudarte hoy?'
         ],
         i18n: {

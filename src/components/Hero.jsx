@@ -22,7 +22,7 @@ const Hero = () => {
   const [isCarViewerOpen, setIsCarViewerOpen] = useState(false)
   const texts = [
     "Soluciones Tecnológicas",
-    "Consultoría Especializada", 
+    "Consultoría Especializada",
     "Innovación Digital",
     "Transformación Digital"
   ]
@@ -110,7 +110,7 @@ const Hero = () => {
 
       {/* Elementos flotantes más transparentes */}
       <motion.div
-        animate={{ 
+        animate={{
           y: [0, -20, 0],
           rotate: [0, 5, -5, 0]
         }}
@@ -118,7 +118,7 @@ const Hero = () => {
         className="absolute top-20 left-10 w-20 h-20 bg-blue-500/15 rounded-full blur-xl"
       />
       <motion.div
-        animate={{ 
+        animate={{
           y: [0, 20, 0],
           rotate: [0, -5, 5, 0]
         }}
@@ -145,7 +145,7 @@ const Hero = () => {
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl rounded-full"
           />
-          
+
           {/* Modelo 3D */}
           <div className="relative w-full h-full">
             <RobotModel />
@@ -168,8 +168,8 @@ const Hero = () => {
       </motion.div>
 
       {/* OrbBot - Asistente Virtual Interactivo */}
-      <div 
-        className="hidden lg:block absolute bottom-20 right-16 z-50" 
+      <div
+        className="hidden lg:block absolute bottom-20 right-16 z-50"
         style={{ willChange: 'transform, opacity' }}
       >
         <OrbBot />
@@ -201,7 +201,7 @@ const Hero = () => {
 
         {/* Animated Subtitle with Gold Effect */}
         <motion.div variants={itemVariants} className="mb-8 h-16 flex items-center justify-center">
-          <motion.h2 
+          <motion.h2
             key={currentText}
             initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -215,7 +215,7 @@ const Hero = () => {
         </motion.div>
 
         {/* Description with VariableProximity Effect */}
-        <motion.div 
+        <motion.div
           ref={descriptionRef}
           variants={itemVariants}
           className="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-lg"
@@ -284,7 +284,7 @@ const Hero = () => {
               <Sparkles size={20} className="text-purple-400" />
             </motion.div>
 
-            <span className="relative z-10">Sonar-Pro</span>
+            <span className="relative z-10">Agent</span>
 
             {/* Partículas flotantes */}
             <motion.div
@@ -381,7 +381,7 @@ const Hero = () => {
                 opacity: [0.2, 0.6, 0.2],
                 x: ["-100%", "100%"]
               }}
-              transition={{ 
+              transition={{
                 opacity: { duration: 2, repeat: Infinity },
                 x: { duration: 1.5, repeat: Infinity, ease: "linear" }
               }}

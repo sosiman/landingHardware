@@ -1,12 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Bot, MessageCircle } from 'lucide-react'
 import Orb from './effects/Orb'
-import ChatBot from './ChatBot'
 
 const OrbBot = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [isWidgetReady, setIsWidgetReady] = useState(false)
+
+  useEffect(() => {
+    // 1. Inject Styles to hide default button
+    const style = document.createElement('style')
+    style.innerHTML = `
+      #anything-llm-embed-chat-button-container {
+        display: none !important;
+      }
+      #anything-llm-embed-chat-container {
+        z-index: 9999 !important;
+      }
+    `
+    document.head.appendChild(style)
+
+    // 2. Inject AnythingLLM Script
+    const script = document.createElement('script')
+    script.dataset.embedId = "cf316f17-0b46-4ae0-83b2-158c758a9ffc"
+    script.dataset.baseApiUrl = "https://anything.lockthard.es/api/embed"
+    script.src = "https://anything.lockthard.es/embed/anythingllm-chat-widget.min.js"
+    script.async = true
+    script.onload = () => {
+      setIsWidgetReady(true)
+      console.log('AnythingLLM Widget Loaded')
+    }
+
+    // Check if script already exists
+    if (!document.querySelector(`script[src="${script.src}"]`)) {
+      document.body.appendChild(script)
+    } else {
+      setIsWidgetReady(true)
+    }
+
+    return () => {
+      // Optional: Cleanup if needed, but usually scripts persist
+      document.head.removeChild(style)
+    }
+  }, [])
+
+  const handleOpenChat = () => {
+    // Trigger the hidden button click
+    const widgetButton = document.querySelector('#anything-llm-embed-chat-button-container button')
+    if (widgetButton) {
+      widgetButton.click()
+    } else {
+      console.warn('AnythingLLM widget button not found yet.')
+    }
+  }
 
   return (
     <>
@@ -19,7 +65,7 @@ const OrbBot = () => {
         style={{ willChange: 'transform, opacity' }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setIsChatOpen(true)}
+        onClick={handleOpenChat}
       >
         {/* Efecto Orb de fondo */}
         <div className="absolute inset-0">
@@ -132,9 +178,6 @@ const OrbBot = () => {
           className="absolute inset-0 border-4 border-blue-500/50 rounded-full"
         />
       </motion.div>
-
-      {/* ChatBot Modal */}
-      <ChatBot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </>
   )
 }
