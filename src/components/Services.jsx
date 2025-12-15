@@ -225,6 +225,9 @@ const Services = () => {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isImageChatOpen, setIsImageChatOpen] = useState(false)
   const [isCodexChatOpen, setIsCodexChatOpen] = useState(false)
+  const [isTransformacionOpen, setIsTransformacionOpen] = useState(false)
+  const [isCiberseguridadOpen, setIsCiberseguridadOpen] = useState(false)
+  const [isCapacitacionOpen, setIsCapacitacionOpen] = useState(false)
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const [passwordInput, setPasswordInput] = useState('')
   const [pendingChatAction, setPendingChatAction] = useState(null)
@@ -297,7 +300,8 @@ const Services = () => {
         { src: "https://picsum.photos/seed/tech4/400/600", alt: "Digital 4" },
         { src: "https://picsum.photos/seed/tech5/400/600", alt: "Digital 5" },
         { src: "https://picsum.photos/seed/tech6/400/600", alt: "Digital 6" },
-      ]
+      ],
+      onClick: () => setIsTransformacionOpen(true)
     },
     {
       icon: <ShieldIcon />,
@@ -311,12 +315,13 @@ const Services = () => {
         { src: "https://picsum.photos/seed/sec4/400/600", alt: "Security 4" },
         { src: "https://picsum.photos/seed/sec5/400/600", alt: "Security 5" },
         { src: "https://picsum.photos/seed/sec6/400/600", alt: "Security 6" },
-      ]
+      ],
+      onClick: () => setIsCiberseguridadOpen(true)
     },
     {
       icon: <UsersIcon />,
-      title: "Capacitación",
-      description: "Formación especializada en tecnologías emergentes",
+      title: "Web Scraper",
+      description: "Turn websites into LLM-ready data",
       color: "from-teal-500 to-green-500",
       marqueeImages: [
         { src: "https://picsum.photos/seed/edu1/400/600", alt: "Training 1" },
@@ -325,7 +330,8 @@ const Services = () => {
         { src: "https://picsum.photos/seed/edu4/400/600", alt: "Training 4" },
         { src: "https://picsum.photos/seed/edu5/400/600", alt: "Training 5" },
         { src: "https://picsum.photos/seed/edu6/400/600", alt: "Training 6" },
-      ]
+      ],
+      onClick: () => setIsCapacitacionOpen(true)
     }
   ]
 
@@ -653,6 +659,229 @@ const Services = () => {
 
       {/* OpenAI Image Chat Modal - Procesamiento de Imágenes */}
       <OpenAIImageChat isOpen={isImageChatOpen} onClose={() => setIsImageChatOpen(false)} />
+
+      {/* Web Scraper Modal */}
+      {isCapacitacionOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsCapacitacionOpen(false)}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative w-full max-w-2xl bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gradient-to-r from-teal-500/20 to-green-500/20">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-teal-500 to-green-500">
+                  <UsersIcon />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Web Scraper</h2>
+              </div>
+              <button
+                onClick={() => setIsCapacitacionOpen(false)}
+                className="p-2 rounded-lg hover:bg-white/10 transition-colors group"
+              >
+                <svg className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-8 text-center">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring" }}
+                className="mb-6 flex justify-center"
+              >
+                <div className="p-6 rounded-full bg-gradient-to-br from-teal-500 to-green-500">
+                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                </div>
+              </motion.div>
+
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Firecrawl Web Scraper
+              </h3>
+              <p className="text-gray-300 mb-8 text-lg">
+                Turn websites into LLM-ready data
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  window.open('https://www.firecrawl.dev/', '_blank', 'width=1400,height=900,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')
+                  setIsCapacitacionOpen(false)
+                }}
+                className="px-8 py-4 rounded-xl bg-gradient-to-r from-teal-500 to-green-500 text-white font-bold text-lg hover:from-teal-600 hover:to-green-600 transition-all shadow-lg shadow-teal-500/50"
+              >
+                🔍 Abrir Firecrawl
+              </motion.button>
+
+              <p className="text-gray-500 text-sm mt-6">
+                La plataforma se abrirá en una ventana separada para una mejor experiencia
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Ciberseguridad Modal */}
+      {isCiberseguridadOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsCiberseguridadOpen(false)}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative w-full max-w-7xl h-[90vh] bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gradient-to-r from-indigo-500/20 to-blue-500/20">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500 to-blue-500">
+                  <ShieldIcon />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Ciberseguridad - TopoExport</h2>
+              </div>
+              <button
+                onClick={() => setIsCiberseguridadOpen(false)}
+                className="p-2 rounded-lg hover:bg-white/10 transition-colors group"
+              >
+                <svg className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Iframe Container */}
+            <div className="w-full h-[calc(100%-5rem)] bg-gray-950">
+              <iframe
+                src="https://app.topoexport.com/"
+                className="w-full h-full border-0"
+                title="Ciberseguridad - TopoExport"
+                allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Transformación Digital Modal */}
+      {isTransformacionOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsTransformacionOpen(false)}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative w-full max-w-2xl bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gradient-to-r from-orange-500/20 to-red-500/20">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500 to-red-500">
+                  <GlobeIcon />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Transformación Digital</h2>
+              </div>
+              <button
+                onClick={() => setIsTransformacionOpen(false)}
+                className="p-2 rounded-lg hover:bg-white/10 transition-colors group"
+              >
+                <svg className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-8 text-center">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring" }}
+                className="mb-6 flex justify-center"
+              >
+                <div className="p-6 rounded-full bg-gradient-to-br from-orange-500 to-red-500">
+                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+              </motion.div>
+
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Acceso a Plataforma de Transformación
+              </h3>
+              <p className="text-gray-300 mb-8 text-lg">
+                Selecciona la plataforma que deseas abrir
+              </p>
+
+              <div className="flex flex-col gap-4 max-w-md mx-auto">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    window.open('https://messenger.abeto.co/', '_blank', 'width=1400,height=900,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')
+                    setIsTransformacionOpen(false)
+                  }}
+                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-lg hover:from-orange-600 hover:to-red-600 transition-all shadow-lg shadow-orange-500/50"
+                >
+                  📱 Abrir Messenger Abeto
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    window.open('https://www.airconsole.com/', '_blank', 'width=1400,height=900,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')
+                    setIsTransformacionOpen(false)
+                  }}
+                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500 text-white font-bold text-lg hover:from-purple-600 hover:via-pink-600 hover:to-fuchsia-600 transition-all shadow-lg shadow-purple-500/50"
+                >
+                  🎮 Abrir AirConsole
+                </motion.button>
+              </div>
+
+              <p className="text-gray-500 text-sm mt-6">
+                Las plataformas se abrirán en ventanas separadas para una mejor experiencia
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   )
 }
