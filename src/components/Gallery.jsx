@@ -1,7 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Eye, ExternalLink, ZoomIn } from 'lucide-react'
+
 import MetallicText from './effects/MetallicText'
+import EcommerceGlobe from './effects/portfolio/EcommerceGlobe'
+import SecureVault from './effects/portfolio/SecureVault'
+import NeuralBrain from './effects/portfolio/NeuralBrain'
+import CloudArchitecture from './effects/portfolio/CloudArchitecture'
+import GlassPrism from './effects/portfolio/GlassPrism'
+import IoTMesh from './effects/portfolio/IoTMesh'
+import ErrorBoundary from './ErrorBoundary'
 
 const Gallery = () => {
   const ref = useRef(null)
@@ -29,7 +37,8 @@ const Gallery = () => {
       title: "E-commerce Platform",
       category: "web",
       description: "Plataforma de comercio electrónico moderna con React y Node.js",
-      video: "/videos/VID_20251006_223257_399.mp4",
+
+      Effect: EcommerceGlobe,
       tags: ["React", "Node.js", "MongoDB"],
       highlight: "Aumento del 230% en conversión"
     },
@@ -38,7 +47,8 @@ const Gallery = () => {
       title: "Mobile Banking App",
       category: "mobile",
       description: "Aplicación bancaria móvil con autenticación biométrica",
-      video: "/videos/VID_20251006_223738_445.mp4",
+
+      Effect: SecureVault,
       tags: ["React Native", "Firebase", "Security"],
       highlight: "99.9% de uptime certificado"
     },
@@ -47,7 +57,8 @@ const Gallery = () => {
       title: "AI Dashboard",
       category: "ai",
       description: "Dashboard de análisis con inteligencia artificial",
-      video: "/videos/VID_20251006_223742_952.mp4",
+
+      Effect: NeuralBrain,
       tags: ["Python", "TensorFlow", "D3.js"],
       highlight: "Predicciones en tiempo real"
     },
@@ -56,7 +67,8 @@ const Gallery = () => {
       title: "Cloud Infrastructure",
       category: "cloud",
       description: "Arquitectura cloud escalable para microservicios",
-      video: "/videos/VID_20251006_223804_366.mp4",
+
+      Effect: CloudArchitecture,
       tags: ["AWS", "Docker", "Kubernetes"],
       highlight: "Despliegues 4x más rápidos"
     },
@@ -65,7 +77,8 @@ const Gallery = () => {
       title: "Corporate Website",
       category: "web",
       description: "Sitio web corporativo con CMS personalizado",
-      video: "/videos/VID_20251006_223822_120.mp4",
+
+      Effect: GlassPrism,
       tags: ["Next.js", "Strapi", "Tailwind"],
       highlight: "Tiempo de carga < 1s"
     },
@@ -74,7 +87,8 @@ const Gallery = () => {
       title: "IoT Control System",
       category: "iot",
       description: "Sistema de control para dispositivos IoT industriales",
-      video: "/videos/VID_20251006_223837_520.mp4",
+
+      Effect: IoTMesh,
       tags: ["Arduino", "MQTT", "React"],
       highlight: "Monitoreo 24/7 sin interrupciones"
     }
@@ -158,16 +172,16 @@ const Gallery = () => {
                   <stop offset="100%" stopColor="#8b5cf6" />
                 </linearGradient>
                 <filter id="neonGlowPortfolio">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                   <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
               </defs>
-              
+
               {/* Main animated curve - bouncy spring effect */}
               <motion.path
                 d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
@@ -185,7 +199,7 @@ const Gallery = () => {
                 }}
                 style={{ filter: 'drop-shadow(0 0 8px rgba(236, 72, 153, 0.9))' }}
               />
-              
+
               {/* Thicker glow layer behind */}
               <motion.path
                 d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
@@ -202,7 +216,7 @@ const Gallery = () => {
                   ease: [0.34, 1.56, 0.64, 1]
                 }}
               />
-              
+
               {/* End point with pulse */}
               <motion.circle
                 cx="130"
@@ -217,7 +231,7 @@ const Gallery = () => {
                   delay: 2
                 }}
               />
-              
+
               {/* Pulsing ring effect */}
               <motion.circle
                 cx="130"
@@ -227,7 +241,7 @@ const Gallery = () => {
                 stroke="#ec4899"
                 strokeWidth="2"
                 initial={{ scale: 0, opacity: 0 }}
-                animate={{ 
+                animate={{
                   scale: [1, 2],
                   opacity: [0.7, 0]
                 }}
@@ -239,7 +253,7 @@ const Gallery = () => {
                 }}
               />
             </motion.svg>
-            
+
             <MetallicText className="silver-text">
               Nuestro Portafolio
             </MetallicText>
@@ -292,16 +306,22 @@ const Gallery = () => {
                 className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 shadow-xl"
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                {/* Video Container */}
-                <div className="relative h-64 overflow-hidden">
-                  <video
-                    src={project.video}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
+                {/* Effect Container */}
+                <div className="relative h-64 overflow-hidden bg-black/80">
+                  {project.Effect ? (
+                    <ErrorBoundary>
+                      <project.Effect />
+                    </ErrorBoundary>
+                  ) : (
+                    <video
+                      src={project.video}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  )}
 
                   <div className="absolute top-4 left-4 px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-black/50 backdrop-blur-md text-white">
                     {project.category}

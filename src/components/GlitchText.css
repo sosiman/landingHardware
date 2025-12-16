@@ -1,0 +1,73 @@
+.glitch {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.glitch::before {
+  animation: glitch-before 0.3s ease-in-out infinite;
+  color: rgba(139, 92, 246, 0.8);
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 58%);
+}
+
+.glitch::after {
+  animation: glitch-after 0.3s ease-in-out infinite;
+  color: rgba(139, 92, 246, 0.6);
+  z-index: -2;
+  clip-path: polygon(0 58%, 100% 45%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-before {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 58%);
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 58%);
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes glitch-after {
+  0% {
+    clip-path: polygon(0 58%, 100% 45%, 100% 100%, 0 100%);
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(2px, -2px);
+  }
+  100% {
+    clip-path: polygon(0 58%, 100% 45%, 100% 100%, 0 100%);
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+.glitch.enable-on-hover:hover::before,
+.glitch.enable-on-hover:hover::after {
+  animation: glitch-before 0.3s ease-in-out 3;
+}
+
+.glitch.enable-on-hover:hover::after {
+  animation: glitch-after 0.3s ease-in-out 3;
+}

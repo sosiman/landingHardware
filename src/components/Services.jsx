@@ -12,6 +12,10 @@ import OpenAIChat from './OpenAIChat'
 import OpenAIImageChat from './OpenAIImageChat'
 import CodexChat from './CodexChat'
 import { ThreeDMarquee } from './ui/3d-marquee'
+import HyperCube4D from './effects/HyperCube4D'
+import QuantumShield from './effects/QuantumShield'
+import DataVortex from './effects/DataVortex'
+import ErrorBoundary from './ErrorBoundary'
 
 // Iconos animados con React
 const CodeIcon = () => (
@@ -293,14 +297,7 @@ const Services = () => {
       title: "Transformación Digital",
       description: "Modernización completa de infraestructuras y procesos empresariales",
       color: "from-orange-500 to-red-500",
-      marqueeImages: [
-        { src: "https://picsum.photos/seed/tech1/400/600", alt: "Digital 1" },
-        { src: "https://picsum.photos/seed/tech2/400/600", alt: "Digital 2" },
-        { src: "https://picsum.photos/seed/tech3/400/600", alt: "Digital 3" },
-        { src: "https://picsum.photos/seed/tech4/400/600", alt: "Digital 4" },
-        { src: "https://picsum.photos/seed/tech5/400/600", alt: "Digital 5" },
-        { src: "https://picsum.photos/seed/tech6/400/600", alt: "Digital 6" },
-      ],
+      CanvasEffect: HyperCube4D,
       onClick: () => setIsTransformacionOpen(true)
     },
     {
@@ -308,29 +305,15 @@ const Services = () => {
       title: "Ciberseguridad",
       description: "Protección integral de sistemas y datos empresariales",
       color: "from-indigo-500 to-blue-500",
-      marqueeImages: [
-        { src: "https://picsum.photos/seed/sec1/400/600", alt: "Security 1" },
-        { src: "https://picsum.photos/seed/sec2/400/600", alt: "Security 2" },
-        { src: "https://picsum.photos/seed/sec3/400/600", alt: "Security 3" },
-        { src: "https://picsum.photos/seed/sec4/400/600", alt: "Security 4" },
-        { src: "https://picsum.photos/seed/sec5/400/600", alt: "Security 5" },
-        { src: "https://picsum.photos/seed/sec6/400/600", alt: "Security 6" },
-      ],
-      onClick: () => setIsCiberseguridadOpen(true)
+      CanvasEffect: QuantumShield,
+      onClick: () => window.open('https://app.topoexport.com/', '_blank', 'width=1400,height=900,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')
     },
     {
       icon: <UsersIcon />,
       title: "Web Scraper",
       description: "Turn websites into LLM-ready data",
       color: "from-teal-500 to-green-500",
-      marqueeImages: [
-        { src: "https://picsum.photos/seed/edu1/400/600", alt: "Training 1" },
-        { src: "https://picsum.photos/seed/edu2/400/600", alt: "Training 2" },
-        { src: "https://picsum.photos/seed/edu3/400/600", alt: "Training 3" },
-        { src: "https://picsum.photos/seed/edu4/400/600", alt: "Training 4" },
-        { src: "https://picsum.photos/seed/edu5/400/600", alt: "Training 5" },
-        { src: "https://picsum.photos/seed/edu6/400/600", alt: "Training 6" },
-      ],
+      CanvasEffect: DataVortex,
       onClick: () => setIsCapacitacionOpen(true)
     }
   ]
@@ -401,16 +384,16 @@ const Services = () => {
                   <stop offset="100%" stopColor="#06b6d4" />
                 </linearGradient>
                 <filter id="neonGlow">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                   <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
               </defs>
-              
+
               {/* Main animated curve - bouncy spring effect */}
               <motion.path
                 d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
@@ -428,7 +411,7 @@ const Services = () => {
                 }}
                 style={{ filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.9))' }}
               />
-              
+
               {/* Thicker glow layer behind */}
               <motion.path
                 d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
@@ -445,7 +428,7 @@ const Services = () => {
                   ease: [0.34, 1.56, 0.64, 1]
                 }}
               />
-              
+
               {/* End point with pulse */}
               <motion.circle
                 cx="130"
@@ -460,7 +443,7 @@ const Services = () => {
                   delay: 2
                 }}
               />
-              
+
               {/* Pulsing ring effect */}
               <motion.circle
                 cx="130"
@@ -470,7 +453,7 @@ const Services = () => {
                 stroke="#06b6d4"
                 strokeWidth="2"
                 initial={{ scale: 0, opacity: 0 }}
-                animate={{ 
+                animate={{
                   scale: [1, 2],
                   opacity: [0.7, 0]
                 }}
@@ -482,7 +465,7 @@ const Services = () => {
                 }}
               />
             </motion.svg>
-            
+
             <MetallicText className="chrome-text">
               Nuestros Servicios
             </MetallicText>
@@ -537,7 +520,9 @@ const Services = () => {
                   </div>
                 ) : (
                   <div className="absolute inset-0 opacity-70 group-hover:opacity-90 transition-opacity duration-500 bg-black/30">
-                    <service.CanvasEffect />
+                    <ErrorBoundary>
+                      <service.CanvasEffect />
+                    </ErrorBoundary>
                   </div>
                 )}
               </div>
@@ -739,56 +724,7 @@ const Services = () => {
         </div>
       )}
 
-      {/* Ciberseguridad Modal */}
-      {isCiberseguridadOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsCiberseguridadOpen(false)}
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-          />
 
-          {/* Modal */}
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-7xl h-[90vh] bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gradient-to-r from-indigo-500/20 to-blue-500/20">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500 to-blue-500">
-                  <ShieldIcon />
-                </div>
-                <h2 className="text-2xl font-bold text-white">Ciberseguridad - TopoExport</h2>
-              </div>
-              <button
-                onClick={() => setIsCiberseguridadOpen(false)}
-                className="p-2 rounded-lg hover:bg-white/10 transition-colors group"
-              >
-                <svg className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Iframe Container */}
-            <div className="w-full h-[calc(100%-5rem)] bg-gray-950">
-              <iframe
-                src="https://app.topoexport.com/"
-                className="w-full h-full border-0"
-                title="Ciberseguridad - TopoExport"
-                allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
-              />
-            </div>
-          </motion.div>
-        </div>
-      )}
 
       {/* Transformación Digital Modal */}
       {isTransformacionOpen && (

@@ -1,0 +1,3 @@
+ejecutar en power Shell en este proyecto: cd C:\Users\codex\Documents\LANDINGIASTOP
+
+node extract-tools.js
