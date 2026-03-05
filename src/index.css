@@ -276,3 +276,177 @@ html {
   width: 100%;
   height: 100%;
 }
+
+/* ============================================
+   ELECTRIC BORDER CARDS
+   ============================================ */
+
+@keyframes electric-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes electric-flicker {
+  0%, 100% { opacity: 0.7; }
+  10% { opacity: 1; }
+  20% { opacity: 0.5; }
+  30% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+  60% { opacity: 1; }
+  80% { opacity: 0.8; }
+  90% { opacity: 1; }
+}
+
+.electric-card {
+  position: relative;
+  border-radius: 1rem;
+  padding: 2px;
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Rotating conic gradient = electricity flowing around border */
+.electric-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  animation: electric-rotate 3s linear infinite;
+  z-index: 0;
+}
+
+/* Flicker overlay for realistic electricity */
+.electric-border-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  z-index: 1;
+  pointer-events: none;
+  animation: electric-flicker 2s ease-in-out infinite;
+}
+
+/* Inner card content */
+.electric-card-inner {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: calc(1rem - 2px);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* === PURPLE variant === */
+.electric-purple::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #a855f7 10%,
+    transparent 20%,
+    transparent 30%,
+    #c084fc 40%,
+    #e9d5ff 45%,
+    #c084fc 50%,
+    transparent 60%,
+    transparent 70%,
+    #a855f7 80%,
+    transparent 90%,
+    transparent 100%
+  );
+}
+.electric-purple .electric-border-glow {
+  box-shadow: 
+    inset 0 0 15px rgba(168, 85, 247, 0.3),
+    0 0 15px rgba(168, 85, 247, 0.2),
+    0 0 30px rgba(168, 85, 247, 0.1);
+}
+.electric-purple:hover::before {
+  animation-duration: 1.5s;
+}
+.electric-purple:hover .electric-border-glow {
+  box-shadow: 
+    inset 0 0 20px rgba(168, 85, 247, 0.5),
+    0 0 25px rgba(168, 85, 247, 0.4),
+    0 0 50px rgba(168, 85, 247, 0.2);
+}
+
+/* === BLUE variant === */
+.electric-blue::before {
+  background: conic-gradient(
+    from 120deg,
+    transparent 0%,
+    #3b82f6 10%,
+    transparent 20%,
+    transparent 30%,
+    #60a5fa 40%,
+    #bfdbfe 45%,
+    #60a5fa 50%,
+    transparent 60%,
+    transparent 70%,
+    #3b82f6 80%,
+    transparent 90%,
+    transparent 100%
+  );
+}
+.electric-blue .electric-border-glow {
+  box-shadow: 
+    inset 0 0 15px rgba(59, 130, 246, 0.3),
+    0 0 15px rgba(59, 130, 246, 0.2),
+    0 0 30px rgba(59, 130, 246, 0.1);
+}
+.electric-blue:hover::before {
+  animation-duration: 1.5s;
+}
+.electric-blue:hover .electric-border-glow {
+  box-shadow: 
+    inset 0 0 20px rgba(59, 130, 246, 0.5),
+    0 0 25px rgba(59, 130, 246, 0.4),
+    0 0 50px rgba(59, 130, 246, 0.2);
+}
+
+/* === EMERALD variant === */
+.electric-emerald::before {
+  background: conic-gradient(
+    from 240deg,
+    transparent 0%,
+    #10b981 10%,
+    transparent 20%,
+    transparent 30%,
+    #34d399 40%,
+    #a7f3d0 45%,
+    #34d399 50%,
+    transparent 60%,
+    transparent 70%,
+    #10b981 80%,
+    transparent 90%,
+    transparent 100%
+  );
+}
+.electric-emerald .electric-border-glow {
+  box-shadow: 
+    inset 0 0 15px rgba(16, 185, 129, 0.3),
+    0 0 15px rgba(16, 185, 129, 0.2),
+    0 0 30px rgba(16, 185, 129, 0.1);
+}
+.electric-emerald:hover::before {
+  animation-duration: 1.5s;
+}
+.electric-emerald:hover .electric-border-glow {
+  box-shadow: 
+    inset 0 0 20px rgba(16, 185, 129, 0.5),
+    0 0 25px rgba(16, 185, 129, 0.4),
+    0 0 50px rgba(16, 185, 129, 0.2);
+}
+
+/* Hover transition for all cards */
+.electric-card::before {
+  transition: animation-duration 0.3s ease;
+}
+.electric-card:hover .electric-card-inner {
+  background: rgba(0, 0, 0, 0.65);
+}

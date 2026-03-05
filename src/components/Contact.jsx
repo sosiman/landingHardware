@@ -220,7 +220,7 @@ const Contact = () => {
             </motion.div>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Contact Information & Team */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -228,73 +228,69 @@ const Contact = () => {
             className="space-y-8"
           >
             <motion.div variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-white mb-8">Información de Contacto</h3>
-              <p className="text-gray-200 mb-8 leading-relaxed">
-                Estamos aquí para ayudarte. No dudes en contactarnos a través de cualquiera
-                de estos medios o visítanos en nuestras oficinas.
-              </p>
+              <h3 className="text-2xl font-bold text-white mb-8">Nuestro Equipo</h3>
             </motion.div>
 
-            {contactInfo.map((info, index) => (
-              <motion.a
-                key={index}
-                href={info.link}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, x: 10 }}
-                className="flex items-center gap-6 p-6 rounded-xl backdrop-blur-md border border-white/20 bg-black/60 hover:border-white/40 transition-all duration-300 group shadow-lg"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300"
-                >
-                  {info.icon}
-                </motion.div>
-                <div>
-                  <h4 className="font-semibold text-white group-hover:text-blue-300 transition-colors duration-300">
-                    {info.title}
-                  </h4>
-                  <p className="text-gray-200 group-hover:text-white transition-colors duration-300">
-                    {info.content}
-                  </p>
-                </div>
-              </motion.a>
-            ))}
-
-
-
-            {/* Office Hours */}
+            {/* José Alberto */}
             <motion.div
               variants={itemVariants}
               className="p-6 rounded-xl backdrop-blur-md border border-white/20 bg-black/60 shadow-lg"
             >
-              <h4 className="font-semibold text-white mb-4">Horarios de Atención</h4>
-              <div className="space-y-2 text-gray-200">
-                <div className="flex justify-between">
-                  <span>Lunes - Domingo</span>
-                  <span>10:30 - 23:00</span>
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white shrink-0">
+                  <User className="w-7 h-7" />
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-400">Zona horaria</span>
-                  <span className="text-sm text-blue-400">Madrid (CET/CEST)</span>
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-white">José Alberto Trujillo Plaza</h4>
+                  <p className="text-blue-400 font-medium mb-3">Master Full-Stack AI Engineering</p>
+                  <div className="space-y-2">
+                    <a
+                      href="https://wa.me/34621208980"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-200 hover:text-green-400 transition-colors"
+                    >
+                      <Phone className="w-4 h-4" />
+                      <span>+34 621 208 980</span>
+                      <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">WhatsApp</span>
+                    </a>
+                    <a
+                      href="mailto:albertotplaza@gmail.com"
+                      className="flex items-center gap-2 text-gray-200 hover:text-blue-400 transition-colors"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>albertotplaza@gmail.com</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Social Links */}
-            <motion.div variants={itemVariants}>
-              <h4 className="font-semibold text-white mb-4">Síguenos</h4>
-              <div className="flex gap-4">
-                {['LinkedIn', 'Twitter', 'Instagram', 'GitHub'].map((platform) => (
-                  <motion.a
-                    key={platform}
-                    href="#"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-12 h-12 bg-gradient-to-br from-blue-500/30 to-purple-600/30 rounded-xl flex items-center justify-center text-white border border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30"
-                  >
-                    {platform.charAt(0)}
-                  </motion.a>
-                ))}
+            {/* Paul Martines */}
+            <motion.div
+              variants={itemVariants}
+              className="p-6 rounded-xl backdrop-blur-md border border-white/20 bg-black/60 shadow-lg"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center text-white shrink-0">
+                  <User className="w-7 h-7" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-white">Paul Martines</h4>
+                  <p className="text-emerald-400 font-medium mb-3">CEO</p>
+                  <div className="space-y-2">
+                    <a
+                      href="https://wa.me/56942875210"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-200 hover:text-green-400 transition-colors"
+                    >
+                      <Phone className="w-4 h-4" />
+                      <span>+56 942 875 210</span>
+                      <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>

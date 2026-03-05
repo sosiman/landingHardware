@@ -1,15 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Eye, ExternalLink, ZoomIn } from 'lucide-react'
+import RobotSVG from './effects/RobotSVG'
 
 import MetallicText from './effects/MetallicText'
-import EcommerceGlobe from './effects/portfolio/EcommerceGlobe'
-import SecureVault from './effects/portfolio/SecureVault'
-import NeuralBrain from './effects/portfolio/NeuralBrain'
-import CloudArchitecture from './effects/portfolio/CloudArchitecture'
-import GlassPrism from './effects/portfolio/GlassPrism'
-import IoTMesh from './effects/portfolio/IoTMesh'
-import ErrorBoundary from './ErrorBoundary'
 
 const Gallery = () => {
   const ref = useRef(null)
@@ -37,8 +31,8 @@ const Gallery = () => {
       title: "E-commerce Platform",
       category: "web",
       description: "Plataforma de comercio electrónico moderna con React y Node.js",
-
-      Effect: EcommerceGlobe,
+      gradient: "from-blue-600 via-cyan-500 to-teal-500",
+      botColor: "#3b82f6",
       tags: ["React", "Node.js", "MongoDB"],
       highlight: "Aumento del 230% en conversión"
     },
@@ -47,8 +41,8 @@ const Gallery = () => {
       title: "Mobile Banking App",
       category: "mobile",
       description: "Aplicación bancaria móvil con autenticación biométrica",
-
-      Effect: SecureVault,
+      gradient: "from-purple-600 via-pink-500 to-fuchsia-500",
+      botColor: "#a855f7",
       tags: ["React Native", "Firebase", "Security"],
       highlight: "99.9% de uptime certificado"
     },
@@ -57,8 +51,8 @@ const Gallery = () => {
       title: "AI Dashboard",
       category: "ai",
       description: "Dashboard de análisis con inteligencia artificial",
-
-      Effect: NeuralBrain,
+      gradient: "from-violet-600 via-indigo-500 to-blue-500",
+      botColor: "#7c3aed",
       tags: ["Python", "TensorFlow", "D3.js"],
       highlight: "Predicciones en tiempo real"
     },
@@ -67,8 +61,8 @@ const Gallery = () => {
       title: "Cloud Infrastructure",
       category: "cloud",
       description: "Arquitectura cloud escalable para microservicios",
-
-      Effect: CloudArchitecture,
+      gradient: "from-sky-600 via-cyan-500 to-blue-500",
+      botColor: "#0ea5e9",
       tags: ["AWS", "Docker", "Kubernetes"],
       highlight: "Despliegues 4x más rápidos"
     },
@@ -77,8 +71,8 @@ const Gallery = () => {
       title: "Corporate Website",
       category: "web",
       description: "Sitio web corporativo con CMS personalizado",
-
-      Effect: GlassPrism,
+      gradient: "from-emerald-600 via-green-500 to-teal-500",
+      botColor: "#10b981",
       tags: ["Next.js", "Strapi", "Tailwind"],
       highlight: "Tiempo de carga < 1s"
     },
@@ -87,8 +81,8 @@ const Gallery = () => {
       title: "IoT Control System",
       category: "iot",
       description: "Sistema de control para dispositivos IoT industriales",
-
-      Effect: IoTMesh,
+      gradient: "from-amber-600 via-yellow-500 to-amber-400",
+      botColor: "#d97706",
       tags: ["Arduino", "MQTT", "React"],
       highlight: "Monitoreo 24/7 sin interrupciones"
     }
@@ -306,22 +300,37 @@ const Gallery = () => {
                 className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 shadow-xl"
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                {/* Effect Container */}
-                <div className="relative h-64 overflow-hidden bg-black/80">
-                  {project.Effect ? (
-                    <ErrorBoundary>
-                      <project.Effect />
-                    </ErrorBoundary>
-                  ) : (
-                    <video
-                      src={project.video}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    />
-                  )}
+                {/* Gradient + Bot Icon Container */}
+                <div className="relative h-64 overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60`} />
+                  <div className="absolute inset-0 bg-black/30" />
+                  {/* Animated Bot - exact same icon as the chatbot */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{ y: [0, -8, 0], rotate: [0, 3, -3, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div className="relative">
+                      {/* Glow effect behind bot */}
+                      <motion.div
+                        animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                          background: `radial-gradient(circle, ${project.botColor}50 0%, transparent 70%)`,
+                          filter: 'blur(12px)',
+                          width: '120px',
+                          height: '120px',
+                          top: '-20px',
+                          left: '-20px'
+                        }}
+                      />
+                      <RobotSVG
+                        color={project.botColor}
+                        size={80}
+                      />
+                    </div>
+                  </motion.div>
 
                   <div className="absolute top-4 left-4 px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-black/50 backdrop-blur-md text-white">
                     {project.category}

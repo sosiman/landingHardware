@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Building2, Briefcase, TrendingUp } from 'lucide-react'
+import { Building2, Briefcase, TrendingUp, Database } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
 import RobotModel from './RobotModel'
 import CustomAgentIcon from './CustomAgentIcon'
@@ -81,7 +81,7 @@ const Hero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
         className="absolute top-0 left-0 w-full h-[60vh] sm:h-full flex items-center justify-center opacity-30 pointer-events-none z-0 lg:opacity-100 lg:pointer-events-auto lg:top-[15%] lg:w-[500px] lg:h-[850px] lg:z-50 lg:block lg:justify-start"
-        style={{ willChange: 'transform, opacity', mixBlendMode: 'screen' }}
+        style={{ willChange: 'transform, opacity' }}
       >
         {/* Contenedor del modelo con efectos de glow */}
         <div className="relative w-full h-full">
@@ -118,16 +118,16 @@ const Hero = () => {
 
 
 
-      {/* CONTENIDO CENTRADO - Como el original */}
+      {/* CONTENIDO PRINCIPAL */}
       <motion.div
         style={{ y, opacity }}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 text-center px-6 max-w-6xl"
+        className="relative z-10 text-center px-6 max-w-5xl pt-28 pb-16"
       >
-        {/* Main Title with Metallic Effect */}
-        <motion.div variants={itemVariants} className="mb-8">
+        {/* Main Title */}
+        <motion.div variants={itemVariants} className="mb-6">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
             <span className="block">
               <MetallicText className="chrome-text">
@@ -142,8 +142,8 @@ const Hero = () => {
           </h1>
         </motion.div>
 
-        {/* Animated Subtitle with Gold Effect */}
-        <motion.div variants={itemVariants} className="mb-8 h-16 flex items-center justify-center">
+        {/* Animated Subtitle */}
+        <motion.div variants={itemVariants} className="mb-10 h-12 flex items-center justify-center">
           <motion.h2
             key={currentText}
             initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
@@ -157,43 +157,69 @@ const Hero = () => {
           </motion.h2>
         </motion.div>
 
-        {/* Description - Redesigned as a Grid of Cards for better readability */}
+        {/* Descripción principal - Un solo bloque elegante */}
+        <motion.div variants={itemVariants} className="mb-14">
+          <div className="electric-card electric-blue mx-auto max-w-4xl">
+            <div className="electric-border-glow" />
+            <div className="electric-card-inner" style={{ padding: '2rem 2.5rem' }}>
+              <p className="text-gray-100 text-lg md:text-xl leading-relaxed text-center font-light">
+                Ayudamos a empresas en Venezuela a fortalecer su operatividad mediante un{' '}
+                <span className="text-blue-400 font-medium">Ecosistema de Inteligencia Artificial</span>{' '}
+                centralizado en una base de datos propietaria y CRM de alto rendimiento,
+                diseñado bajo estándares de calidad y estética europea.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* 4 Features - Lista compacta con bordes eléctricos laterales */}
         <motion.div
           variants={itemVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14 max-w-4xl mx-auto text-left"
         >
-          {/* Card 1 */}
-          <div className="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl hover:border-purple-500/50 transition-colors text-left flex flex-col gap-4">
-            <div className="p-3 bg-purple-500/20 rounded-lg w-fit">
-              <Building2 className="w-6 h-6 text-purple-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-white">Estándar Europeo</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Ayudamos a empresas en Venezuela a fortalecer su operatividad y capacidad de respuesta mediante Agentes de IA bajo los más altos estándares de calidad.
-            </p>
-          </div>
-
-          {/* Card 2 */}
-          <div className="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl hover:border-blue-500/50 transition-colors text-left flex flex-col gap-4">
-            <div className="p-3 bg-blue-500/20 rounded-lg w-fit">
-              <Briefcase className="w-6 h-6 text-blue-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-white">Automatización Crítica</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Asumimos tareas en cobranza, ventas, logística y conciliación de pagos, reduciendo drásticamente el margen de error y la carga operativa manual.
-            </p>
-          </div>
-
-          {/* Card 3 */}
-          <div className="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl hover:border-emerald-500/50 transition-colors text-left flex flex-col gap-4">
-            <div className="p-3 bg-emerald-500/20 rounded-lg w-fit">
-              <TrendingUp className="w-6 h-6 text-emerald-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-white">Escalabilidad Genuina</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Transforma gastos en infraestructura estable. El aumento en volumen de negocio no incrementará tus costos proporcionalmente. Recupera tu tiempo.
-            </p>
-          </div>
+          {[
+            {
+              icon: <Briefcase className="w-6 h-6 text-purple-400" />,
+              color: 'purple',
+              title: 'Agentes Autónomos',
+              desc: 'Asumen tareas críticas en cobranza, ventas, logística y conciliación de pagos, con soporte en gestión contable y cumplimiento legal.'
+            },
+            {
+              icon: <Database className="w-6 h-6 text-blue-400" />,
+              color: 'blue',
+              title: 'Memoria Corporativa',
+              desc: 'Transforma datos dispersos en infraestructura digital estable y una memoria corporativa inteligente.'
+            },
+            {
+              icon: <TrendingUp className="w-6 h-6 text-emerald-400" />,
+              color: 'emerald',
+              title: 'Escalabilidad Real',
+              desc: 'Tu negocio crece sin fricciones. El aumento de volumen no incrementa tus costos operativos.'
+            },
+            {
+              icon: <Building2 className="w-6 h-6 text-amber-400" />,
+              color: 'amber',
+              title: 'Recupera tu Tiempo',
+              desc: 'Transforma gastos variables en infraestructura digital estable. Recupera tu enfoque estratégico y tu tiempo.'
+            }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.2 + i * 0.15, duration: 0.5 }}
+              className="flex items-start gap-4 p-4 rounded-xl bg-black/80 backdrop-blur-xl border-l-2 hover:bg-black/90 transition-all duration-300"
+              style={{ borderLeftColor: `var(--tw-${item.color}-400, ${item.color === 'purple' ? '#a855f7' : item.color === 'blue' ? '#3b82f6' : item.color === 'emerald' ? '#10b981' : '#f59e0b'})` }}
+            >
+              <div className={`p-2.5 rounded-lg bg-${item.color}-500/20 shrink-0 mt-0.5`}>
+                {item.icon}
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-1">{item.title}</h3>
+                <p className="text-gray-300 text-base leading-relaxed">{item.desc}</p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* CTA Buttons */}
@@ -202,15 +228,12 @@ const Hero = () => {
           className="flex flex-col sm:flex-row gap-6 justify-center items-center"
         >
 
-
-
           <motion.button
             onClick={() => setIsNeuralNetworkOpen(true)}
             whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(16, 185, 129, 0.5)" }}
             whileTap={{ scale: 0.95 }}
             className="group relative px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full text-white font-semibold overflow-hidden shadow-lg flex items-center gap-2"
           >
-            {/* Efecto de pulso */}
             <motion.div
               animate={{
                 opacity: [0.2, 0.5, 0.2],
@@ -220,7 +243,6 @@ const Hero = () => {
               className="absolute inset-0 bg-gradient-to-r from-teal-500/30 via-emerald-500/30 to-teal-500/30"
             />
 
-            {/* Icono de red neuronal */}
             <motion.svg
               width="20"
               height="20"
@@ -248,7 +270,6 @@ const Hero = () => {
 
             <span className="relative z-10">Redes Neuronales</span>
 
-            {/* Partículas flotantes múltiples */}
             <motion.div
               animate={{
                 y: [-3, 3, -3],
