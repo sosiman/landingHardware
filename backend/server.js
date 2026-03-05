@@ -322,27 +322,21 @@ app.post('/api/chat/nvidia', async (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     const completion = await nvidiaOpenai.chat.completions.create({
-      model: "z-ai/glm5",
+      model: "minimaxai/minimax-m2.5",
       messages: messages,
       temperature: 1,
-      top_p: 1,
-      max_tokens: 16384,
-      chat_template_kwargs: { "enable_thinking": true, "clear_thinking": false },
+      top_p: 0.95,
+      max_tokens: 8192,
       stream: true
     });
 
     for await (const chunk of completion) {
-      const reasoning = chunk.choices[0]?.delta?.reasoning_content;
       const content = chunk.choices[0]?.delta?.content || '';
-
-      if (reasoning || content) {
-        const payload = {
-          reasoning: reasoning || '',
-          content: content || ''
-        };
-        res.write(`data: ${JSON.stringify(payload)}\n\n`);
+      if (content) {
+        res.write(`data: ${JSON.stringify({ content })}\n\n`);
       }
     }
 
@@ -350,8 +344,12 @@ app.post('/api/chat/nvidia', async (req, res) => {
     res.end();
   } catch (error) {
     console.error('Error en /api/chat/nvidia:', error.message);
-    res.write(`data: ${JSON.stringify({ error: 'Error al procesar tu mensaje', details: error.message })}\n\n`);
-    res.end();
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Error al procesar tu mensaje', details: error.message });
+    } else {
+      res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
+      res.end();
+    }
   }
 });
 
