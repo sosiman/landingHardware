@@ -80,7 +80,7 @@ const Hero = () => {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="absolute top-0 left-0 w-full h-[60vh] sm:h-full flex items-center justify-center opacity-30 pointer-events-none z-0 lg:opacity-100 lg:pointer-events-auto lg:top-[15%] lg:w-[500px] lg:h-[850px] lg:z-50 lg:block lg:justify-start"
+        className="hidden lg:flex absolute top-[15%] left-0 w-[500px] h-[850px] items-center justify-start opacity-100 pointer-events-auto z-50"
         style={{ willChange: 'transform, opacity' }}
       >
         {/* Contenedor del modelo con efectos de glow */}
@@ -268,7 +268,7 @@ const Hero = () => {
               <line x1="15" y1="13.5" x2="16.5" y2="16.5" />
             </motion.svg>
 
-            <span className="relative z-10">Redes Neuronales</span>
+            <span className="relative z-10">Demo IA</span>
 
             <motion.div
               animate={{
@@ -334,7 +334,7 @@ const Hero = () => {
                     transition={{ duration: 2, repeat: Infinity }}
                     className="w-2 h-2 bg-emerald-500 rounded-full"
                   />
-                  Redes Neuronales
+                  Demo IA
                 </h3>
                 <button
                   onClick={() => setIsNeuralNetworkOpen(false)}
