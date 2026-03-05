@@ -25,17 +25,15 @@ console.log('='.repeat(60));
 // Middleware
 app.use(express.json());
 
-// CORS - permite peticiones desde tu dominio
+// CORS - permisivo para evitar bloqueos con reverse proxy
 app.use(cors({
-  origin: [
-    'https://lockthard.es',
-    'https://www.lockthard.es',
-    'https://n8n.lockthard.es',
-    'http://localhost:5173', // Para desarrollo local
-    'http://localhost:3000'
-  ],
-  credentials: true
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// Manejar preflight OPTIONS explícitamente
+app.options('*', cors());
 
 // Rate limiting - máximo 20 peticiones por minuto
 const limiter = rateLimit({
