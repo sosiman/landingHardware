@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3001;
 
 // Configurar OpenAI
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY || 'dummy-key'
 });
 
 // Logs de configuración al iniciar
@@ -304,6 +304,56 @@ app.post('/api/generate-image', async (req, res) => {
     res.status(500).json({
       error: 'Error al generar la imagen. Intenta de nuevo.'
     });
+  }
+});
+
+// Endpoint para chat con NVIDIA API
+const nvidiaOpenai = new OpenAI({
+  apiKey: process.env.NVIDIA_API_KEY,
+  baseURL: 'https://integrate.api.nvidia.com/v1',
+});
+
+app.post('/api/chat/nvidia', async (req, res) => {
+  try {
+    const { messages } = req.body;
+
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: 'Messages array is required' });
+    }
+
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    const completion = await nvidiaOpenai.chat.completions.create({
+      model: "z-ai/glm5",
+      messages: messages,
+      temperature: 1,
+      top_p: 1,
+      max_tokens: 16384,
+      chat_template_kwargs: { "enable_thinking": true, "clear_thinking": false },
+      stream: true
+    });
+
+    for await (const chunk of completion) {
+      const reasoning = chunk.choices[0]?.delta?.reasoning_content;
+      const content = chunk.choices[0]?.delta?.content || '';
+
+      if (reasoning || content) {
+        const payload = {
+          reasoning: reasoning || '',
+          content: content || ''
+        };
+        res.write(`data: ${JSON.stringify(payload)}\n\n`);
+      }
+    }
+
+    res.write('data: [DONE]\n\n');
+    res.end();
+  } catch (error) {
+    console.error('Error en /api/chat/nvidia:', error.message);
+    res.write(`data: ${JSON.stringify({ error: 'Error al procesar tu mensaje', details: error.message })}\n\n`);
+    res.end();
   }
 });
 

@@ -2,8 +2,6 @@ import React, { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Mail, Phone, MapPin, Send, User, MessageSquare, CheckCircle } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
-import Iridescence from './effects/Iridescence'
-import PlasmaGlobe from './ui/plasma-globe'
 
 const Contact = () => {
   const ref = useRef(null)
@@ -84,28 +82,8 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
-      {/* Iridescence Background Effect */}
-      <div className="absolute inset-0 z-0">
-        <Iridescence
-          color={[1, 1, 1]}
-          mouseReact={false}
-          amplitude={0.1}
-          speed={1.0}
-        />
-      </div>
-
-      {/* Dark overlay para mejorar legibilidad */}
-      <div className="absolute inset-0 bg-black/40 z-0" />
-
-      {/* Plasma Globe Ambient Background */}
-      <div className="absolute -left-[30%] -top-[20%] w-[160%] h-[140%] z-0 pointer-events-none mix-blend-screen">
-        <div className="w-full h-full" style={{
-          maskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)'
-        }}>
-          <PlasmaGlobe />
-        </div>
-      </div>
+      {/* Dark overlay para mejorar legibilidad sobre el carrusel de App.jsx */}
+      <div className="absolute inset-0 bg-black/60 z-0" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -282,90 +260,7 @@ const Contact = () => {
               </motion.a>
             ))}
 
-            <motion.div
-              variants={itemVariants}
-              className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-md shadow-2xl bg-black/20"
-              style={{ height: '380px' }}
-            >
-              {/* Video Carousel - Shows 3 videos at a time */}
-              <div className="relative w-full h-full overflow-hidden">
-                <motion.div
-                  className="flex gap-4 h-full"
-                  animate={{
-                    x: ['0%', '-50%'], // Move 50% to loop seamlessly (6 videos = 50% of 12 total)
-                  }}
-                  transition={{
-                    x: {
-                      repeat: Infinity,
-                      repeatType: "loop",
-                      duration: 12,
-                      ease: "linear",
-                    },
-                  }}
-                  style={{
-                    display: 'flex',
-                    minWidth: '100%',
-                  }}
-                >
-                  {/* First set of 6 videos */}
-                  {[
-                    "/videos/VID_20251006_223257_399.mp4",
-                    "/videos/VID_20251006_223738_445.mp4",
-                    "/videos/VID_20251006_223742_952.mp4",
-                    "/videos/VID_20251006_223804_366.mp4",
-                    "/videos/VID_20251006_223822_120.mp4",
-                    "/videos/VID_20251006_223837_520.mp4",
-                  ].map((video, index) => (
-                    <div
-                      key={`video-1-${index}`}
-                      className="flex-shrink-0 rounded-xl overflow-hidden"
-                      style={{
-                        width: '32%',
-                        minWidth: '32%',
-                        height: '100%'
-                      }}
-                    >
-                      <video
-                        src={video}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                      />
-                    </div>
-                  ))}
-                  {/* Duplicate set of 6 videos for seamless loop */}
-                  {[
-                    "/videos/VID_20251006_223257_399.mp4",
-                    "/videos/VID_20251006_223738_445.mp4",
-                    "/videos/VID_20251006_223742_952.mp4",
-                    "/videos/VID_20251006_223804_366.mp4",
-                    "/videos/VID_20251006_223822_120.mp4",
-                    "/videos/VID_20251006_223837_520.mp4",
-                  ].map((video, index) => (
-                    <div
-                      key={`video-2-${index}`}
-                      className="flex-shrink-0 rounded-xl overflow-hidden"
-                      style={{
-                        width: '32%',
-                        minWidth: '32%',
-                        height: '100%'
-                      }}
-                    >
-                      <video
-                        src={video}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                      />
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
-            </motion.div>
+
 
             {/* Office Hours */}
             <motion.div
@@ -406,20 +301,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <motion.footer
-        variants={itemVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        className="mt-24 pt-12 border-t border-white/20 text-center text-gray-200"
-      >
-        <div className="container mx-auto px-6">
-          <p>&copy; 2025 Innovate Solutions. Todos los derechos reservados.</p>
-          <p className="mt-2 text-sm">
-            Diseñado con ❤️ para transformar el futuro digital
-          </p>
-        </div>
-      </motion.footer>
+
     </section>
   )
 }

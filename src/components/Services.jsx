@@ -1,20 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import MetallicText from './effects/MetallicText'
-import Galaxy from './effects/Galaxy'
 import CodeMatrix from './effects/CodeMatrix'
 import NeuralNetwork from './effects/NeuralNetwork'
 import DataFlow from './effects/DataFlow'
-import GeometricMorph from './effects/GeometricMorph'
-import ShieldField from './effects/ShieldField'
-import KnowledgeOrbs from './effects/KnowledgeOrbs'
 import OpenAIChat from './OpenAIChat'
 import OpenAIImageChat from './OpenAIImageChat'
 import CodexChat from './CodexChat'
 import { ThreeDMarquee } from './ui/3d-marquee'
 import HyperCube4D from './effects/HyperCube4D'
-import QuantumShield from './effects/QuantumShield'
-import DataVortex from './effects/DataVortex'
 import ErrorBoundary from './ErrorBoundary'
 
 // Iconos animados con React
@@ -269,52 +263,36 @@ const Services = () => {
 
   const services = [
     {
-      icon: <CodeIcon />,
-      title: "Desarrollo de Software",
-      description: "Aplicaciones web y móviles personalizadas con las últimas tecnologías",
+      icon: <UsersIcon />,
+      title: "Agente de Ventas",
+      description: "Atención 24/7, cualificación de leads y cierre de ventas automático.",
       color: "from-blue-500 to-cyan-500",
       CanvasEffect: CodeMatrix,
       onClick: () => handlePasswordProtectedAction(() => setIsCodexChatOpen(true))
     },
     {
-      icon: <OpenAIIcon />,
-      title: "Consultoría Tecnológica",
-      description: "Asesoramiento estratégico para optimizar tus procesos digitales con IA",
+      icon: <GlobeIcon />,
+      title: "Agente de Cobranza",
+      description: "Gestión automatizada de recordatorios, facturación y cobros.",
       color: "from-purple-500 to-pink-500",
       CanvasEffect: NeuralNetwork,
       onClick: () => handlePasswordProtectedAction(() => setIsChatOpen(true))
     },
     {
-      icon: <ImageIcon />,
-      title: "Procesamiento de Imágenes",
-      description: "Generación y procesamiento de imágenes con IA usando DALL-E 3",
+      icon: <CodeIcon />,
+      title: "Agente de Logística",
+      description: "Coordinación de despachos, estatus de envíos y control de stock.",
       color: "from-green-500 to-emerald-500",
       CanvasEffect: DataFlow,
       onClick: () => handlePasswordProtectedAction(() => setIsImageChatOpen(true))
     },
     {
-      icon: <GlobeIcon />,
-      title: "Transformación Digital",
-      description: "Modernización completa de infraestructuras y procesos empresariales",
+      icon: <ShieldIcon />,
+      title: "Agente de Conciliación de Pagos",
+      description: "Revisión automática de transferencias y cuadres de caja.",
       color: "from-orange-500 to-red-500",
       CanvasEffect: HyperCube4D,
       onClick: () => setIsTransformacionOpen(true)
-    },
-    {
-      icon: <ShieldIcon />,
-      title: "Ciberseguridad",
-      description: "Protección integral de sistemas y datos empresariales",
-      color: "from-indigo-500 to-blue-500",
-      CanvasEffect: QuantumShield,
-      onClick: () => window.open('https://app.topoexport.com/', '_blank', 'width=1400,height=900,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')
-    },
-    {
-      icon: <UsersIcon />,
-      title: "Web Scraper",
-      description: "Turn websites into LLM-ready data",
-      color: "from-teal-500 to-green-500",
-      CanvasEffect: DataVortex,
-      onClick: () => setIsCapacitacionOpen(true)
     }
   ]
 
@@ -348,7 +326,7 @@ const Services = () => {
 
   return (
     <section id="services" className="py-24 relative">
-      {/* Galaxy ya NO está aquí - ahora está en App.jsx compartido */}
+
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -474,8 +452,8 @@ const Services = () => {
             variants={itemVariants}
             className="text-xl text-gray-300 max-w-3xl mx-auto drop-shadow-lg"
           >
-            Ofrecemos soluciones tecnológicas integrales que impulsan el crecimiento
-            y la innovación en tu empresa
+            A diferencia del software comercial, cada agente se configura individualmente para tu empresa.
+            Se integran a tus plataformas web sin complicaciones.
           </motion.p>
         </motion.div>
 
@@ -483,7 +461,7 @@ const Services = () => {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {services.map((service, index) => (
             <motion.div

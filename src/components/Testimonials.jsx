@@ -14,7 +14,7 @@ const Testimonials = () => {
       position: "CEO, TechStartup",
       company: "TechStartup Solutions",
       rating: 5,
-      text: "Innovate Solutions transformó completamente nuestra infraestructura digital. Su expertise en consultoría tecnológica es excepcional.",
+      text: "Agentes IA transformó completamente nuestra infraestructura digital. Su expertise en consultoría tecnológica es excepcional.",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
     },
     {
@@ -41,7 +41,7 @@ const Testimonials = () => {
       position: "Fundador, LogiTech",
       company: "LogiTech Solutions",
       rating: 5,
-      text: "La implementación de IA en nuestros procesos fue un game changer. El equipo de Innovate Solutions es extraordinario.",
+      text: "La implementación de IA en nuestros procesos fue un game changer. El equipo de Agentes IA es extraordinario.",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
     },
     {
@@ -76,8 +76,8 @@ const Testimonials = () => {
   }
 
   const itemVariants = {
-    hidden: { 
-      y: 60, 
+    hidden: {
+      y: 60,
       opacity: 0,
       filter: "blur(10px)"
     },
@@ -96,7 +96,7 @@ const Testimonials = () => {
     <section id="testimonials" className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/30 to-black" />
-      
+
       {/* Animated Background Elements */}
       <motion.div
         animate={{
@@ -116,7 +116,7 @@ const Testimonials = () => {
           animate={isInView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             variants={itemVariants}
             className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl"
           >
@@ -124,17 +124,17 @@ const Testimonials = () => {
               Lo que Dicen Nuestros Clientes
             </MetallicText>
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-xl text-gray-400 max-w-3xl mx-auto"
           >
-            La satisfacción de nuestros clientes es nuestro mayor logro. 
+            La satisfacción de nuestros clientes es nuestro mayor logro.
             Descubre por qué confían en nosotros para sus proyectos más importantes.
           </motion.p>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -144,7 +144,7 @@ const Testimonials = () => {
             <motion.div
               key={testimonial.id}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.02,
                 y: -5
               }}
@@ -161,7 +161,7 @@ const Testimonials = () => {
               </motion.div>
 
               {/* Stars Rating */}
-              <motion.div 
+              <motion.div
                 className="flex gap-1 mb-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -180,7 +180,7 @@ const Testimonials = () => {
               </motion.div>
 
               {/* Testimonial Text */}
-              <motion.p 
+              <motion.p
                 className="text-gray-300 mb-8 leading-relaxed italic group-hover:text-white transition-colors duration-300"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -190,7 +190,7 @@ const Testimonials = () => {
               </motion.p>
 
               {/* Author Info */}
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -209,7 +209,7 @@ const Testimonials = () => {
                     className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                 </motion.div>
-                
+
                 <div>
                   <h4 className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">
                     {testimonial.name}
@@ -243,7 +243,7 @@ const Testimonials = () => {
         </motion.div>
 
         {/* Statistics */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -260,7 +260,7 @@ const Testimonials = () => {
               variants={itemVariants}
               className="text-center p-6 rounded-xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10"
             >
-              <motion.h3 
+              <motion.h3
                 className="text-4xl font-bold mb-2"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

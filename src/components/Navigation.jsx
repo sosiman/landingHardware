@@ -12,7 +12,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
   ]
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-custom bg-black/20 border-b border-white/10"
@@ -20,12 +20,12 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             whileHover={{ scale: 1.05 }}
             className="text-2xl font-bold"
           >
             <MetallicText className="chrome-text">
-              Innovate Solutions
+              Agentes IA
             </MetallicText>
           </motion.div>
 
@@ -57,7 +57,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
         </div>
 
         {/* Mobile Menu */}
-        <motion.div 
+        <motion.div
           initial={false}
           animate={{ height: isMenuOpen ? 'auto' : 0, opacity: isMenuOpen ? 1 : 0 }}
           className="md:hidden overflow-hidden"
