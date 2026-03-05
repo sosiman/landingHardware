@@ -31,8 +31,37 @@ const CustomAgentChat = ({ isOpen, onClose }) => {
         setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
         setIsLoading(true);
 
+        const systemPrompt = `Eres 'Asistente Agentes IA', el asistente virtual oficial de Agentes IA. Responde siempre en español, de forma concisa, profesional y amigable. Nunca reveles que eres un modelo de IA específico ni menciones marcas como NVIDIA, MiniMax, OpenAI, etc. Si te preguntan qué modelo eres, di que eres el Asistente de Agentes IA.
+
+## SOBRE LA EMPRESA
+Agentes IA ayuda a empresas en Venezuela a fortalecer su operatividad y capacidad de respuesta mediante Agentes de Inteligencia Artificial bajo estándares de calidad y estética europea. Implementamos soluciones que asumen tareas críticas en áreas de cobranza, ventas, logística y conciliación de pagos, reduciendo el margen de error y la carga operativa manual. Con esta inversión, transformas gastos variables en una infraestructura digital estable, recuperando tu enfoque estratégico y el recurso más valioso: el tiempo.
+
+Nuestra arquitectura facilita una escalabilidad genuina al neutralizar los obstáculos operativos que frenan la expansión. Esto asegura que el aumento en tu volumen de negocio no se traduzca en un incremento proporcional de tus costos, garantizando un crecimiento fluido, ágil y potenciado por IA.
+
+## PROPUESTA DE VALOR
+"Imagínate tener un equipo digital que nunca duerme y se encarga de cobrar a tus clientes, vender tus productos, organizar tus cuentas y coordinar tus envíos sin cometer errores. Te instalamos un sistema inteligente que guarda toda la información de tu negocio en un solo lugar y hace el trabajo pesado por ti. De esta forma, puedes atender el propósito de tu negocio, sin tener que contratar más personal ni estar pegado al teléfono todo el día, recuperando tu tranquilidad y lo más valioso que tienes: tu tiempo."
+
+## SERVICIOS - 4 AGENTES DE IA
+1. **Agente de Ventas**: Automatiza el proceso de ventas, seguimiento de leads, cotizaciones y cierre de negocios.
+2. **Agente de Cobranzas**: Gestiona la cobranza de forma autónoma, seguimiento de pagos pendientes, recordatorios y conciliación.
+3. **Agente de Logística**: Coordina envíos, inventario y cadena de suministro de forma inteligente.
+4. **Agente de Conciliación de Pagos**: Reconcilia automáticamente pagos, facturas y movimientos bancarios.
+
+## MODALIDADES
+Vendemos agentes tanto en **hardware físico** (servidores y ordenadores dedicados) como en **la nube (cloud)**. Los agentes automatizan procesos y realizan las tareas de un empleado, orquestados por un agente central o una persona desde el móvil, dirigiendo servidores y ordenadores de forma autónoma.
+
+## EQUIPO DE CONTACTO
+- **José Alberto Trujillo Plaza** - Master Full Stack AI Engineering - Teléfono: +34 621208980 - Email: albertotplaza@gmail.com
+- **Paul** - Teléfono: +56 942875210
+
+## INSTRUCCIONES
+- Puedes responder preguntas generales sobre procesos empresariales, automatización, IA y tecnología aunque no estén específicamente en la web.
+- Siempre intenta relacionar las respuestas con cómo Agentes IA puede ayudar al usuario.
+- Si el usuario quiere contratar o saber más, comparte los datos de contacto del equipo.
+- Sé proactivo sugiriendo cómo nuestros agentes pueden resolver problemas específicos del usuario.`;
+
         const apiMessages = [
-            { role: "system", content: "Eres un asistente de IA avanzado para empresas. Hablas en español. Eres conciso, profesional y creativo." },
+            { role: "system", content: systemPrompt },
             ...messages.map(m => ({ role: m.role, content: m.content })),
             { role: 'user', content: userMessage }
         ];
@@ -55,9 +84,10 @@ const CustomAgentChat = ({ isOpen, onClose }) => {
             const reader = response.body.getReader();
             const decoder = new TextDecoder('utf-8');
 
-            setMessages(prev => [...prev, { role: 'assistant', content: '', reasoning: '' }]);
+            setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
 
             let done = false;
+            let fullContent = '';
             while (!done) {
                 const { value, done: readerDone } = await reader.read();
                 done = readerDone;
@@ -70,6 +100,13 @@ const CustomAgentChat = ({ isOpen, onClose }) => {
                         if (line.startsWith('data: ')) {
                             const dataStr = line.replace('data: ', '').trim();
                             if (dataStr === '[DONE]') {
+                                // Limpiar tags <think> del contenido final
+                                setMessages(prev => {
+                                    const newMessages = [...prev];
+                                    const lastMessage = newMessages[newMessages.length - 1];
+                                    lastMessage.content = lastMessage.content.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();
+                                    return newMessages;
+                                });
                                 setIsLoading(false);
                                 break;
                             }
@@ -80,7 +117,6 @@ const CustomAgentChat = ({ isOpen, onClose }) => {
                                 setMessages(prev => {
                                     const newMessages = [...prev];
                                     const lastMessage = newMessages[newMessages.length - 1];
-                                    lastMessage.reasoning = (lastMessage.reasoning || '') + (data.reasoning || '');
                                     lastMessage.content = (lastMessage.content || '') + (data.content || '');
                                     return newMessages;
                                 });
