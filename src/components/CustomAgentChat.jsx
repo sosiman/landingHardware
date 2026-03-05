@@ -38,9 +38,9 @@ const CustomAgentChat = ({ isOpen, onClose }) => {
         ];
 
         try {
-            // Auto-detectar backend: en producción usa chat.lockthard.es, en local usa localhost
+            // Auto-detectar backend: en producción usa api.lockthard.es, en local usa localhost
             const isProduction = window.location.hostname.includes('lockthard.es');
-            const apiUrl = import.meta.env.VITE_API_URL || (isProduction ? 'https://chat.lockthard.es' : 'http://localhost:3001');
+            const apiUrl = import.meta.env.VITE_API_URL || (isProduction ? 'https://api.lockthard.es' : 'http://localhost:3001');
 
             const response = await fetch(`${apiUrl}/api/chat/nvidia`, {
                 method: 'POST',
