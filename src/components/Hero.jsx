@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import React, { useEffect, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Building2, Briefcase, TrendingUp, Database } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
 import RobotModel from './RobotModel'
@@ -10,10 +10,8 @@ const Hero = () => {
   const { scrollYProgress } = useScroll()
   const y = useTransform(scrollYProgress, [0, 1], [0, -50])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const descriptionRef = useRef(null)
 
   const [currentText, setCurrentText] = useState(0)
-  const [isNeuralNetworkOpen, setIsNeuralNetworkOpen] = useState(false)
   const [isCustomChatOpen, setIsCustomChatOpen] = useState(false)
   const texts = [
     "Soluciones Tecnológicas",
@@ -157,19 +155,14 @@ const Hero = () => {
           </motion.h2>
         </motion.div>
 
-        {/* Descripción principal - Un solo bloque elegante */}
+        {/* Descripción principal - Estilo editorial limpio (sin efecto eléctrico) */}
         <motion.div variants={itemVariants} className="mb-14">
-          <div className="electric-card electric-blue mx-auto max-w-4xl">
-            <div className="electric-border-glow" />
-            <div className="electric-card-inner" style={{ padding: '2rem 2.5rem' }}>
-              <p className="text-gray-100 text-lg md:text-xl leading-relaxed text-center font-light">
-                Ayudamos a empresas en Venezuela a fortalecer su operatividad mediante un{' '}
-                <span className="text-blue-400 font-medium">Ecosistema de Inteligencia Artificial</span>{' '}
-                centralizado en una base de datos propietaria y CRM de alto rendimiento,
-                diseñado bajo estándares de calidad y estética europea.
-              </p>
-            </div>
-          </div>
+          <p className="mx-auto max-w-4xl text-center text-zinc-100 text-lg md:text-2xl leading-relaxed md:leading-relaxed font-light tracking-wide">
+            Ayudamos a empresas en Venezuela a fortalecer su operatividad mediante un{' '}
+            <span className="font-semibold text-amber-200">ecosistema de inteligencia artificial</span>{' '}
+            centralizado en una base de datos propietaria y CRM de alto rendimiento,
+            diseñado bajo estándares de calidad y estética europea.
+          </p>
         </motion.div>
 
         {/* 4 Features - Lista compacta con bordes eléctricos laterales */}
@@ -208,7 +201,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.2 + i * 0.15, duration: 0.5 }}
-              className="flex items-start gap-4 p-4 rounded-xl bg-black/80 backdrop-blur-xl border-l-2 hover:bg-black/90 transition-all duration-300"
+              className="flex items-start gap-4 p-4 rounded-xl border-l-2 transition-all duration-300 bg-white/10 border-white/20 backdrop-blur-md lg:bg-black/80 lg:border-l-2 lg:border-white/10 lg:hover:bg-black/90"
               style={{ borderLeftColor: `var(--tw-${item.color}-400, ${item.color === 'purple' ? '#a855f7' : item.color === 'blue' ? '#3b82f6' : item.color === 'emerald' ? '#10b981' : '#f59e0b'})` }}
             >
               <div className={`p-2.5 rounded-lg bg-${item.color}-500/20 shrink-0 mt-0.5`}>
@@ -222,146 +215,12 @@ const Hero = () => {
           ))}
         </motion.div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-        >
-
-          <motion.button
-            onClick={() => setIsNeuralNetworkOpen(true)}
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(16, 185, 129, 0.5)" }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full text-white font-semibold overflow-hidden shadow-lg flex items-center gap-2"
-          >
-            <motion.div
-              animate={{
-                opacity: [0.2, 0.5, 0.2],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              className="absolute inset-0 bg-gradient-to-r from-teal-500/30 via-emerald-500/30 to-teal-500/30"
-            />
-
-            <motion.svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="relative z-10"
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 180, 360]
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            >
-              <circle cx="12" cy="12" r="3" />
-              <circle cx="6" cy="6" r="2" />
-              <circle cx="18" cy="6" r="2" />
-              <circle cx="6" cy="18" r="2" />
-              <circle cx="18" cy="18" r="2" />
-              <line x1="9" y1="10.5" x2="7.5" y2="7.5" />
-              <line x1="15" y1="10.5" x2="16.5" y2="7.5" />
-              <line x1="9" y1="13.5" x2="7.5" y2="16.5" />
-              <line x1="15" y1="13.5" x2="16.5" y2="16.5" />
-            </motion.svg>
-
-            <span className="relative z-10">Demo IA</span>
-
-            <motion.div
-              animate={{
-                y: [-3, 3, -3],
-                x: [-2, 2, -2],
-                opacity: [0.4, 1, 0.4]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute top-2 right-4 w-1.5 h-1.5 bg-emerald-400 rounded-full blur-sm"
-            />
-            <motion.div
-              animate={{
-                y: [3, -3, 3],
-                x: [2, -2, 2],
-                opacity: [0.4, 1, 0.4]
-              }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
-              className="absolute bottom-2 right-6 w-1.5 h-1.5 bg-teal-400 rounded-full blur-sm"
-            />
-
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-600"
-              initial={{ x: "100%" }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
-
-        </motion.div>
       </motion.div>
 
       {/* Nuevo Asistente IA NV - Right Side */}
       <CustomAgentIcon onClick={() => setIsCustomChatOpen(true)} />
       <CustomAgentChat isOpen={isCustomChatOpen} onClose={() => setIsCustomChatOpen(false)} />
 
-      {/* Neural Network Modal */}
-      <AnimatePresence>
-        {isNeuralNetworkOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-            style={{ background: 'rgba(0, 0, 0, 0.3)' }}
-            onClick={() => setIsNeuralNetworkOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0, y: 50 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 50 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-7xl h-[1040px] bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-emerald-500/20"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-3 bg-gradient-to-b from-gray-900/90 to-transparent backdrop-blur-sm">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <motion.span
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.7, 1, 0.7]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-2 h-2 bg-emerald-500 rounded-full"
-                  />
-                  Demo IA
-                </h3>
-                <button
-                  onClick={() => setIsNeuralNetworkOpen(false)}
-                  className="p-2 hover:bg-white/10 rounded-full transition-colors text-white hover:rotate-90 transition-transform duration-300"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Iframe - con permisos completos para interacción */}
-              <iframe
-                src="https://nn-vis.noelith.dev/"
-                className="w-full h-full border-0"
-                title="Neural Network Visualization"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-modals"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                style={{
-                  pointerEvents: 'auto',
-                  touchAction: 'auto'
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   )
 }
