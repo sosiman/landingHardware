@@ -18,23 +18,13 @@ import {
   TrendingDown,
   Clock,
   UserX,
-  Maximize
+  Maximize,
+  Brain,
+  Timer,
+  ShieldCheck,
+  Coins,
+  TrendingUp
 } from 'lucide-react'
-
-const AnimatedBotIcon = ({ color }) => (
-  <motion.svg
-    width="32" height="32" viewBox="0 0 24 24" fill="none"
-    stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-    animate={{ y: [0, -2, 0] }}
-    transition={{ duration: 3, repeat: Infinity }}
-  >
-    <rect x="3" y="11" width="18" height="10" rx="2" />
-    <circle cx="12" cy="5" r="2" />
-    <path d="M12 7v4" />
-    <line x1="8" y1="16" x2="8" y2="16" strokeWidth="3" />
-    <line x1="16" y1="16" x2="16" y2="16" strokeWidth="3" />
-  </motion.svg>
-)
 
 const Services = () => {
   const ref = useRef(null)
@@ -72,12 +62,12 @@ const Services = () => {
   ]
 
   const advantages = [
-    { title: "Elimina Empleados", icon: <UserX />, color: "text-red-600", bg: "bg-red-50" },
-    { title: "Reduce Costos", icon: <TrendingDown />, color: "text-emerald-600", bg: "bg-emerald-50" },
-    { title: "Aumenta Productividad", icon: <Maximize />, color: "text-blue-600", bg: "bg-blue-50" },
-    { title: "Funciona 24/7", icon: <Clock />, color: "text-amber-600", bg: "bg-amber-50" },
-    { title: "Sin Errores", icon: <Shield />, color: "text-purple-600", bg: "bg-purple-50" },
-    { title: "Escalable", icon: <Zap />, color: "text-cyan-600", bg: "bg-cyan-50" }
+    { title: "Elimina Empleados", icon: <UserX />, color: "text-rose-500", bg: "bg-rose-50/50" },
+    { title: "Reduce Costos", icon: <Coins />, color: "text-amber-500", bg: "bg-amber-50/50" },
+    { title: "Productividad", icon: <BarChart3 />, color: "text-blue-500", bg: "bg-blue-50/50" },
+    { title: "Funciona 24/7", icon: <Timer />, color: "text-emerald-500", bg: "bg-emerald-50/50" },
+    { title: "Sin Errores", icon: <ShieldCheck />, color: "text-indigo-500", bg: "bg-indigo-50/50" },
+    { title: "Escalable", icon: <TrendingUp />, color: "text-cyan-500", bg: "bg-cyan-50/50" }
   ]
 
   return (
@@ -124,7 +114,8 @@ const Services = () => {
         </div>
 
         {/* GRID: What can it do? */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-24">
+
           {/* LADO IZQUIERDO: Ventana de Control (Glassmorphism) */}
           <div className="lg:col-span-4 sticky top-32">
             <span className="text-zinc-400 font-bold tracking-[0.3em] uppercase text-[10px]">Command Center</span>
@@ -169,40 +160,116 @@ const Services = () => {
                 ))}
               </div>
 
-              {/* Bottom Decoration */}
+              {/* Active System Indicator */}
               <div className="p-6 bg-zinc-900/5 mt-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest uppercase tracking-widest">Active System</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-[0.2em]">System Status: Operating</span>
                 </div>
                 <div className="h-1 w-full bg-zinc-200 rounded-full overflow-hidden">
                   <motion.div
                     animate={{ x: ["-100%", "100%"] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                    className="h-full w-1/3 bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+                    className="h-full w-1/3 bg-gradient-to-r from-transparent via-blue-500 to-transparent shadow-[0_0_10px_rgba(59,130,246,0.5)]"
                   />
                 </div>
               </div>
             </motion.div>
           </div>
 
-          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {capabilities.map((cap, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ x: 10 }}
-                className="flex items-center gap-6 p-6 rounded-[32px] bg-white border border-zinc-100 hover:border-zinc-300 transition-all shadow-sm"
-              >
-                <div className="p-4 rounded-2xl bg-zinc-50 text-zinc-900">
-                  {React.cloneElement(cap.icon, { size: 24, strokeWidth: 2.5 })}
-                </div>
-                <div>
-                  <h4 className="font-black text-zinc-900 tracking-tight">{cap.title}</h4>
-                  <p className="text-xs text-zinc-400 font-bold uppercase tracking-widest">{cap.desc}</p>
-                </div>
-                <ArrowRight className="w-4 h-4 ml-auto text-zinc-200 group-hover:text-zinc-900" />
-              </motion.div>
-            ))}
+          {/* LADO DERECHO: Grid de Capacidades (7 Bloques) + Workflow */}
+          <div className="lg:col-span-8 flex flex-col gap-12">
+
+            {/* 7 Bloques de Capacidades */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {capabilities.map((cap, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ x: 10, backgroundColor: "rgba(255, 255, 255, 0.8)" }}
+                  className="group flex items-center gap-6 p-6 rounded-[32px] bg-white border border-zinc-100/50 hover:border-zinc-300 transition-all shadow-sm"
+                >
+                  <div className="p-4 rounded-2xl bg-zinc-50 text-zinc-900 group-hover:bg-white group-hover:shadow-inner transition-all">
+                    {React.cloneElement(cap.icon, { size: 24, strokeWidth: 2 })}
+                  </div>
+                  <div>
+                    <h4 className="font-black text-zinc-900 tracking-tight text-lg">{cap.title}</h4>
+                    <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">{cap.desc}</p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 ml-auto text-zinc-200 group-hover:text-zinc-900 group-hover:translate-x-1 transition-all" />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* SECCIÓN: ¿CÓMO FUNCIONA? (Basada en la Foto) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              className="p-10 rounded-[48px] bg-gradient-to-br from-white/80 to-zinc-50/50 border border-white backdrop-blur-xl shadow-2xl relative overflow-hidden"
+            >
+              <div className="flex items-center gap-4 mb-12">
+                <div className="h-0.5 w-12 bg-amber-500" />
+                <h3 className="text-3xl font-black text-zinc-900 tracking-tighter italic">¿Cómo funciona?</h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                {[
+                  {
+                    num: "1",
+                    title: "Le das una tarea",
+                    desc: '"Crea una base de datos de clientes"',
+                    icon: <Layout className="text-amber-500" />,
+                    color: "bg-amber-50"
+                  },
+                  {
+                    num: "2",
+                    title: "El agente la entiende",
+                    desc: "Procesamiento de lenguaje natural y lógica.",
+                    icon: <Brain className="text-blue-500" />,
+                    color: "bg-blue-50"
+                  },
+                  {
+                    num: "3",
+                    title: "La ejecuta automáticamente",
+                    desc: "Interacción autónoma sin errores.",
+                    icon: <Zap className="text-purple-500" />,
+                    color: "bg-purple-50"
+                  },
+                  {
+                    num: "4",
+                    title: "Entrega resultados",
+                    desc: "Inmediato, eficiente y escalable.",
+                    icon: <CheckCircle2 className="text-emerald-500" />,
+                    color: "bg-emerald-50"
+                  }
+                ].map((step, idx) => (
+                  <div key={idx} className="relative group">
+                    <motion.div
+                      whileHover={{ y: -5 }}
+                      className="p-6 rounded-[32px] bg-white border border-zinc-100 shadow-sm h-full flex flex-col items-center text-center gap-4"
+                    >
+                      <div className={`w-14 h-14 rounded-2xl ${step.color} flex items-center justify-center`}>
+                        {React.cloneElement(step.icon, { size: 30, strokeWidth: 2.5 })}
+                        <span className="absolute -top-2 -right-2 w-7 h-7 bg-zinc-900 text-white rounded-full flex items-center justify-center text-[10px] font-black border-2 border-white shadow-lg">
+                          0{step.num}
+                        </span>
+                      </div>
+                      <h4 className="font-black text-zinc-900 text-sm leading-tight">{step.title}</h4>
+                      <p className="text-[11px] text-zinc-500 font-medium leading-relaxed italic">
+                        {step.desc}
+                      </p>
+                    </motion.div>
+                    {idx < 3 && (
+                      <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-zinc-300">
+                        <ArrowRight size={20} strokeWidth={3} className="animate-pulse" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -241,10 +308,8 @@ const Services = () => {
                 Transformamos gastos operativos en infraestructura digital escalable y permanente.
               </p>
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
   )
