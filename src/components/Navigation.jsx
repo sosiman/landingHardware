@@ -15,7 +15,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-custom bg-black/20 border-b border-white/10"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/40 border-b border-zinc-200"
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
@@ -38,11 +38,11 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, color: '#3b82f6' }}
-                className="text-white/80 hover:text-white transition-colors relative group"
+                whileHover={{ scale: 1.05, color: '#2563eb' }}
+                className="text-zinc-600 hover:text-zinc-900 transition-colors relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
               </motion.a>
             ))}
           </div>
@@ -50,7 +50,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white p-2"
+            className="md:hidden text-zinc-900 p-2"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -71,7 +71,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
                 animate={{ opacity: isMenuOpen ? 1 : 0, x: isMenuOpen ? 0 : -20 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-white/80 hover:text-white transition-colors py-2"
+                className="block text-zinc-600 hover:text-zinc-900 transition-colors py-2"
               >
                 {item.name}
               </motion.a>

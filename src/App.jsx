@@ -14,13 +14,7 @@ function App() {
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100])
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden relative">
-
-      {/* Fondo corporativo estático para toda la web */}
-      <div className="fixed inset-0 z-[-2]">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-700 via-stone-600 to-amber-700" />
-        <div className="absolute inset-0 bg-black/25" />
-      </div>
+    <div className="min-h-screen text-zinc-900 overflow-x-hidden relative bg-[#FDF5E6]">
 
       {/* Navigation */}
       <Navigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
@@ -28,17 +22,14 @@ function App() {
       {/* Hero Section */}
       <Hero />
 
-      {/* SECCIÓN UNIFICADA: Services + Gallery con el MISMO fondo */}
+      {/* SECCIÓN UNIFICADA: Services + Gallery */}
       <section className="relative">
-        {/* Dark overlay para mejorar legibilidad - COMPARTIDO */}
-        <div className="absolute inset-0 bg-black/50 z-0" />
-
         {/* Services Section */}
         <div>
           <Services />
         </div>
 
-        {/* Gallery Section - SIN su propio fondo */}
+        {/* Gallery Section */}
         <Gallery />
       </section>
 
@@ -48,7 +39,7 @@ function App() {
       {/* Animated Background Elements */}
       <motion.div
         style={{ y: y1 }}
-        className="fixed top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl -z-10"
+        className="fixed top-20 left-10 w-72 h-72 bg-amber-200/20 rounded-full blur-3xl -z-10"
       />
 
     </div>

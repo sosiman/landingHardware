@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Building2, Briefcase, TrendingUp, Database } from 'lucide-react'
+import { Building2, Briefcase, TrendingUp, Database, ArrowRight } from 'lucide-react'
 import MetallicText from './effects/MetallicText'
 import RobotModel from './RobotModel'
 import CustomAgentIcon from './CustomAgentIcon'
@@ -33,191 +33,152 @@ const Hero = () => {
       opacity: 1,
       transition: {
         delayChildren: 0.3,
-        staggerChildren: 0.2
+        staggerChildren: 0.1
       }
     }
   }
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0, filter: "blur(10px)" },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.6, ease: "easeOut" }
     }
   }
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* El fondo de carrusel ahora vive globalmente en App.jsx */}
+    <section id="home" className="relative min-h-screen pt-20 flex flex-col items-center justify-center overflow-hidden bg-[#FDF5E6]">
 
-      {/* Elementos flotantes más transparentes */}
-      <motion.div
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 5, -5, 0]
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-10 w-20 h-20 bg-blue-500/15 rounded-full blur-xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, -5, 5, 0]
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute bottom-20 right-20 w-32 h-32 bg-purple-500/15 rounded-full blur-xl"
-      />
+      {/* App Mask (Subtle bezel for mobile-app feel) */}
+      <div className="absolute inset-4 border border-zinc-900/5 rounded-[40px] pointer-events-none z-50 hidden lg:block" />
 
-      {/* MODELO 3D - Adaptado para Móvil (fondo centrado) y Desktop (lado izquierdo) */}
-      <motion.div
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="hidden lg:flex absolute top-[15%] left-0 w-[500px] h-[850px] items-center justify-start opacity-100 pointer-events-auto z-50"
-        style={{ willChange: 'transform, opacity' }}
-      >
-        {/* Contenedor del modelo con efectos de glow */}
-        <div className="relative w-full h-full">
-          {/* Glow effect detrás del modelo */}
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          {/* COLUMNA IZQUIERDA: Título y Tablets */}
           <motion.div
-            animate={{
-              opacity: [0.3, 0.6, 0.3],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-3xl rounded-full"
-          />
-
-          {/* Modelo 3D */}
-          <div className="relative w-full h-full">
-            <RobotModel />
-          </div>
-
-          {/* Decoración - Anillos orbitales */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 border-2 border-purple-500/20 rounded-full"
-            style={{ transform: 'scale(1.1)' }}
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 border-2 border-blue-500/20 rounded-full"
-            style={{ transform: 'scale(0.9) rotateX(60deg)' }}
-          />
-        </div>
-      </motion.div>
-
-
-
-      {/* CONTENIDO PRINCIPAL */}
-      <motion.div
-        style={{ y, opacity }}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="relative z-10 text-center px-6 max-w-5xl pt-28 pb-16"
-      >
-        {/* Main Title */}
-        <motion.div variants={itemVariants} className="mb-6">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
-            <span className="block">
-              <MetallicText className="chrome-text">
-                Agentes IA
-              </MetallicText>
-            </span>
-            <span className="block">
-              <MetallicText className="silver-text">
-                para Empresas
-              </MetallicText>
-            </span>
-          </h1>
-        </motion.div>
-
-        {/* Animated Subtitle */}
-        <motion.div variants={itemVariants} className="mb-10 h-12 flex items-center justify-center">
-          <motion.h2
-            key={currentText}
-            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-            className="text-2xl md:text-4xl font-light"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 space-y-8"
           >
-            <MetallicText className="gold-text">
-              {texts[currentText]}
-            </MetallicText>
-          </motion.h2>
-        </motion.div>
-
-        {/* Descripción principal - Estilo editorial limpio (sin efecto eléctrico) */}
-        <motion.div variants={itemVariants} className="mb-14">
-          <p className="mx-auto max-w-4xl text-center text-zinc-100 text-lg md:text-2xl leading-relaxed md:leading-relaxed font-light tracking-wide">
-            Ayudamos a empresas en Venezuela a fortalecer su operatividad mediante un{' '}
-            <span className="font-semibold text-amber-200">ecosistema de inteligencia artificial</span>{' '}
-            centralizado en una base de datos propietaria y CRM de alto rendimiento,
-            diseñado bajo estándares de calidad y estética europea.
-          </p>
-        </motion.div>
-
-        {/* 4 Features - Lista compacta con bordes eléctricos laterales */}
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14 max-w-4xl mx-auto text-left"
-        >
-          {[
-            {
-              icon: <Briefcase className="w-6 h-6 text-purple-400" />,
-              color: 'purple',
-              title: 'Agentes Autónomos',
-              desc: 'Asumen tareas críticas en cobranza, ventas, logística y conciliación de pagos, con soporte en gestión contable y cumplimiento legal.'
-            },
-            {
-              icon: <Database className="w-6 h-6 text-blue-400" />,
-              color: 'blue',
-              title: 'Memoria Corporativa',
-              desc: 'Transforma datos dispersos en infraestructura digital estable y una memoria corporativa inteligente.'
-            },
-            {
-              icon: <TrendingUp className="w-6 h-6 text-emerald-400" />,
-              color: 'emerald',
-              title: 'Escalabilidad Real',
-              desc: 'Tu negocio crece sin fricciones. El aumento de volumen no incrementa tus costos operativos.'
-            },
-            {
-              icon: <Building2 className="w-6 h-6 text-amber-400" />,
-              color: 'amber',
-              title: 'Recupera tu Tiempo',
-              desc: 'Transforma gastos variables en infraestructura digital estable. Recupera tu enfoque estratégico y tu tiempo.'
-            }
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.2 + i * 0.15, duration: 0.5 }}
-              className="flex items-start gap-4 p-4 rounded-xl border-l-2 transition-all duration-300 bg-white/10 border-white/20 backdrop-blur-md lg:bg-black/80 lg:border-l-2 lg:border-white/10 lg:hover:bg-black/90"
-              style={{ borderLeftColor: `var(--tw-${item.color}-400, ${item.color === 'purple' ? '#a855f7' : item.color === 'blue' ? '#3b82f6' : item.color === 'emerald' ? '#10b981' : '#f59e0b'})` }}
-            >
-              <div className={`p-2.5 rounded-lg bg-${item.color}-500/20 shrink-0 mt-0.5`}>
-                {item.icon}
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-1">{item.title}</h3>
-                <p className="text-gray-300 text-base leading-relaxed">{item.desc}</p>
-              </div>
+            {/* Main Title - Left Aligned */}
+            <motion.div variants={itemVariants} className="space-y-2">
+              <span className="text-zinc-500 font-medium tracking-[0.2em] uppercase text-sm block">Premium AI Systems</span>
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
+                <span className="block">
+                  <MetallicText className="chrome-text">
+                    Agentes IA
+                  </MetallicText>
+                </span>
+                <span className="block">
+                  <MetallicText className="silver-text text-zinc-900">
+                    para Empresas
+                  </MetallicText>
+                </span>
+              </h1>
             </motion.div>
-          ))}
-        </motion.div>
 
-      </motion.div>
+            {/* Tablets (Features) - Left Aligned & Stacked like App Widgets */}
+            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 max-w-xl">
+              {[
+                {
+                  icon: <Briefcase className="w-5 h-5 text-purple-600" />,
+                  title: 'Agentes Autónomos',
+                  desc: 'Ventas y gestión operativa 24/7.'
+                },
+                {
+                  icon: <Database className="w-5 h-5 text-blue-600" />,
+                  title: 'Memoria Corporativa',
+                  desc: 'Infraestructura digital unificada.'
+                },
+                {
+                  icon: <TrendingUp className="w-5 h-5 text-emerald-600" />,
+                  title: 'Escalabilidad Real',
+                  desc: 'Crece sin aumentar costos fijos.'
+                },
+                {
+                  icon: <Building2 className="w-5 h-5 text-amber-600" />,
+                  title: 'Ahorro Estratégico',
+                  desc: 'Optimización de recursos y tiempo.'
+                }
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.02, x: 10 }}
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                >
+                  <div className="p-3 rounded-xl bg-zinc-50 group-hover:bg-white transition-colors">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-zinc-900">{item.title}</h3>
+                    <p className="text-xs text-zinc-500 font-medium">{item.desc}</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 ml-auto text-zinc-300 group-hover:text-zinc-800 transition-colors" />
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
 
-      {/* Nuevo Asistente IA NV - Right Side */}
+          {/* COLUMNA DERECHA: Subtítulo y Bot */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end space-y-12">
+
+            {/* Animated Subtitle - Right Aligned */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="w-full text-center lg:text-right"
+            >
+              <div className="inline-block p-1 px-4 rounded-full bg-zinc-900 text-white mb-4 text-xs font-bold tracking-widest uppercase">
+                Status: Online
+              </div>
+              <motion.h2
+                key={currentText}
+                initial={{ opacity: 0, filter: "blur(10px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                className="text-3xl md:text-5xl font-light text-zinc-400"
+              >
+                {texts[currentText]}
+              </motion.h2>
+              <p className="mt-4 text-zinc-500 text-sm md:text-base max-w-sm ml-auto font-medium">
+                Diseñado bajo estándares estéticos europeos para la operatividad del futuro.
+              </p>
+            </motion.div>
+
+            {/* ROBOT MODEL - Right Side / Floating Widget Style */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="relative w-full aspect-square max-w-[450px] group"
+            >
+              {/* Glow background */}
+              <div className="absolute inset-0 bg-zinc-900/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors duration-1000" />
+
+              {/* Robot Model component */}
+              <div className="relative w-full h-full z-10 scale-110">
+                <RobotModel />
+              </div>
+
+              {/* Orbital Decorations */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 border border-zinc-200/50 rounded-full"
+              />
+            </motion.div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Elements (Background) */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-[100px] -z-10" />
+      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-purple-100/30 rounded-full blur-[100px] -z-10" />
+
+      {/* Asistente Chat UI */}
       <CustomAgentIcon onClick={() => setIsCustomChatOpen(true)} />
       <CustomAgentChat isOpen={isCustomChatOpen} onClose={() => setIsCustomChatOpen(false)} />
 

@@ -82,8 +82,8 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
-      {/* Dark overlay para mejorar legibilidad sobre el carrusel de App.jsx */}
-      <div className="absolute inset-0 bg-black/60 z-0" />
+      {/* Overlay sutil para legibilidad en fondo claro */}
+      <div className="absolute inset-0 bg-white/20 z-0" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -103,7 +103,7 @@ const Contact = () => {
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-xl text-gray-100 max-w-3xl mx-auto drop-shadow-lg"
+            className="text-xl text-zinc-600 max-w-3xl mx-auto drop-shadow-sm"
           >
             ¿Tienes una idea innovadora? Contáctanos y descubre cómo podemos
             ayudarte a convertirla en realidad digital.
@@ -120,68 +120,68 @@ const Contact = () => {
           >
             <motion.div
               variants={itemVariants}
-              className="p-8 rounded-2xl backdrop-blur-md border border-white/20 bg-black/60 shadow-2xl"
+              className="p-8 rounded-2xl backdrop-blur-md border border-zinc-200 bg-white/40 shadow-2xl"
             >
-              <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                <MessageSquare className="w-6 h-6 text-blue-400" />
+              <h3 className="text-2xl font-bold text-zinc-900 mb-8 flex items-center gap-3">
+                <MessageSquare className="w-6 h-6 text-blue-600" />
                 Envíanos un Mensaje
               </h3>
 
               {!isSubmitted ? (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <motion.div variants={itemVariants}>
-                    <label className="block text-gray-200 mb-2">Nombre Completo</label>
+                    <label className="block text-zinc-700 mb-2">Nombre Completo</label>
                     <div className="relative">
-                      <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-400" />
+                      <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-600" />
                       <input
                         type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full pl-12 pr-4 py-4 bg-black/40 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                        className="w-full pl-12 pr-4 py-4 bg-white/40 border border-zinc-200 rounded-xl text-zinc-900 placeholder-zinc-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                         placeholder="Tu nombre completo"
                       />
                     </div>
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
-                    <label className="block text-gray-200 mb-2">Email</label>
+                    <label className="block text-zinc-700 mb-2">Email</label>
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-400" />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-600" />
                       <input
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full pl-12 pr-4 py-4 bg-black/40 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                        className="w-full pl-12 pr-4 py-4 bg-white/40 border border-zinc-200 rounded-xl text-zinc-900 placeholder-zinc-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                         placeholder="tu@email.com"
                       />
                     </div>
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
-                    <label className="block text-gray-200 mb-2">Empresa (Opcional)</label>
+                    <label className="block text-zinc-700 mb-2">Empresa (Opcional)</label>
                     <input
                       type="text"
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-4 bg-black/40 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                      className="w-full px-4 py-4 bg-white/40 border border-zinc-200 rounded-xl text-zinc-900 placeholder-zinc-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                       placeholder="Nombre de tu empresa"
                     />
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
-                    <label className="block text-gray-200 mb-2">Mensaje</label>
+                    <label className="block text-zinc-700 mb-2">Mensaje</label>
                     <textarea
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
                       required
                       rows="6"
-                      className="w-full px-4 py-4 bg-black/40 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition-all duration-300 resize-none"
+                      className="w-full px-4 py-4 bg-white/40 border border-zinc-200 rounded-xl text-zinc-900 placeholder-zinc-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 resize-none"
                       placeholder="Cuéntanos sobre tu proyecto..."
                     ></textarea>
                   </motion.div>
@@ -211,8 +211,8 @@ const Contact = () => {
                   >
                     <CheckCircle className="w-8 h-8 text-white" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-4">¡Mensaje Enviado!</h3>
-                  <p className="text-gray-200">
+                  <h3 className="text-2xl font-bold text-zinc-900 mb-4">¡Mensaje Enviado!</h3>
+                  <p className="text-zinc-600">
                     Gracias por contactarnos. Te responderemos en breve.
                   </p>
                 </motion.div>
@@ -228,35 +228,35 @@ const Contact = () => {
             className="space-y-8"
           >
             <motion.div variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-white mb-8">Nuestro Equipo</h3>
+              <h3 className="text-2xl font-bold text-zinc-900 mb-8">Nuestro Equipo</h3>
             </motion.div>
 
             {/* José Alberto */}
             <motion.div
               variants={itemVariants}
-              className="p-6 rounded-xl backdrop-blur-md border border-white/20 bg-black/60 shadow-lg"
+              className="p-6 rounded-xl backdrop-blur-md border border-zinc-200 bg-white/40 shadow-lg"
             >
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white shrink-0">
                   <User className="w-7 h-7" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-xl font-bold text-white">José Alberto Trujillo Plaza</h4>
-                  <p className="text-blue-400 font-medium mb-3">Master Full-Stack AI Engineering</p>
+                  <h4 className="text-xl font-bold text-zinc-900">José Alberto Trujillo Plaza</h4>
+                  <p className="text-blue-600 font-medium mb-3">Master Full-Stack AI Engineering</p>
                   <div className="space-y-2">
                     <a
                       href="https://wa.me/34621208980"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-gray-200 hover:text-green-400 transition-colors"
+                      className="flex items-center gap-2 text-zinc-600 hover:text-green-600 transition-colors"
                     >
                       <Phone className="w-4 h-4" />
                       <span>+34 621 208 980</span>
-                      <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">WhatsApp</span>
+                      <span className="text-xs bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full">WhatsApp</span>
                     </a>
                     <a
                       href="mailto:albertotplaza@gmail.com"
-                      className="flex items-center gap-2 text-gray-200 hover:text-blue-400 transition-colors"
+                      className="flex items-center gap-2 text-zinc-600 hover:text-blue-600 transition-colors"
                     >
                       <Mail className="w-4 h-4" />
                       <span>albertotplaza@gmail.com</span>
@@ -269,25 +269,25 @@ const Contact = () => {
             {/* Paul Martines */}
             <motion.div
               variants={itemVariants}
-              className="p-6 rounded-xl backdrop-blur-md border border-white/20 bg-black/60 shadow-lg"
+              className="p-6 rounded-xl backdrop-blur-md border border-zinc-200 bg-white/40 shadow-lg"
             >
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center text-white shrink-0">
                   <User className="w-7 h-7" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-xl font-bold text-white">Paul Martines</h4>
-                  <p className="text-emerald-400 font-medium mb-3">CEO</p>
+                  <h4 className="text-xl font-bold text-zinc-900">Paul Martines</h4>
+                  <p className="text-emerald-600 font-medium mb-3">CEO</p>
                   <div className="space-y-2">
                     <a
                       href="https://wa.me/56942875210"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-gray-200 hover:text-green-400 transition-colors"
+                      className="flex items-center gap-2 text-zinc-600 hover:text-green-600 transition-colors"
                     >
                       <Phone className="w-4 h-4" />
                       <span>+56 942 875 210</span>
-                      <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">WhatsApp</span>
+                      <span className="text-xs bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full">WhatsApp</span>
                     </a>
                   </div>
                 </div>

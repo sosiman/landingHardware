@@ -1,460 +1,190 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { Eye, ExternalLink, ZoomIn } from 'lucide-react'
+import { ExternalLink, Layers, Layout, Smartphone, Brain, Cloud, Cpu, ArrowUpRight } from 'lucide-react'
 import RobotSVG from './effects/RobotSVG'
-
 import MetallicText from './effects/MetallicText'
 
 const Gallery = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, threshold: 0.1 })
-  const [selectedProject, setSelectedProject] = useState(null)
   const [filter, setFilter] = useState('all')
-  const [backdropIndex, setBackdropIndex] = useState(0)
-
-  const galleryVisuals = [
-    "https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1472289065668-ce650ac443d2?q=80&w=1800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1800&auto=format&fit=crop"
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBackdropIndex((prev) => (prev + 1) % galleryVisuals.length)
-    }, 9000)
-    return () => clearInterval(interval)
-  }, [galleryVisuals.length])
 
   const projects = [
     {
       id: 1,
-      title: "E-commerce Platform",
+      title: "Plataforma E-commerce",
       category: "web",
-      description: "Plataforma de comercio electrónico moderna con React y Node.js",
+      description: "Automatización de ventas y pagos recurrentes.",
       gradient: "from-blue-600 via-cyan-500 to-teal-500",
       botColor: "#3b82f6",
-      tags: ["React", "Node.js", "MongoDB"],
-      highlight: "Aumento del 230% en conversión"
+      icon: <Layout className="w-5 h-5" />
     },
     {
       id: 2,
-      title: "Mobile Banking App",
+      title: "App de Banca Móvil",
       category: "mobile",
-      description: "Aplicación bancaria móvil con autenticación biométrica",
+      description: "Seguridad biométrica e IA predictiva de gastos.",
       gradient: "from-purple-600 via-pink-500 to-fuchsia-500",
       botColor: "#a855f7",
-      tags: ["React Native", "Firebase", "Security"],
-      highlight: "99.9% de uptime certificado"
+      icon: <Smartphone className="w-5 h-5" />
     },
     {
       id: 3,
-      title: "AI Dashboard",
+      title: "Dashboard de IA",
       category: "ai",
-      description: "Dashboard de análisis con inteligencia artificial",
+      description: "Análisis de sentimientos en tiempo real para soporte.",
       gradient: "from-violet-600 via-indigo-500 to-blue-500",
       botColor: "#7c3aed",
-      tags: ["Python", "TensorFlow", "D3.js"],
-      highlight: "Predicciones en tiempo real"
+      icon: <Brain className="w-5 h-5" />
     },
     {
       id: 4,
-      title: "Cloud Infrastructure",
+      title: "Nube Empresarial",
       category: "cloud",
-      description: "Arquitectura cloud escalable para microservicios",
+      description: "Infraestructura escalable bajo demanda.",
       gradient: "from-sky-600 via-cyan-500 to-blue-500",
       botColor: "#0ea5e9",
-      tags: ["AWS", "Docker", "Kubernetes"],
-      highlight: "Despliegues 4x más rápidos"
+      icon: <Cloud className="w-5 h-5" />
     },
     {
       id: 5,
-      title: "Corporate Website",
-      category: "web",
-      description: "Sitio web corporativo con CMS personalizado",
-      gradient: "from-emerald-600 via-green-500 to-teal-500",
-      botColor: "#10b981",
-      tags: ["Next.js", "Strapi", "Tailwind"],
-      highlight: "Tiempo de carga < 1s"
-    },
-    {
-      id: 6,
-      title: "IoT Control System",
+      title: "Control Industrial",
       category: "iot",
-      description: "Sistema de control para dispositivos IoT industriales",
+      description: "Monitoreo de maquinaria vía agentes inteligentes.",
       gradient: "from-amber-600 via-yellow-500 to-amber-400",
       botColor: "#d97706",
-      tags: ["Arduino", "MQTT", "React"],
-      highlight: "Monitoreo 24/7 sin interrupciones"
+      icon: <Cpu className="w-5 h-5" />
     }
   ]
 
   const categories = [
-    { id: 'all', name: 'Todos' },
-    { id: 'web', name: 'Web' },
-    { id: 'mobile', name: 'Mobile' },
-    { id: 'ai', name: 'IA' },
-    { id: 'cloud', name: 'Cloud' },
-    { id: 'iot', name: 'IoT' }
+    { id: 'all', name: 'Todos los Proyectos', icon: <Layers className="w-4 h-4" /> },
+    { id: 'web', name: 'Web Apps', icon: <Layout className="w-4 h-4" /> },
+    { id: 'mobile', name: 'Móvil', icon: <Smartphone className="w-4 h-4" /> },
+    { id: 'ai', name: 'IA & Agentes', icon: <Brain className="w-4 h-4" /> },
+    { id: 'iot', name: 'IoT & Industria', icon: <Cpu className="w-4 h-4" /> }
   ]
 
   const filteredProjects = filter === 'all'
     ? projects
     : projects.filter(project => project.category === filter)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: {
-      y: 60,
-      opacity: 0,
-      filter: "blur(10px)"
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  }
-
   return (
-    <section id="gallery" className="py-24 relative">
-      {/* Ya NO tiene su propio fondo - usa el Galaxy compartido de App.jsx */}
-
+    <section id="gallery" className="py-32 relative bg-[#FDF5E6]">
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-16"
-        >
-          <motion.h2
-            variants={itemVariants}
-            className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl flex items-center justify-center gap-6"
-          >
-            {/* Bouncy Easing Curve Visualization */}
-            <motion.svg
-              width="140"
-              height="70"
-              viewBox="0 0 140 70"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 1.2,
-                ease: [0.34, 1.56, 0.64, 1]
-              }}
-              className="hidden md:block"
-            >
-              <defs>
-                <linearGradient id="lineGradientPortfolio" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#ec4899" />
-                  <stop offset="33%" stopColor="#d946ef" />
-                  <stop offset="66%" stopColor="#a855f7" />
-                  <stop offset="100%" stopColor="#8b5cf6" />
-                </linearGradient>
-                <filter id="neonGlowPortfolio">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
-              {/* Main animated curve - bouncy spring effect */}
-              <motion.path
-                d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
-                fill="none"
-                stroke="url(#lineGradientPortfolio)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                filter="url(#neonGlowPortfolio)"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{
-                  duration: 2,
-                  ease: [0.34, 1.56, 0.64, 1]
-                }}
-                style={{ filter: 'drop-shadow(0 0 8px rgba(236, 72, 153, 0.9))' }}
-              />
-
-              {/* Thicker glow layer behind */}
-              <motion.path
-                d="M 10 60 L 15 10 L 20 45 L 25 35 L 30 42 L 35 40 L 40 43 L 50 42 L 60 44 L 80 43 L 100 44 L 130 45"
-                fill="none"
-                stroke="#d946ef"
-                strokeWidth="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0.25"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{
-                  duration: 2,
-                  ease: [0.34, 1.56, 0.64, 1]
-                }}
-              />
-
-              {/* End point with pulse */}
-              <motion.circle
-                cx="130"
-                cy="45"
-                r="4"
-                fill="#ec4899"
-                filter="url(#neonGlowPortfolio)"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 2
-                }}
-              />
-
-              {/* Pulsing ring effect */}
-              <motion.circle
-                cx="130"
-                cy="45"
-                r="6"
-                fill="none"
-                stroke="#ec4899"
-                strokeWidth="2"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [1, 2],
-                  opacity: [0.7, 0]
-                }}
-                transition={{
-                  duration: 1.5,
-                  delay: 2.2,
-                  repeat: Infinity,
-                  repeatDelay: 0.3
-                }}
-              />
-            </motion.svg>
-
-            <MetallicText className="silver-text">
-              Nuestro Portafolio
-            </MetallicText>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-xl text-gray-300 max-w-3xl mx-auto mb-12 drop-shadow-lg"
-          >
-            Descubre algunos de nuestros proyectos más destacados y las soluciones
-            innovadoras que hemos desarrollado para nuestros clientes
-          </motion.p>
-
-          {/* Filter Buttons */}
+          {/* LADO IZQUIERDO: Filtros y Título (Sidebar Style) */}
           <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            ref={ref}
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            className="lg:col-span-4 lg:sticky lg:top-32 h-fit"
           >
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setFilter(category.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg ${filter === category.id
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
-              >
-                {category.name}
-              </motion.button>
-            ))}
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <span className="text-zinc-400 font-bold tracking-[0.3em] uppercase text-[10px]">Display Case</span>
+                <h2 className="text-5xl font-black leading-none tracking-tighter">
+                  <MetallicText className="silver-text text-zinc-900">
+                    Proyectos
+                  </MetallicText>
+                  <br />
+                  <span className="text-zinc-900 italic">Élite</span>
+                </h2>
+              </div>
+
+              {/* Navigation Filters */}
+              <nav className="flex flex-col gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setFilter(cat.id)}
+                    className={`flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 font-bold text-sm ${filter === cat.id
+                      ? 'bg-zinc-900 text-white shadow-xl shadow-zinc-200 translate-x-3'
+                      : 'text-zinc-400 hover:text-zinc-900 hover:bg-white/50'
+                      }`}
+                  >
+                    <span className={filter === cat.id ? 'text-amber-400' : ''}>
+                      {cat.icon}
+                    </span>
+                    {cat.name}
+                    {filter === cat.id && <motion.div layoutId="dot" className="w-1.5 h-1.5 rounded-full bg-amber-400 ml-auto" />}
+                  </button>
+                ))}
+              </nav>
+
+              <div className="p-6 rounded-3xl bg-amber-500/10 border border-amber-500/20">
+                <p className="text-zinc-800 text-xs font-bold uppercase tracking-widest mb-2 italic">Dato de Éxito</p>
+                <p className="text-sm text-zinc-600 font-medium">+150 integraciones exitosas en el último año.</p>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
 
-        {/* Projects Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          <AnimatePresence>
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.85 }}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -12, rotateX: 4, rotateY: -4 }}
-                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 shadow-xl"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                {/* Gradient + Bot Icon Container */}
-                <div className="relative h-64 overflow-hidden">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60`} />
-                  <div className="absolute inset-0 bg-black/30" />
-                  {/* Animated Bot - exact same icon as the chatbot */}
-                  <motion.div
-                    className="absolute inset-0 flex items-center justify-center"
-                    animate={{ y: [0, -8, 0], rotate: [0, 3, -3, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <div className="relative">
-                      {/* Glow effect behind bot */}
-                      <motion.div
-                        animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute inset-0 rounded-full"
-                        style={{
-                          background: `radial-gradient(circle, ${project.botColor}50 0%, transparent 70%)`,
-                          filter: 'blur(12px)',
-                          width: '120px',
-                          height: '120px',
-                          top: '-20px',
-                          left: '-20px'
-                        }}
-                      />
-                      <RobotSVG
-                        color={project.botColor}
-                        size={80}
-                      />
-                    </div>
-                  </motion.div>
-
-                  <div className="absolute top-4 left-4 px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-black/50 backdrop-blur-md text-white">
-                    {project.category}
-                  </div>
-
-                  {/* Overlay */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    className="absolute inset-0 bg-black/40 flex items-center justify-center gap-4"
-                  >
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => setSelectedProject(project)}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors"
-                    >
-                      <ZoomIn size={20} />
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors"
-                    >
-                      <ExternalLink size={20} />
-                    </motion.button>
-                  </motion.div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-blue-300 text-sm mb-3">
-                    <Eye className="w-4 h-4" />
-                    <span>{project.highlight}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors drop-shadow-lg">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="px-3 py-1 text-xs bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 rounded-full border border-blue-500/30"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Animated Border */}
-                <motion.div
-                  className="absolute inset-0 rounded-2xl"
-                  style={{
-                    background: "linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent)",
-                  }}
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Modal */}
-        <AnimatePresence>
-          {selectedProject && (
+          {/* LADO DERECHO: Grid de Proyectos compacto para móvil */}
+          <div className="lg:col-span-8">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-              onClick={() => setSelectedProject(null)}
+              layout
+              className="grid grid-cols-2 lg:grid-cols-2 gap-3 lg:gap-6"
             >
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                className="relative max-w-4xl w-full bg-gray-900 rounded-2xl overflow-hidden"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <video
-                  src={selectedProject.video}
-                  className="w-full h-96 object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    {selectedProject.title}
-                  </h3>
-                  <p className="text-gray-400 mb-4">
-                    {selectedProject.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 text-sm bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 rounded-full border border-blue-500/30"
+              <AnimatePresence mode='popLayout'>
+                {filteredProjects.map((project) => (
+                  <motion.div
+                    key={project.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    whileHover={{ y: -5 }}
+                    className="group relative overflow-hidden rounded-[24px] lg:rounded-[40px] bg-white border border-zinc-100 shadow-sm hover:shadow-xl transition-all duration-500"
+                  >
+                    {/* Project Image Area - Compacted for mobile */}
+                    <div className="relative h-28 lg:h-48 overflow-hidden bg-zinc-50">
+                      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20`} />
+
+                      {/* Central Mini Bot */}
+                      <motion.div
+                        animate={{ y: [0, -3, 0] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute inset-0 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-500"
                       >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="absolute top-4 right-4 p-2 bg-black/50 rounded-full text-white hover:bg-black/70 transition-colors"
-                >
-                  ×
-                </button>
-              </motion.div>
+                        <RobotSVG color={project.botColor} size={35} className="lg:scale-150" />
+                      </motion.div>
+
+                      {/* Floating Link Icon */}
+                      <div className="absolute top-3 right-3 lg:top-6 lg:right-6 p-2 lg:p-3 rounded-full bg-white shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                        <ArrowUpRight className="w-3 h-3 lg:w-5 lg:h-5 text-zinc-900" />
+                      </div>
+                    </div>
+
+                    {/* Project Info - Scaled down for 2x2 grid */}
+                    <div className="p-4 lg:p-8">
+                      <div className="flex items-center gap-1.5 mb-2 lg:mb-4">
+                        <div className="p-1 rounded bg-zinc-50 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                          {React.cloneElement(project.icon, { size: 12, className: "lg:w-5 lg:h-5" })}
+                        </div>
+                        <span className="text-[8px] lg:text-[10px] uppercase tracking-[0.1em] font-black text-zinc-300 group-hover:text-zinc-900 transition-colors truncate">
+                          {project.category}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xs lg:text-2xl font-black text-zinc-900 mb-1 lg:mb-2 leading-tight truncate">
+                        {project.title}
+                      </h3>
+                      <p className="text-[10px] lg:text-sm text-zinc-500 font-medium leading-tight line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* Bottom Line Color */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1 lg:h-1.5" style={{ backgroundColor: project.botColor }} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </div>
+
+        </div>
       </div>
     </section>
   )
