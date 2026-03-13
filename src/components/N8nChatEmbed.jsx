@@ -15,7 +15,7 @@ const N8nChatEmbed = ({ isOpen, onClose }) => {
         target: '#n8n-chat-container',
         showWelcomeScreen: true,
         initialMessages: [
-          '¡Hola! Soy Sonar-Pro, trabajando en equipo con Gemini 2.5 Pro, el asistente IA de Agentes IA',
+          '¡Hola! Soy Sonar-Pro, trabajando en equipo con Gemini 2.5 Pro, el asistente IA de Lockthard',
           '¿En qué puedo ayudarte hoy?'
         ],
         i18n: {
@@ -23,7 +23,7 @@ const N8nChatEmbed = ({ isOpen, onClose }) => {
             title: 'Sonar-Pro - Asistente IA',
             subtitle: 'Conectado con n8n - Disponible 24/7',
             inputPlaceholder: 'Escribe tu mensaje...',
-            footer: 'Powered by Agentes IA',
+            footer: 'Powered by Lockthard',
             getStarted: 'Iniciar Conversación'
           }
         },

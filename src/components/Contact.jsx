@@ -266,33 +266,7 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* Paul Martines */}
-            <motion.div
-              variants={itemVariants}
-              className="p-6 rounded-xl backdrop-blur-md border border-zinc-200 bg-white/40 shadow-lg"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl flex items-center justify-center text-white shrink-0">
-                  <User className="w-7 h-7" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-xl font-bold text-zinc-900">Paul Martines</h4>
-                  <p className="text-emerald-600 font-medium mb-3">CEO</p>
-                  <div className="space-y-2">
-                    <a
-                      href="https://wa.me/56942875210"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-zinc-600 hover:text-green-600 transition-colors"
-                    >
-                      <Phone className="w-4 h-4" />
-                      <span>+56 942 875 210</span>
-                      <span className="text-xs bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full">WhatsApp</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+
           </motion.div>
         </div>
       </div>

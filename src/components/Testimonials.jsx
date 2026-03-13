@@ -14,7 +14,7 @@ const Testimonials = () => {
       position: "CEO, TechStartup",
       company: "TechStartup Solutions",
       rating: 5,
-      text: "Agentes IA transformó completamente nuestra infraestructura digital. Su expertise en consultoría tecnológica es excepcional.",
+      text: "Lockthard transformó completamente nuestra infraestructura digital. Su expertise en consultoría tecnológica es excepcional.",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
     },
     {
@@ -41,7 +41,7 @@ const Testimonials = () => {
       position: "Fundador, LogiTech",
       company: "LogiTech Solutions",
       rating: 5,
-      text: "La implementación de IA en nuestros procesos fue un game changer. El equipo de Agentes IA es extraordinario.",
+      text: "La implementación de IA en nuestros procesos fue un game changer. El equipo de Lockthard es extraordinario.",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
     },
     {

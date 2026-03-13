@@ -69,7 +69,7 @@ const Hero = () => {
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
                 <span className="block">
                   <MetallicText className="chrome-text">
-                    Agentes IA
+                    Lockthard
                   </MetallicText>
                 </span>
                 <span className="block">

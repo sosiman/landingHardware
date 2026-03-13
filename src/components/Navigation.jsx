@@ -25,7 +25,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
             className="text-2xl font-bold"
           >
             <MetallicText className="chrome-text">
-              Agentes IA
+              Lockthard
             </MetallicText>
           </motion.div>
 
